@@ -123,8 +123,8 @@ Primer presidente: Manuel Bárcena.` },
 
       <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/50">
-            <Shield size={20} />
+          <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg shadow-blue-500/50 bg-blue-600">
+            <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="font-bold text-lg leading-tight">Chiño AI</h1>
@@ -164,8 +164,13 @@ Primer presidente: Manuel Bárcena.` },
             <AnimatePresence>
               {messages.map((msg, idx) => (
                 <motion.div key={idx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
+                  className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  {msg.role === 'agent' && (
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-blue-600">
+                      <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
                     <p className="text-sm md:text-base">{msg.text}</p>
                     {msg.role === 'agent' && (
                       <button onClick={() => speak(msg.text)} className="mt-2 text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
