@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3 } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
-
+import RankingsView from './RankingsView'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
@@ -28,6 +28,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [showGamer, setShowGamer] = useState(false)
   const [showBusiness, setShowBusiness] = useState(false)
+  const [showRankings, setShowRankings] = useState(false)
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
 
@@ -139,17 +140,21 @@ export default function App() {
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => { setShowGamer(false); setShowBusiness(false) }}
-            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${!showGamer && !showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Sparkles size={12} className="inline mr-0.5" />Chat
+          <button onClick={() => { setShowGamer(false); setShowBusiness(false); setShowRankings(false) }}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${!showGamer && !showBusiness && !showRankings ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Sparkles size={11} className="inline mr-0.5" />Chat
           </button>
-          <button onClick={() => { setShowGamer(true); setShowBusiness(false) }}
-            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${showGamer && !showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Trophy size={12} className="inline mr-0.5" />Gamer
+          <button onClick={() => { setShowGamer(true); setShowBusiness(false); setShowRankings(false) }}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showGamer ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Trophy size={11} className="inline mr-0.5" />Gamer
           </button>
-          <button onClick={() => { setShowBusiness(true); setShowGamer(false) }}
-            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <BarChart3 size={12} className="inline mr-0.5" />Biz
+          <button onClick={() => { setShowRankings(true); setShowGamer(false); setShowBusiness(false) }}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showRankings ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Medal size={11} className="inline mr-0.5" />Ranking
+          </button>
+          <button onClick={() => { setShowBusiness(true); setShowGamer(false); setShowRankings(false) }}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <BarChart3 size={11} className="inline mr-0.5" />Biz
           </button>
           <div className="w-px h-6 bg-slate-600 mx-1" />
           <button onClick={() => setAgentGender(g => {
@@ -234,6 +239,8 @@ export default function App() {
             <p className="text-center text-[10px] text-slate-500 mt-2">Chiño AI © 2026 — Real Club Celta de Vigo</p>
           </footer>
         </>
+      ) : showRankings ? (
+        <RankingsView supabase={supabase} />
       ) : showBusiness ? (
         <BusinessView />
       ) : (
