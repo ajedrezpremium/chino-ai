@@ -1,0 +1,7 @@
+ESTRATEGIA DE CONTENIDO: LAS PREGUNTAS (El Alma del Juego)
+Para que el video al Director General sea impactante, necesitas preguntas que demuestren profundidad. Carga estas en tu tabla game_questions:
+Fácil: "¿En qué año se fundó el RC Celta?" -> 1923
+Media: "¿Quién marcó el gol de la victoria contra el Liverpool en Anfield (2001)?" -> Gustavo López
+Difícil: "¿Cómo se llamaba el estadio antes de llamarse Balaídos?" -> No tenía nombre oficial, era un campo rústico, pero se conocía como 'O Campo do Celta' (Truco: mejor preguntar "¿Cuánto costó la entrada más cara en 1923?")
+Curiosidad: "¿Qué jugador celeste fue conocido como 'O Zar'?" -> Mostovoi
+Actualidad: "¿Quién es el máximo goleador activo de la plantilla 2026?" -> Depende de tu DB, ej: Aspas / Swedberg
