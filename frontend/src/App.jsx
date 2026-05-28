@@ -45,6 +45,10 @@ export default function App() {
 
   useEffect(() => {
     fetchLegends()
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices()
+      window.speechSynthesis.addEventListener('voiceschanged', () => {}, { once: true })
+    }
   }, [])
 
   const fetchLegends = async () => {
@@ -53,19 +57,23 @@ export default function App() {
   }
 
   const [agentGender, setAgentGender] = useState('male')
-  const speak = (text, gender) => {
-    if ('speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(text)
-      const g = gender || agentGender
-      const voices = window.speechSynthesis.getVoices()
-      const es = voices.filter(v => v.lang.includes('es') || v.lang.includes('gl'))
-      const preferred = g === 'male'
-        ? es.find(v => /david|jorge|pablo|male|masculino|hombre/i.test(v.name))
-        : es.find(v => /zira|laura|elena|helena|female|femenino|mujer|muller/i.test(v.name))
-      u.voice = preferred || es[0] || voices.find(v => v.lang.startsWith('es')) || voices[0]
-      u.rate = 1.1
-      window.speechSynthesis.speak(u)
+  const speak = (text, gender, retry = 0) => {
+    if (!('speechSynthesis' in window)) return
+    const u = new SpeechSynthesisUtterance(text)
+    const g = gender || agentGender
+    const allVoices = window.speechSynthesis.getVoices()
+    if (allVoices.length === 0 && retry < 5) {
+      return setTimeout(() => speak(text, gender, retry + 1), 300)
     }
+    const es = allVoices.filter(v => v.lang.startsWith('es') || v.lang.startsWith('gl'))
+    const maleNames = /pablo|raul|jorge|david|male/i
+    const femaleNames = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller/i
+    const preferred = g === 'male'
+      ? es.find(v => maleNames.test(v.name)) || es.find(v => !femaleNames.test(v.name))
+      : es.find(v => femaleNames.test(v.name)) || es.find(v => !maleNames.test(v.name))
+    u.voice = preferred || es[0] || allVoices.find(v => v.lang.startsWith('es')) || allVoices[0]
+    u.rate = g === 'male' ? 1.0 : 1.1
+    window.speechSynthesis.speak(u)
   }
 
   const startListening = () => {
