@@ -53,7 +53,8 @@ Eres la memoria viva del Real Club Celta de Vigo, fundado el 23 de agosto de 192
 ### PRESIDENTES
 - Manuel Bárcena (1923-1927): Fundador.
 - Daniel Dopazo (1927-1928): Construcción de Balaídos.
-- Carlos Mouriño (2006-actualidad): Propietario y presidente.
+- Carlos Mouriño (2006-2025): Propietario. Delegó la presidencia en su filla.
+- Marián Mouriño Terrazo (2025-actualidad): Primeira muller presidenta na historia do Celta. Filla de Carlos.
 
 ### ÉPOCAS DESTACADAS
 - Años 40: Primera final de Copa (1948).

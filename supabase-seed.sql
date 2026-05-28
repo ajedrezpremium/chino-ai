@@ -26,7 +26,8 @@ INSERT INTO players (first_name, last_name, birth_date, nationality, position, d
 -- STAFF HISTÓRICO
 INSERT INTO staff_history (name, role, start_date, end_date, notes) VALUES
 ('Manuel Bárcena de Andrés', 'Presidente', '1923-08-23', '1927-01-01', 'Primer presidente na historia do club. Liderou a fusión.'),
-('Carlos Mouriño', 'Presidente', '2006-06-01', NULL, 'Propietario e presidente actual. Maior accionista.'),
+('Carlos Mouriño', 'Presidente', '2006-06-01', '2025-06-01', 'Propietario. Delegou a presidencia na súa filla.'),
+('Marián Mouriño Terrazo', 'Presidenta', '2025-06-01', NULL, 'Primeira muller presidenta do Celta. Filla de Carlos.'),
 ('Miguel Muñoz', 'Entrenador', '1968-07-01', '1969-06-30', 'Lenda do fútbol español. Adestrou ao Celta nunha época dourada.'),
 ('Carlos Aimar', 'Entrenador', '1993-07-01', '1994-06-30', 'Levou ao Celta á final de Copa en 1994.'),
 ('Víctor Fernández', 'Entrenador', '1998-07-01', '2002-06-30', 'Era dourada europea. UEFA 2000 e 2001.'),
