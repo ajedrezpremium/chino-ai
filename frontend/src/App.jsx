@@ -4,7 +4,7 @@ import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
-import DemoTour from './DemoTour'
+
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
@@ -240,11 +240,6 @@ export default function App() {
         <ChinoGamer supabase={supabase} speak={speak} />
       )}
 
-      <DemoTour onNavigate={(section) => {
-        setShowGamer(section === 'gamer')
-        setShowBusiness(section === 'business')
-        if (section === 'chat') { setShowGamer(false); setShowBusiness(false) }
-      }} />
     </div>
   )
 }
