@@ -5,7 +5,7 @@ import { MessageCircle } from 'lucide-react'
 const moments = [
   { img: '/Mostovoi Celta.jpg', title: 'Aleksandr Mostovoi', subtitle: '"O Zar" · 1996–2002', desc: '72 goles · 235 partidos · 3 semifinais europeas' },
   { img: '/Iago Aspas · MITO VIVIENTE.jpg', title: 'Iago Aspas', subtitle: 'Capitán · 2008–', desc: '210 goles · 450 partidos · Lenda viva' },
-  { img: '/#11deMemoria Celta.jpg', title: 'O Soño Europeo', subtitle: 'UEFA 2000–01', desc: 'Contra a Juventus · Semifinais · Lendas en campo' },
+  { img: '/11deMemoria Celta.jpg', title: 'O Soño Europeo', subtitle: 'UEFA 2000–01', desc: 'Contra a Juventus · Semifinais · Lendas en campo' },
   { img: '/Celta de Vigo · ASCENSO A 1ª.jpg', title: 'O Regreso á Elite', subtitle: 'Ascenso a Primeira División', desc: 'Un club, unha cidade, unha historia de superación' },
   { img: '/2025 El regreso a Europa.webp', title: '2025 · Regreso a Europa', subtitle: 'Celta volve a competición continental', desc: 'Cuartos UEFA · 6º en LaLiga · Ilusión renovada' },
 ]
