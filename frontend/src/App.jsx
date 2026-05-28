@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
+import LandingView from './LandingView'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
@@ -28,6 +29,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [currentTab, setCurrentTab] = useState('chat')
   const [adminMode, setAdminMode] = useState(() => localStorage.getItem('chino_admin') === 'true')
+  const [showLanding, setShowLanding] = useState(() => localStorage.getItem('chino_landing_seen') !== 'true')
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
 
@@ -130,11 +132,23 @@ export default function App() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-slate-900 text-white flex flex-col relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-black opacity-90 z-0" />
+  const handleEnterApp = () => {
+    setShowLanding(false)
+    localStorage.setItem('chino_landing_seen', 'true')
+  }
 
-      <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
+  return (
+    <AnimatePresence mode="wait">
+      {showLanding ? (
+        <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
+          <LandingView legends={legends} onEnter={handleEnterApp} />
+        </motion.div>
+      ) : (
+        <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
+          className="min-h-screen bg-slate-900 text-white flex flex-col relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-black opacity-90 z-0" />
+
+        <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg shadow-blue-500/50 bg-blue-600">
             <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
@@ -188,21 +202,6 @@ export default function App() {
       ) : (
         <>
           <main className="flex-1 overflow-y-auto p-4 z-10 space-y-4 pb-28">
-            {legends.length > 0 && messages.length === 1 && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-4">
-                {legends.map((l, i) => (
-                  <motion.div key={l.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-                    className="bg-slate-800/80 border border-blue-500/20 rounded-xl p-3 text-center">
-                    <div className="w-12 h-12 bg-blue-600/30 rounded-full mx-auto mb-2 flex items-center justify-center text-xl font-bold text-blue-400">
-                      {l.name.charAt(0)}
-                    </div>
-                    <p className="text-sm font-semibold truncate">{l.name}</p>
-                    <p className="text-[10px] text-blue-300">{l.role}</p>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-
             <AnimatePresence>
               {messages.map((msg, idx) => (
                 <motion.div key={idx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
@@ -258,6 +257,8 @@ export default function App() {
         </>
       )}
 
-    </div>
+      </motion.div>
+    )}
+    </AnimatePresence>
   )
 }
