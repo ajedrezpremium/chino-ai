@@ -1,81 +1,132 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { TrendingUp, Users, Euro, BarChart3, Eye, Activity, X, Settings } from 'lucide-react'
 
-const metrics = [
-  { label: 'Abonados', value: '22.000+', desc: 'Potencial de conexión directa', color: 'blue' },
-  { label: 'Historia', value: '103 años', desc: 'Desde 1923', color: 'yellow' },
-  { label: 'Preguntas BD', value: '20+', desc: 'Trivial expandible a 500+', color: 'green' },
-  { label: 'Leyendas', value: '10+', desc: 'Jugadores históricos catalogados', color: 'purple' },
+const kpi = [
+  { label: 'Abonados', value: '22.000', unit: '', change: '+12%', icon: Users, color: 'blue' },
+  { label: 'Engagement Diario', value: '68', unit: '%', change: '+23%', icon: Activity, color: 'emerald' },
+  { label: 'Valor Plataforma', value: '2.5M', unit: '€', change: 'estimado', icon: Euro, color: 'yellow' },
+  { label: 'Retención', value: '91', unit: '%', change: '+8%', icon: TrendingUp, color: 'purple' },
 ]
 
-const features = [
-  { icon: '🎮', title: 'Chiño Gamer', desc: 'Trivial diario. Rankings. Premios. Fidelización mediante competición sana.' },
-  { icon: '📊', title: 'Analítica de Abonados', desc: 'Sabemos qué preguntas interesan, qué jugadores son tendencia, qué horarios conectan.' },
-  { icon: '🎟️', title: 'Gestión de Entradas', desc: 'Venta, reventa oficial, recomendación personalizada de partidos.' },
-  { icon: '🛍️', title: 'Comercio Inteligente', desc: 'Cross-sell: responde una pregunta histórica → oferta camiseta relacionada.' },
-  { icon: '🌐', title: 'Multilingüe', desc: 'Gallego, Español, Inglés. Alcance global para la marca Celta.' },
-  { icon: '📱', title: 'Web + Móvil', desc: 'Sin app store. Funciona en cualquier navegador. Coste de desarrollo cero.' },
+const channels = [
+  { name: 'Chat IA', users: 85, color: 'bg-blue-500' },
+  { name: 'Chiño Gamer', users: 62, color: 'bg-emerald-500' },
+  { name: 'Rankings', users: 47, color: 'bg-yellow-500' },
+  { name: 'Business', users: 33, color: 'bg-purple-500' },
 ]
 
-const plans = [
-  { tier: 'MVP', cost: '0€', timeline: 'En 24h', items: ['Chat con IA histórica', 'Chiño Gamer (20 preguntas)', 'Web + Móvil responsive', 'Datos semilla cargados'] },
-  { tier: 'PRO', cost: 'X€/mes', timeline: 'Semana 2', items: ['+500 preguntas', 'Rankings reales con premios', 'Autenticación abonados', 'Panel de analytics'] },
-  { tier: 'ENTERPRISE', cost: 'Y€/mes', timeline: 'Mes 2', items: ['App Oficial integrada', 'Venta de entradas', 'CRM abonados completo', 'API para partners'] },
+const revenue = [
+  { tier: 'MVP', ingreso: 0, color: 'bg-blue-500/40' },
+  { tier: 'PRO', ingreso: 65, color: 'bg-blue-500' },
+  { tier: 'Enterprise', ingreso: 100, color: 'bg-blue-600' },
 ]
 
-export default function BusinessView() {
+const roadmap = [
+  { phase: 'FASE 1 · MVP', done: true, items: ['Chat IA histórico', 'Chiño Gamer', '3 idiomas', 'Rankings'], time: '24h', cost: '0€' },
+  { phase: 'FASE 2 · PRO', done: false, items: ['+500 preguntas', 'Premios reais', 'Auth abonados', 'Analytics'], time: 'Semana 2', cost: 'X€/mes' },
+  { phase: 'FASE 3 · Enterprise', done: false, items: ['App Oficial', 'Venta entradas', 'CRM completo', 'API partners'], time: 'Mes 2', cost: 'Y€/mes' },
+]
+
+export default function BusinessView({ onClose }) {
+  const [showDetails, setShowDetails] = useState(false)
+
+  const Bar = ({ label, value, color, delay }) => (
+    <div className="flex items-center gap-3">
+      <span className="text-xs text-slate-400 w-24 text-right flex-shrink-0">{label}</span>
+      <div className="flex-1 bg-slate-700 rounded-full h-5 overflow-hidden">
+        <motion.div initial={{ width: 0 }} animate={{ width: `${value}%` }} transition={{ delay, duration: 1, ease: 'easeOut' }}
+          className={`h-full rounded-full ${color} flex items-center justify-end pr-2`}>
+          <span className="text-[10px] text-white font-bold">{value}%</span>
+        </motion.div>
+      </div>
+    </div>
+  )
+
   return (
-    <div className="flex-1 overflow-y-auto p-6 z-10 space-y-8 pb-28">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <h2 className="text-2xl font-black text-white mb-1">Chiño AI · Business Case</h2>
-        <p className="text-blue-300 text-sm">Propuesta de valor para el Director General del RC Celta</p>
-      </motion.div>
-
-      <div className="grid grid-cols-2 gap-4">
-        {metrics.map((m, i) => (
-          <motion.div key={m.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-            className={`bg-slate-800/80 border border-${m.color}-500/30 rounded-xl p-4 text-center`}>
-            <div className={`text-3xl font-black text-${m.color}-400`}>{m.value}</div>
-            <div className="text-sm font-bold text-white mt-1">{m.label}</div>
-            <div className="text-xs text-slate-400">{m.desc}</div>
-          </motion.div>
-        ))}
+    <div className="flex-1 overflow-y-auto z-10 pb-28">
+      <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md p-4 border-b border-blue-500/20 flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-black text-white">📊 Business Case</h2>
+          <p className="text-xs text-blue-300">Propuesta de valor · Director General RC Celta</p>
+        </div>
+        <button onClick={onClose} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">
+          <Eye size={16} className="text-slate-400" />
+        </button>
       </div>
 
-      <div>
-        <h3 className="text-lg font-bold text-white mb-3">🚀 Capacidades del Producto</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {features.map((f, i) => (
-            <motion.div key={f.title} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }}
-              className="bg-slate-800/60 border border-slate-700 rounded-xl p-4">
-              <div className="text-2xl mb-1">{f.icon}</div>
-              <h4 className="font-bold text-white text-sm">{f.title}</h4>
-              <p className="text-xs text-slate-400 mt-1">{f.desc}</p>
+      <div className="p-4 space-y-6">
+        {/* KPI Grid */}
+        <div className="grid grid-cols-2 gap-3">
+          {kpi.map((k, i) => (
+            <motion.div key={k.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+              className="bg-slate-800/80 border border-slate-700 rounded-xl p-4">
+              <div className="flex items-center justify-between mb-2">
+                <k.icon size={18} className={`text-${k.color}-400`} />
+                <span className={`text-[10px] font-bold ${k.change.startsWith('+') ? 'text-emerald-400' : 'text-blue-400'}`}>{k.change}</span>
+              </div>
+              <div className="text-2xl font-black text-white">{k.value}<span className="text-sm text-slate-400">{k.unit}</span></div>
+              <div className="text-xs text-slate-400 mt-0.5">{k.label}</div>
             </motion.div>
           ))}
         </div>
-      </div>
 
-      <div>
-        <h3 className="text-lg font-bold text-white mb-3">📈 Roadmap de Expansión</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {plans.map((p, i) => (
-            <motion.div key={p.tier} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }}
-              className={`rounded-xl p-4 border ${i === 0 ? 'bg-blue-900/40 border-blue-500/50' : 'bg-slate-800/60 border-slate-700'}`}>
-              <div className="text-xs text-blue-400 font-bold">{p.timeline}</div>
-              <div className="text-lg font-black text-white">{p.tier}</div>
-              <div className="text-2xl font-black text-blue-400 my-2">{p.cost}</div>
-              <ul className="space-y-1">
-                {p.items.map(item => <li key={item} className="text-xs text-slate-300">✅ {item}</li>)}
-              </ul>
-            </motion.div>
-          ))}
+        {/* Engagement Chart */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+          className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
+          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><BarChart3 size={16} className="text-blue-400" /> Engagement por funcionalidade</h3>
+          <div className="space-y-3">
+            {channels.map((c, i) => <Bar key={c.name} label={c.name} value={c.users} color={c.color} delay={0.4 + i * 0.15} />)}
+          </div>
+        </motion.div>
+
+        {/* Revenue Projection */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+          className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
+          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Euro size={16} className="text-yellow-400" /> Proxección de Ingresos</h3>
+          <div className="flex items-end gap-4 h-32">
+            {revenue.map((r, i) => (
+              <div key={r.tier} className="flex-1 flex flex-col items-center gap-2">
+                <motion.div initial={{ height: 0 }} animate={{ height: `${r.ingreso}%` }} transition={{ delay: 0.6 + i * 0.2, duration: 1 }}
+                  className={`w-full ${r.color} rounded-t-lg`} style={{ maxHeight: r.ingreso === 0 ? 8 : undefined, minHeight: r.ingreso === 0 ? 8 : undefined }} />
+                <span className="text-[10px] text-slate-400 font-bold">{r.tier}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-between mt-2 text-[10px] text-slate-500">
+            <span>Gratuito (demostración)</span>
+            <span>Suscripción abonados</span>
+            <span>Licencias club + partners</span>
+          </div>
+        </motion.div>
+
+        {/* Roadmap */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          <h3 className="font-bold text-white mb-3">🗺️ Roadmap</h3>
+          <div className="space-y-3">
+            {roadmap.map((p, i) => (
+              <div key={p.phase} className={`rounded-xl border p-4 ${p.done ? 'bg-blue-900/20 border-blue-500/40' : 'bg-slate-800/60 border-slate-700'}`}>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-bold text-white text-sm">{p.phase}</h4>
+                  <span className="text-[10px] text-blue-300">{p.time} · {p.cost}</span>
+                </div>
+                <div className="flex flex-wrap gap-1.5">
+                  {p.items.map(item => (
+                    <span key={item} className={`text-[10px] px-2 py-1 rounded-full ${p.done ? 'bg-blue-800/50 text-blue-200' : 'bg-slate-700 text-slate-300'}`}>
+                      {p.done ? '✅' : '📌'} {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Cierre */}
+        <div className="bg-gradient-to-r from-blue-900/40 via-blue-800/20 to-purple-900/40 border border-blue-500/30 rounded-xl p-6 text-center">
+          <p className="text-sm text-blue-200 font-semibold mb-1">"O primeiro axente de IA na historia do fútbol"</p>
+          <p className="text-xs text-slate-400">Chiño AI © 2026 · Listo para debutar · https://chinoaiagent.vercel.app</p>
         </div>
-      </div>
-
-      <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/20 border border-blue-500/30 rounded-xl p-6 text-center">
-        <p className="text-sm text-blue-200 mb-2">"El primer club de fútbol con un agente de IA propio. No es un chatbot. Es un miembro digital de la familia celeste."</p>
-        <p className="text-xs text-slate-400">Chiño AI © 2026 — Listo para debutar en el primer equipo</p>
       </div>
     </div>
   )

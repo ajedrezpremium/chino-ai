@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users } from 'lucide-react'
+import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye } from 'lucide-react'
 
 const playerRanking = [
   { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: '👑 Lenda' },
@@ -31,7 +31,7 @@ const coachRanking = [
 const badgeColors = ['from-yellow-500 to-amber-600', 'from-slate-400 to-slate-500', 'from-amber-700 to-amber-800']
 const badgeLabels = ['🥇', '🥈', '🥉']
 
-export default function RankingsView({ supabase }) {
+export default function RankingsView({ supabase, onClose }) {
   const [tab, setTab] = useState('players')
   const [fans, setFans] = useState([])
 
@@ -57,7 +57,14 @@ export default function RankingsView({ supabase }) {
   return (
     <div className="flex-1 overflow-y-auto z-10 pb-4">
       <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md p-4 border-b border-blue-500/20">
-        <h2 className="text-xl font-black text-white mb-3">🏆 Rankings Celestes</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-xl font-black text-white">🏆 Rankings Celestes</h2>
+          {onClose && (
+            <button onClick={onClose} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">
+              <Eye size={16} className="text-slate-400" />
+            </button>
+          )}
+        </div>
         <div className="flex gap-2">
           <TabButton id="players" label="Xogadores" icon={<Trophy size={14} className="inline mr-1" />} />
           <TabButton id="coaches" label="Adestradores" icon={<Award size={14} className="inline mr-1" />} />

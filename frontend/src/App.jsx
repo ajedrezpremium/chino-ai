@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
@@ -26,11 +26,16 @@ export default function App() {
   const [input, setInput] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [showGamer, setShowGamer] = useState(false)
-  const [showBusiness, setShowBusiness] = useState(false)
-  const [showRankings, setShowRankings] = useState(false)
+  const [currentTab, setCurrentTab] = useState('chat')
+  const [adminMode, setAdminMode] = useState(() => localStorage.getItem('chino_admin') === 'true')
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
+
+  const toggleAdmin = () => {
+    const next = !adminMode
+    setAdminMode(next)
+    localStorage.setItem('chino_admin', next.toString())
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -140,23 +145,29 @@ export default function App() {
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button onClick={() => { setShowGamer(false); setShowBusiness(false); setShowRankings(false) }}
-            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${!showGamer && !showBusiness && !showRankings ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+          <button onClick={() => setCurrentTab('chat')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'chat' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Sparkles size={11} className="inline mr-0.5" />Chat
           </button>
-          <button onClick={() => { setShowGamer(true); setShowBusiness(false); setShowRankings(false) }}
-            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showGamer ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+          <button onClick={() => setCurrentTab('gamer')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'gamer' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Trophy size={11} className="inline mr-0.5" />Gamer
           </button>
-          <button onClick={() => { setShowRankings(true); setShowGamer(false); setShowBusiness(false) }}
-            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showRankings ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+          <button onClick={() => setCurrentTab('rankings')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'rankings' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Medal size={11} className="inline mr-0.5" />Ranking
           </button>
-          <button onClick={() => { setShowBusiness(true); setShowGamer(false); setShowRankings(false) }}
-            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <BarChart3 size={11} className="inline mr-0.5" />Biz
-          </button>
+          {adminMode && (
+            <button onClick={() => setCurrentTab('biz')}
+              className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'biz' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+              <BarChart3 size={11} className="inline mr-0.5" />Biz
+            </button>
+          )}
           <div className="w-px h-6 bg-slate-600 mx-1" />
+          <button onClick={toggleAdmin}
+            className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400">
+            <Settings size={13} />
+          </button>
           <button onClick={() => setAgentGender(g => {
               const newG = g === 'male' ? 'female' : 'male'
               setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
@@ -168,7 +179,13 @@ export default function App() {
         </div>
       </header>
 
-      {!showGamer ? (
+      {currentTab === 'rankings' ? (
+        <RankingsView supabase={supabase} onClose={() => setCurrentTab('chat')} />
+      ) : currentTab === 'biz' ? (
+        <BusinessView onClose={() => setCurrentTab('chat')} />
+      ) : currentTab === 'gamer' ? (
+        <ChinoGamer supabase={supabase} speak={speak} />
+      ) : (
         <>
           <main className="flex-1 overflow-y-auto p-4 z-10 space-y-4 pb-28">
             {legends.length > 0 && messages.length === 1 && (
@@ -239,12 +256,6 @@ export default function App() {
             <p className="text-center text-[10px] text-slate-500 mt-2">Chiño AI © 2026 — Real Club Celta de Vigo</p>
           </footer>
         </>
-      ) : showRankings ? (
-        <RankingsView supabase={supabase} />
-      ) : showBusiness ? (
-        <BusinessView />
-      ) : (
-        <ChinoGamer supabase={supabase} speak={speak} />
       )}
 
     </div>
