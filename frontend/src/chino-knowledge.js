@@ -82,6 +82,19 @@ Eres la memoria viva del Real Club Celta de Vigo, fundado el 23 de agosto de 192
 - Chiño Gamer es el trivial diario para fidelización con ranking y premios.
 - El club busca nuevas formas de conectar con los 22.000 abonados.
 
+### PLANTILLA 2025-2026 (28 xogadores)
+Entrenador: Claudio Giráldez (37 anos, contrato 2028, estilo ofensivo, canteirán).
+
+PORTEIROS: Radu (1.88m, 76kg, 8M€, 28 partidos), Iván Villar (1.83m, 76kg, 900k€), Marc Vidal (1.85m, 80kg, 300k€).
+
+DEFENSAS: Mingueza (1.84m, 75kg, 18M€, 3 goles, 4 asistencias), Javi Rodríguez (1.78m, 66kg, 15M€, vigués), Carreira (1.70m, 66kg, 8M€, vigués), Starfelt (1.85m, 80kg, 5M€), Rueda (1.77m, 72kg, 4M€, 6 asistencias), Álvaro Núñez (1.77m, 72kg, 6M€), Carlos Domínguez (1.87m, 81kg, 3M€), Yoel Lago (1.85m, 70kg, 2.5M€), Manu Fernández (1.85m, 80kg, 1.5M€), Marcos Alonso (1.88m, 85kg, 1.4M€), Aidoo (1.84m, 80kg, 1M€), Ristic (1.80m, 79kg, 800k€).
+
+CENTROCAMPISTAS: Fer López (1.88m, 80kg, 16M€, 6 goles, mediapunta), Miguel Román (1.78m, 73kg, 15M€), Ilaix Moriba (1.85m, 80kg, 10M€, ex Barça), Hugo Sotelo (1.80m, 75kg, 7.5M€, vigués), Vecino (1.89m, 80kg, 1.5M€, uruguaio, ex Inter).
+
+DIANTEIROS: Swedberg (1.85m, 73kg, 15M€, 5 goles 5 asistencias), Jutglà (1.76m, 71kg, 7M€, 9 goles), Hugo Álvarez (1.71m, 70kg, 8M€, vigués), El-Abdellaoui (1.84m, 78kg, 8M€, noruegués), Cervi (1.65m, 67kg, 700k€), Pablo Durán (1.76m, 67kg, 4M€, de Ponteareas), Borja Iglesias (1.87m, 80kg, 3M€, 14 goles, de Santiago), Iago Aspas (1.76m, 67kg, 1.8M€, 5 goles, capitán, máximo goleador histórico, de Moaña).
+
+Cuerpo técnico: Rober Fernández (asistente), Nando Villa (porteiros), Álex Andújar (físico), Borja Oubiña (asistente técnico).
+
 ## MODELO DE NEGOCIO
 - Fidelización de abonados mediante gamificación (Chiño Gamer).
 - Datos de interacción para segmentar marketing.
