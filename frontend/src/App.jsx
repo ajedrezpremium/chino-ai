@@ -20,6 +20,9 @@ export default function App() {
   const [messages, setMessages] = useState([
     { role: 'agent', text: 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras sobre a historia do Celta!' }
   ])
+  const initialMsg = (gender) => gender === 'male'
+    ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras sobre a historia do Celta!'
+    : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo do noso Celta!'
   const [input, setInput] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -41,12 +44,17 @@ export default function App() {
     if (data) setLegends(data)
   }
 
-  const speak = (text) => {
+  const [agentGender, setAgentGender] = useState('male')
+  const speak = (text, gender) => {
     if ('speechSynthesis' in window) {
       const u = new SpeechSynthesisUtterance(text)
+      const g = gender || agentGender
       const voices = window.speechSynthesis.getVoices()
-      const es = voices.find(v => v.lang.includes('es') || v.lang.includes('gl'))
-      if (es) u.voice = es
+      const es = voices.filter(v => v.lang.includes('es') || v.lang.includes('gl'))
+      const preferred = g === 'male'
+        ? es.find(v => /david|jorge|pablo|male|masculino|hombre/i.test(v.name))
+        : es.find(v => /zira|laura|elena|helena|female|femenino|mujer|muller/i.test(v.name))
+      u.voice = preferred || es[0] || voices.find(v => v.lang.startsWith('es')) || voices[0]
       u.rate = 1.1
       window.speechSynthesis.speak(u)
     }
@@ -105,7 +113,7 @@ export default function App() {
         const data = await res.json()
         const aiText = data.choices?.[0]?.message?.content || 'Perdona, non puiden procesar iso.'
         setMessages(prev => [...prev, { role: 'agent', text: aiText }])
-        speak(aiText)
+        speak(aiText, agentGender)
       } else {
         setMessages(prev => [...prev, { role: 'agent', text: 'Son Chiño! Aquí estou para falar do Celta. (Conecta unha API key en .env para respostas reais)' }])
       }
@@ -126,11 +134,11 @@ export default function App() {
             <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-tight">Chiño AI</h1>
-            <p className="text-xs text-blue-300">O teu colega celeste</p>
+            <h1 className="font-bold text-lg leading-tight">{agentGender === 'male' ? 'Chiño' : 'Chiña'} AI</h1>
+            <p className="text-xs text-blue-300">{agentGender === 'male' ? 'O teu colega celeste' : 'A túa colega celeste'}</p>
           </div>
         </div>
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
           <button onClick={() => { setShowGamer(false); setShowBusiness(false) }}
             className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${!showGamer && !showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Sparkles size={12} className="inline mr-0.5" />Chat
@@ -141,7 +149,16 @@ export default function App() {
           </button>
           <button onClick={() => { setShowBusiness(true); setShowGamer(false) }}
             className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <BarChart3 size={12} className="inline mr-0.5" />Business
+            <BarChart3 size={12} className="inline mr-0.5" />Biz
+          </button>
+          <div className="w-px h-6 bg-slate-600 mx-1" />
+          <button onClick={() => setAgentGender(g => {
+              const newG = g === 'male' ? 'female' : 'male'
+              setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
+              return newG
+            })}
+            className={`text-xs px-2 py-1.5 rounded-full transition-colors font-bold ${agentGender === 'male' ? 'bg-blue-600 text-white' : 'bg-pink-600 text-white'}`}>
+            {agentGender === 'male' ? '👨 Chiño' : '👩 Chiña'}
           </button>
         </div>
       </header>
@@ -176,7 +193,7 @@ export default function App() {
                   <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
                     <p className="text-sm md:text-base">{msg.text}</p>
                     {msg.role === 'agent' && (
-                      <button onClick={() => speak(msg.text)} className="mt-2 text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
+                      <button onClick={() => speak(msg.text, agentGender)} className="mt-2 text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
                         <Volume2 size={12} /> Escutar
                       </button>
                     )}
