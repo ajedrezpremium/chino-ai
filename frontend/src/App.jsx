@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Shield, Sparkles, Trophy } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
+import BusinessView from './BusinessView'
+import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL || '',
@@ -21,6 +23,7 @@ export default function App() {
   const [isRecording, setIsRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showGamer, setShowGamer] = useState(false)
+  const [showBusiness, setShowBusiness] = useState(false)
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
 
@@ -93,12 +96,7 @@ export default function App() {
           body: JSON.stringify({
             model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
             messages: [
-              { role: 'system', content: `Eres Chiño AI, agente oficial del RC Celta de Vigo (fundado 1923). 
-Tono celista, orgulloso y cercano. Hablas gallego si te hablan en gallego. 
-Máximo 2 frases para respuestas de voz. 
-Datos clave: Iago Aspas máximo goleador histórico. Balaídos es nuestro templo. 
-Fundado el 23 de agosto de 1923 de la fusión de Real Fortuna y Sporting.
-Primer presidente: Manuel Bárcena.` },
+              { role: 'system', content: SYSTEM_PROMPT },
               { role: 'user', content: userText }
             ]
           })
@@ -131,14 +129,18 @@ Primer presidente: Manuel Bárcena.` },
             <p className="text-xs text-blue-300">O teu colega celeste</p>
           </div>
         </div>
-        <div className="flex gap-2">
-          <button onClick={() => setShowGamer(false)}
-            className={`text-xs px-3 py-1.5 rounded-full transition-colors ${!showGamer ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Sparkles size={12} className="inline mr-1" />Chat
+        <div className="flex gap-1">
+          <button onClick={() => { setShowGamer(false); setShowBusiness(false) }}
+            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${!showGamer && !showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Sparkles size={12} className="inline mr-0.5" />Chat
           </button>
-          <button onClick={() => setShowGamer(true)}
-            className={`text-xs px-3 py-1.5 rounded-full transition-colors ${showGamer ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Trophy size={12} className="inline mr-1" />Gamer
+          <button onClick={() => { setShowGamer(true); setShowBusiness(false) }}
+            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${showGamer && !showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Trophy size={12} className="inline mr-0.5" />Gamer
+          </button>
+          <button onClick={() => { setShowBusiness(true); setShowGamer(false) }}
+            className={`text-xs px-2.5 py-1.5 rounded-full transition-colors ${showBusiness ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <BarChart3 size={12} className="inline mr-0.5" />Business
           </button>
         </div>
       </header>
@@ -214,6 +216,8 @@ Primer presidente: Manuel Bárcena.` },
             <p className="text-center text-[10px] text-slate-500 mt-2">Chiño AI © 2026 — Real Club Celta de Vigo</p>
           </footer>
         </>
+      ) : showBusiness ? (
+        <BusinessView />
       ) : (
         <ChinoGamer supabase={supabase} speak={speak} />
       )}
