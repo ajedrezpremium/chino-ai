@@ -5,3 +5,7 @@ dist/
 __pycache__/
 .DS_Store
 thumbs.db
+
+.env.txt
+.env
+*.env

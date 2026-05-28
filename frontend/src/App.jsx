@@ -10,6 +10,8 @@ const supabase = createClient(
 )
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ''
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || ''
+const USE_OPENROUTER = !!OPENROUTER_API_KEY
 
 export default function App() {
   const [messages, setMessages] = useState([
@@ -75,12 +77,21 @@ export default function App() {
     setIsLoading(true)
 
     try {
-      if (OPENAI_API_KEY) {
-        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const key = OPENROUTER_API_KEY || OPENAI_API_KEY
+      if (key) {
+        const baseUrl = USE_OPENROUTER
+          ? 'https://openrouter.ai/api/v1/chat/completions'
+          : 'https://api.openai.com/v1/chat/completions'
+        const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` }
+        if (USE_OPENROUTER) {
+          headers['HTTP-Referer'] = 'https://chinoaiagent.vercel.app'
+          headers['X-Title'] = 'Chiño AI'
+        }
+        const res = await fetch(baseUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${OPENAI_API_KEY}` },
+          headers,
           body: JSON.stringify({
-            model: 'gpt-4o-mini',
+            model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
             messages: [
               { role: 'system', content: `Eres Chiño AI, agente oficial del RC Celta de Vigo (fundado 1923). 
 Tono celista, orgulloso y cercano. Hablas gallego si te hablan en gallego. 
@@ -97,7 +108,7 @@ Primer presidente: Manuel Bárcena.` },
         setMessages(prev => [...prev, { role: 'agent', text: aiText }])
         speak(aiText)
       } else {
-        setMessages(prev => [...prev, { role: 'agent', text: 'Son Chiño! Aquí estou para falar do Celta. (Conecta OpenAI en .env para respostas reais)' }])
+        setMessages(prev => [...prev, { role: 'agent', text: 'Son Chiño! Aquí estou para falar do Celta. (Conecta unha API key en .env para respostas reais)' }])
       }
     } catch {
       setMessages(prev => [...prev, { role: 'agent', text: 'Perdona, estou tendo un problema técnico. Inténtao de novo!' }])
