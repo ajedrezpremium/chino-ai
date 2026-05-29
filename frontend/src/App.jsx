@@ -7,6 +7,7 @@ import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
 import LandingView from './LandingView'
 import AuthModal from './AuthModal'
+import ErrorBoundary from './ErrorBoundary'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
@@ -57,6 +58,14 @@ export default function App() {
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
+      if (session?.user) {
+        const username = session.user.user_metadata?.username || session.user.email?.split('@')[0] || 'siareiro'
+        supabase.from('user_profiles').upsert({
+          id: session.user.id,
+          username,
+          display_name: username
+        }).catch(() => {})
+      }
     })
     return () => subscription?.unsubscribe()
   }, [])
@@ -67,6 +76,24 @@ export default function App() {
   }
 
   const [agentGender, setAgentGender] = useState('male')
+  const detectLang = (text) => {
+    const lower = text.toLowerCase()
+    const glWords = ['non', 'pode', 'ben', 'moito', 'unha', 'ti', 'celeste', 'goleador', 'partido', 'historia', 'xogador', 'galicia', 'vigo', 'balaídos', 'xogar', 'mellor', 'sempre', 'nunca', 'porque', 'cousa', 'anos', 'campión', 'equipo', 'derbi']
+    const esWords = ['no', 'puede', 'bien', 'mucho', 'una', 'tú', 'goleador', 'partido', 'historia', 'jugador', 'españa', 'balai', 'mejor', 'siempre', 'nunca', 'porque', 'cosa', 'años', 'campeón', 'equipo', 'dépor']
+    const glCount = glWords.filter(w => lower.includes(w)).length
+    const esCount = esWords.filter(w => lower.includes(w)).length
+    if (glCount > esCount) return 'gl'
+    if (esCount > glCount) return 'es'
+    if (/\b(the|is|was|are|were|have|has|been|will|would|could|hello|hi|thanks|football|player|team|club|match|game|goal|season|league|cup|europe|world|best|never|always)\b/i.test(lower)) return 'en'
+    return 'es'
+  }
+  const pickVoice = (voices, gender) => {
+    const male = /pablo|raul|jorge|david|male|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam/i
+    const female = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller|samantha|karen|susan|julia|emma|olivia|ava|sophia|mía|charlotte|victoria/i
+    return gender === 'male'
+      ? voices.find(v => male.test(v.name)) || voices.find(v => !female.test(v.name))
+      : voices.find(v => female.test(v.name)) || voices.find(v => !male.test(v.name))
+  }
   const speak = (text, gender, retry = 0) => {
     if (!('speechSynthesis' in window)) return
     const u = new SpeechSynthesisUtterance(text)
@@ -75,13 +102,12 @@ export default function App() {
     if (allVoices.length === 0 && retry < 5) {
       return setTimeout(() => speak(text, gender, retry + 1), 300)
     }
-    const es = allVoices.filter(v => v.lang.startsWith('es') || v.lang.startsWith('gl'))
-    const maleNames = /pablo|raul|jorge|david|male/i
-    const femaleNames = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller/i
-    const preferred = g === 'male'
-      ? es.find(v => maleNames.test(v.name)) || es.find(v => !femaleNames.test(v.name))
-      : es.find(v => femaleNames.test(v.name)) || es.find(v => !maleNames.test(v.name))
-    u.voice = preferred || es[0] || allVoices.find(v => v.lang.startsWith('es')) || allVoices[0]
+    const lang = detectLang(text)
+    const langVoices = lang === 'en'
+      ? allVoices.filter(v => v.lang.startsWith('en'))
+      : allVoices.filter(v => v.lang.startsWith('es') || v.lang.startsWith('gl'))
+    u.voice = pickVoice(langVoices, g) || langVoices[0] || allVoices.find(v => v.lang.startsWith(lang === 'en' ? 'en' : 'es')) || allVoices[0]
+    u.lang = u.voice?.lang || 'es-ES'
     u.rate = g === 'male' ? 1.0 : 1.1
     window.speechSynthesis.speak(u)
   }
@@ -175,10 +201,11 @@ export default function App() {
   }
 
   return (
+    <ErrorBoundary>
     <AnimatePresence mode="wait">
       {showLanding ? (
         <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-          <LandingView legends={legends} onEnter={handleEnterApp} />
+          <LandingView legends={legends} agentGender={agentGender} onEnter={handleEnterApp} />
         </motion.div>
       ) : (
         <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
@@ -187,15 +214,15 @@ export default function App() {
 
         <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden shadow-lg shadow-blue-500/50 bg-blue-600">
-            <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
+          <div className={`w-10 h-10 rounded-full overflow-hidden shadow-lg flex-shrink-0 ${agentGender === 'male' ? 'shadow-blue-500/50 bg-blue-600' : 'shadow-pink-500/50 bg-pink-600'}`}>
+            <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-full h-full object-cover" />
           </div>
           <div>
             <h1 className="font-bold text-lg leading-tight">{agentGender === 'male' ? 'Chiño' : 'Chiña'} AI</h1>
-            <p className="text-xs text-blue-300">{agentGender === 'male' ? 'O teu colega celeste' : 'A túa colega celeste'}</p>
+            <p className={`text-xs ${agentGender === 'male' ? 'text-blue-300' : 'text-pink-300'}`}>{agentGender === 'male' ? 'O teu colega celeste' : 'A túa colega celeste'}</p>
           </div>
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 tab-scroll">
           <button onClick={() => setCurrentTab('chat')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'chat' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Sparkles size={11} className="inline mr-0.5" />Chat
@@ -317,5 +344,6 @@ export default function App() {
       </motion.div>
     )}
     </AnimatePresence>
+    </ErrorBoundary>
   )
 }

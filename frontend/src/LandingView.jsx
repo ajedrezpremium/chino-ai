@@ -10,7 +10,7 @@ const moments = [
   { img: '/2025 El regreso a Europa.webp', title: '2025 · Regreso a Europa', subtitle: 'Celta volve a competición continental', desc: 'Cuartos UEFA · 6º en LaLiga · Ilusión renovada' },
 ]
 
-export default function LandingView({ legends, onEnter }) {
+export default function LandingView({ legends, agentGender, onEnter }) {
   const [idx, setIdx] = useState(0)
 
   useEffect(() => {
@@ -34,8 +34,8 @@ export default function LandingView({ legends, onEnter }) {
         <AnimatePresence mode="wait">
           <motion.div key={idx} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: 0.6 }}
             className="text-center max-w-lg">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-blue-600/40 border-2 border-white/30 overflow-hidden shadow-xl shadow-black/50 backdrop-blur-sm">
-              <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
+            <div className={`w-20 h-20 mx-auto mb-6 rounded-full border-2 overflow-hidden shadow-xl backdrop-blur-sm flex items-center justify-center ${agentGender === 'male' ? 'bg-blue-600/40 border-blue-400/30 shadow-blue-500/30' : 'bg-pink-600/40 border-pink-400/30 shadow-pink-500/30'}`}>
+              <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-full h-full object-cover rounded-full" />
             </div>
             <h2 className="text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-2xl">{m.title}</h2>
             <p className="text-lg text-blue-200 font-semibold mt-2 drop-shadow-lg">{m.subtitle}</p>
@@ -70,12 +70,12 @@ export default function LandingView({ legends, onEnter }) {
       )}
 
       <motion.button onClick={onEnter} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-        className="fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 shadow-xl shadow-black/50 hover:shadow-blue-400/60 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group">
-        <img src="/chino-avatar.png" alt="Chiño" className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
+        className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}>
+        <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
         <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-900 flex items-center justify-center animate-pulse">
           <MessageCircle size={10} className="text-white" />
         </span>
-        <span className="absolute -bottom-7 text-[10px] text-white/70 font-medium whitespace-nowrap drop-shadow">Falar con Chiño</span>
+        <span className="absolute -bottom-7 text-[10px] text-white/70 font-medium whitespace-nowrap drop-shadow">{agentGender === 'male' ? 'Falar con Chiño' : 'Falar con Chiña'}</span>
       </motion.button>
     </div>
   )

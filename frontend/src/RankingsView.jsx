@@ -38,18 +38,29 @@ export default function RankingsView({ supabase, user, onClose }) {
   useEffect(() => {
     if (tab === 'fans' && supabase) {
       supabase.from('game_sessions')
-        .select('*')
+        .select('id, score, questions_answered, user_id')
         .order('score', { ascending: false })
-        .limit(10)
-        .then(({ data }) => {
-          if (data) setFans(data)
+        .limit(20)
+        .then(async ({ data: sessions }) => {
+          if (!sessions) return
+          const userIds = [...new Set(sessions.map(s => s.user_id))]
+          const { data: profiles } = await supabase
+            .from('user_profiles')
+            .select('id, username, display_name')
+            .in('id', userIds)
+          const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p]))
+          setFans(sessions.map(s => ({
+            ...s,
+            username: profileMap[s.user_id]?.display_name || profileMap[s.user_id]?.username || null
+          })))
         })
     }
   }, [tab, supabase])
 
   const fanName = (f) => {
     if (user && f.user_id === user.id) return 'Ti'
-    return `Siareiro #${f.id % 1000}`
+    if (f.username) return f.username
+    return `Siareiro #${String(f.id).slice(-3)}`
   }
 
   const TabButton = ({ id, label, icon }) => (
@@ -70,7 +81,7 @@ export default function RankingsView({ supabase, user, onClose }) {
             </button>
           )}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 tab-scroll">
           <TabButton id="players" label="Xogadores" icon={<Trophy size={14} className="inline mr-1" />} />
           <TabButton id="coaches" label="Adestradores" icon={<Award size={14} className="inline mr-1" />} />
           <TabButton id="fans" label="Siareiros" icon={<Users size={14} className="inline mr-1" />} />
@@ -80,7 +91,7 @@ export default function RankingsView({ supabase, user, onClose }) {
       <div className="p-4 space-y-3">
         {tab === 'players' && playerRanking.map((p, i) => (
           <motion.div key={p.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
-            className={`bg-slate-800/80 border rounded-xl p-4 ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
+            className={`bg-slate-800/80 border rounded-xl p-4 rank-card ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-lg ${i < 3 ? `bg-gradient-to-br ${badgeColors[i]}` : 'bg-slate-700'}`}>
                 {i < 3 ? badgeLabels[i] : `#${p.pos}`}
@@ -88,7 +99,7 @@ export default function RankingsView({ supabase, user, onClose }) {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-white truncate">{p.name}</h3>
-                  <span className="text-[10px] bg-blue-900/50 text-blue-300 px-1.5 py-0.5 rounded-full">{p.badge || p.era}</span>
+                  <span className="text-[10px] bg-blue-900/50 text-blue-300 px-1.5 py-0.5 rounded-full rank-badge">{p.badge || p.era}</span>
                 </div>
                 <p className="text-xs text-slate-400">{p.role} · {p.era}</p>
                 <p className="text-[11px] text-blue-300 mt-0.5">{p.stats}</p>
@@ -103,7 +114,7 @@ export default function RankingsView({ supabase, user, onClose }) {
 
         {tab === 'coaches' && coachRanking.map((c, i) => (
           <motion.div key={c.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
-            className={`bg-slate-800/80 border rounded-xl p-4 ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
+            className={`bg-slate-800/80 border rounded-xl p-4 rank-card ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-lg ${i < 3 ? `bg-gradient-to-br ${badgeColors[i]}` : 'bg-slate-700'}`}>
                 {i < 3 ? badgeLabels[i] : `#${c.pos}`}
@@ -111,7 +122,7 @@ export default function RankingsView({ supabase, user, onClose }) {
               <div className="flex-1">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-white">{c.name}</h3>
-                  <span className="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded-full">{c.era}</span>
+                  <span className="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded-full rank-badge">{c.era}</span>
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">{c.logros}</p>
               </div>

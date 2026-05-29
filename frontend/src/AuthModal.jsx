@@ -19,8 +19,15 @@ export default function AuthModal({ supabase, onClose }) {
         if (error) throw error
         onClose()
       } else {
-        const { error } = await supabase.auth.signUp({ email, password, options: { data: { username: email.split('@')[0] } } })
+        const { data: signUpData, error } = await supabase.auth.signUp({ email, password, options: { data: { username: email.split('@')[0] } } })
         if (error) throw error
+        if (signUpData?.user) {
+          await supabase.from('user_profiles').upsert({
+            id: signUpData.user.id,
+            username: email.split('@')[0],
+            display_name: email.split('@')[0]
+          })
+        }
         setMessage('Conta creada! Inicia sesión.')
         setMode('login')
       }

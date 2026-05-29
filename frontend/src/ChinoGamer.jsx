@@ -1,6 +1,53 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { Trophy, Timer, Flame, Star, ArrowLeft, RefreshCw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const playSound = (type) => {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)()
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    gain.gain.setValueAtTime(0.15, ctx.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4)
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime)
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.12)
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.24)
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.4)
+    } else if (type === 'wrong') {
+      osc.frequency.setValueAtTime(300, ctx.currentTime)
+      osc.frequency.linearRampToValueAtTime(150, ctx.currentTime + 0.35)
+      osc.type = 'sawtooth'
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.4)
+    } else if (type === 'tick') {
+      gain.gain.setValueAtTime(0.1, ctx.currentTime)
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08)
+      osc.frequency.setValueAtTime(880, ctx.currentTime)
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.08)
+    } else if (type === 'fanfare') {
+      gain.gain.setValueAtTime(0.2, ctx.currentTime)
+      const notes = [523, 659, 784, 1047]
+      notes.forEach((freq, i) => {
+        const o = ctx.createOscillator()
+        const g = ctx.createGain()
+        o.connect(g)
+        g.connect(ctx.destination)
+        o.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.15)
+        g.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.15)
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.15 + 0.3)
+        o.start(ctx.currentTime + i * 0.15)
+        o.stop(ctx.currentTime + i * 0.15 + 0.3)
+      })
+      osc.start(ctx.currentTime)
+      osc.stop(ctx.currentTime + 0.001)
+    }
+  } catch {}
+}
 
 const TOTAL_QUESTIONS = 5
 const TIME_PER_QUESTION = 15
@@ -27,6 +74,18 @@ export default function ChinoGamer({ supabase, speak, user }) {
       handleAnswer(null)
     }
   }, [timer, tab])
+
+  useEffect(() => {
+    if (tab === 'playing' && timer <= 5 && timer > 0) {
+      playSound('tick')
+    }
+  }, [timer, tab])
+
+  useEffect(() => {
+    if (tab === 'result' && score > 500) {
+      playSound('fanfare')
+    }
+  }, [tab, score])
 
   const fetchQuestions = async () => {
     const { data } = await supabase
@@ -62,9 +121,11 @@ export default function ChinoGamer({ supabase, speak, user }) {
 
     if (isCorrect) {
       setStreak(s => s + 1)
+      playSound('correct')
       speak('Correcto! Boa xogada!')
     } else {
       setStreak(0)
+      playSound('wrong')
     }
 
     setScore(s => s + points)
