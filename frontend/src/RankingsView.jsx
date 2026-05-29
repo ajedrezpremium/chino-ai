@@ -31,7 +31,7 @@ const coachRanking = [
 const badgeColors = ['from-yellow-500 to-amber-600', 'from-slate-400 to-slate-500', 'from-amber-700 to-amber-800']
 const badgeLabels = ['🥇', '🥈', '🥉']
 
-export default function RankingsView({ supabase, onClose }) {
+export default function RankingsView({ supabase, user, onClose }) {
   const [tab, setTab] = useState('players')
   const [fans, setFans] = useState([])
 
@@ -46,6 +46,11 @@ export default function RankingsView({ supabase, onClose }) {
         })
     }
   }, [tab, supabase])
+
+  const fanName = (f) => {
+    if (user && f.user_id === user.id) return 'Ti'
+    return `Siareiro #${f.id % 1000}`
+  }
 
   const TabButton = ({ id, label, icon }) => (
     <button onClick={() => setTab(id)}
@@ -125,12 +130,15 @@ export default function RankingsView({ supabase, onClose }) {
             <p className="text-sm mt-1">Xoga a O Desafío Celeste para aparecer aquí</p>
             <div className="mt-6 space-y-3 text-left">
               {fans.length > 0 ? fans.map((f, i) => (
-                <div key={f.id} className="bg-slate-800/80 border border-slate-700 rounded-xl p-4 flex items-center gap-3">
+                <div key={f.id} className={`rounded-xl p-4 flex items-center gap-3 ${user && f.user_id === user.id ? 'bg-blue-900/40 border border-blue-500/40' : 'bg-slate-800/80 border border-slate-700'}`}>
                   <div className="w-10 h-10 rounded-full bg-blue-600/30 flex items-center justify-center font-black text-blue-400">
                     {i < 3 ? badgeLabels[i] : `#${i + 1}`}
                   </div>
                   <div className="flex-1">
-                    <p className="font-bold text-white">Usuario #{f.user_id?.slice(0, 8) || 'Anónimo'}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-white">{fanName(f)}</p>
+                      {user && f.user_id === user.id && <span className="text-[9px] bg-blue-600 text-white px-1.5 rounded-full font-bold">ES TI</span>}
+                    </div>
                     <p className="text-xs text-slate-400">{f.questions_answered || 0} preguntas</p>
                   </div>
                   <div className="text-right">

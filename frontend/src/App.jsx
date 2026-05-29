@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, LogOut } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
 import LandingView from './LandingView'
+import AuthModal from './AuthModal'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const supabase = createClient(
@@ -30,6 +31,8 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState('chat')
   const [adminMode, setAdminMode] = useState(() => localStorage.getItem('chino_admin') === 'true')
   const [showLanding, setShowLanding] = useState(() => sessionStorage.getItem('chino_landing') !== 'true')
+  const [user, setUser] = useState(null)
+  const [showAuth, setShowAuth] = useState(false)
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
 
@@ -49,6 +52,13 @@ export default function App() {
       window.speechSynthesis.getVoices()
       window.speechSynthesis.addEventListener('voiceschanged', () => {}, { once: true })
     }
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) setUser(session.user)
+    })
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+    return () => subscription?.unsubscribe()
   }, [])
 
   const fetchLegends = async () => {
@@ -96,11 +106,29 @@ export default function App() {
     r.onend = () => setIsRecording(false)
   }
 
+  const saveMessage = async (role, text) => {
+    if (!user?.id) return
+    try {
+      await supabase.from('chat_history').insert({ user_id: user.id, role, message: text })
+    } catch {}
+  }
+
+  const loadChatHistory = async () => {
+    if (!user?.id) return
+    const { data } = await supabase.from('chat_history').select('message, role').order('created_at', { ascending: true }).limit(50)
+    if (data?.length) setMessages(data.map(m => ({ role: m.role === 'user' ? 'user' : 'agent', text: m.message })))
+  }
+
+  useEffect(() => {
+    loadChatHistory()
+  }, [user?.id])
+
   const handleSend = async (textOverride = null) => {
     const userText = textOverride || input
     if (!userText.trim()) return
 
     setMessages(prev => [...prev, { role: 'user', text: userText }])
+    saveMessage('user', userText)
     setInput('')
     setIsLoading(true)
 
@@ -129,6 +157,7 @@ export default function App() {
         const data = await res.json()
         const aiText = data.choices?.[0]?.message?.content || 'Perdona, non puiden procesar iso.'
         setMessages(prev => [...prev, { role: 'agent', text: aiText }])
+        saveMessage('agent', aiText)
         speak(aiText, agentGender)
       } else {
         setMessages(prev => [...prev, { role: 'agent', text: 'Son Chiño! Aquí estou para falar do Celta. (Conecta unha API key en .env para respostas reais)' }])
@@ -195,18 +224,34 @@ export default function App() {
               setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
               return newG
             })}
-            className={`text-xs px-2 py-1.5 rounded-full transition-colors font-bold ${agentGender === 'male' ? 'bg-blue-600 text-white' : 'bg-pink-600 text-white'}`}>
-            {agentGender === 'male' ? '👨 Chiño' : '👩 Chiña'}
+            className={`text-xs px-1.5 py-1.5 rounded-full transition-colors font-bold ${agentGender === 'male' ? 'bg-blue-600 text-white' : 'bg-pink-600 text-white'}`}>
+            {agentGender === 'male' ? '👨' : '👩'}
           </button>
+          <div className="w-px h-6 bg-slate-600 mx-1" />
+          {user ? (
+            <button onClick={() => supabase.auth.signOut()} className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 rounded-full px-2.5 py-1.5 transition-colors">
+              <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
+                {user.email?.charAt(0).toUpperCase() || '?'}
+              </div>
+              <span className="text-[10px] text-slate-300 max-w-[60px] truncate">{user.email?.split('@')[0]}</span>
+              <LogOut size={10} className="text-slate-500" />
+            </button>
+          ) : (
+            <button onClick={() => setShowAuth(true)}
+              className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 rounded-full px-2.5 py-1.5 transition-colors">
+              <LogIn size={11} className="text-white" />
+              <span className="text-[10px] font-bold text-white">Entrar</span>
+            </button>
+          )}
         </div>
       </header>
 
       {currentTab === 'rankings' ? (
-        <RankingsView supabase={supabase} onClose={() => setCurrentTab('chat')} />
+        <RankingsView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (
         <BusinessView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'gamer' ? (
-        <ChinoGamer supabase={supabase} speak={speak} />
+        <ChinoGamer supabase={supabase} user={user} speak={speak} />
       ) : (
         <>
           <main className="flex-1 overflow-y-auto p-4 z-10 space-y-4 pb-28">
@@ -264,6 +309,10 @@ export default function App() {
           </footer>
         </>
       )}
+
+      <AnimatePresence>
+        {showAuth && <AuthModal supabase={supabase} onClose={() => setShowAuth(false)} />}
+      </AnimatePresence>
 
       </motion.div>
     )}

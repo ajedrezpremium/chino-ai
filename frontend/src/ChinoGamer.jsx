@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const TOTAL_QUESTIONS = 5
 const TIME_PER_QUESTION = 15
 
-export default function ChinoGamer({ supabase, speak }) {
+export default function ChinoGamer({ supabase, speak, user }) {
   const [tab, setTab] = useState('intro')
   const [questions, setQuestions] = useState([])
   const [currentIdx, setCurrentIdx] = useState(0)
@@ -32,7 +32,7 @@ export default function ChinoGamer({ supabase, speak }) {
     const { data } = await supabase
       .from('game_questions')
       .select('*')
-      .limit(TOTAL_QUESTIONS)
+      .limit(100)
     if (data && data.length > 0) {
       const shuffled = data.sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS)
       setQuestions(shuffled)
@@ -76,8 +76,9 @@ export default function ChinoGamer({ supabase, speak }) {
       setTimer(TIME_PER_QUESTION)
     } else {
       setTab('result')
-      if (supabase) {
+      if (supabase && user?.id) {
         supabase.from('game_sessions').insert({
+          user_id: user.id,
           score: score + points,
           questions_answered: TOTAL_QUESTIONS
         }).then()

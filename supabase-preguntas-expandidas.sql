@@ -1,0 +1,130 @@
+-- =============================================================
+-- CHIÑO GAMER · +100 PREGUNTAS EXPANDIDAS
+-- Categorías: Historia, Jugadores, Estadio, Curiosidades, Actualidad
+-- Dificultad: 1 (fácil), 2 (media), 3 (difícil)
+-- =============================================================
+
+-- === HISTORIA (30 preguntas) ===
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, category) VALUES
+('En que ano se fusionaron o Real Fortuna e o Sporting para crear o Celta?', '1921', '1923', '1925', '1930', 'B', 1, 'Historia'),
+('Cal foi o primeiro estadio do Celta?', 'Balaídos', 'Campo de Coia', 'Estadio de Balaídos Vello', 'Campo do Sportíng', 'D', 3, 'Historia'),
+('En que ano se inaugurou Balaídos?', '1925', '1928', '1930', '1935', 'B', 2, 'Historia'),
+('Cantas veces xogou o Celta a final da Copa do Rei?', '1', '2', '3', '4', 'C', 2, 'Historia'),
+('Contra quen perdeu o Celta a final de Copa de 1994?', 'Barcelona', 'Real Madrid', 'Zaragoza', 'Valencia', 'C', 2, 'Historia'),
+('En que ano conseguiu o Celta o seu primeiro ascenso a Primeira?', '1929', '1939', '1945', '1950', 'B', 3, 'Historia'),
+('Quen marcou o gol do ascenso en 2012 no estadio de Riazor?', 'Aspas', 'De Lucas', 'Bermejo', 'Oubiña', 'C', 3, 'Historia'),
+('Cal foi a maior goleada do Celta en Primeira División?', '6-0 ao Sevilla', '7-0 ao Sporting', '6-1 ao Valladolid', '5-0 ao Dépor', 'B', 3, 'Historia'),
+('En que tempada debutou o Celta en competición europea?', '1996-97', '1998-99', '2000-01', '2003-04', 'B', 2, 'Historia'),
+('Cal foi o primeiro rival europeo do Celta?', 'Liverpool', 'Benfica', 'Standard Lieja', 'Olympiacos', 'C', 3, 'Historia'),
+('Contra quen xogou o Celta os cuartos de final da UEFA 2017?', 'Manchester United', 'Schalke 04', 'Genk', 'Shakhtar Donetsk', 'C', 2, 'Historia'),
+('Quen era o presidente do Celta na época dourada europea (1998-2002)?', 'Carlos Mouriño', 'Horacio Gómez', 'Manuel Bárcena', 'José Luis Rodríguez', 'B', 3, 'Historia'),
+('En que ano descendeu o Celta a Segunda por primeira vez?', '1944', '1950', '1958', '1962', 'A', 3, 'Historia'),
+('Cantos descensos a Segunda ten o Celta na súa historia?', '4', '5', '6', '7', 'C', 3, 'Historia'),
+('O Celta xogou a Copa da UEFA cantas veces?', '3', '4', '5', '6', 'B', 2, 'Historia'),
+('En que ano celebrou o Celta o seu centenario?', '2021', '2022', '2023', '2024', 'C', 1, 'Historia'),
+('Cal foi o maior triunfo do Celta en Balaídos en Europa?', '3-0 ao Liverpool', '4-0 ao Benfica', '4-1 ao Olympiacos', '2-0 ao Barcelona', 'B', 2, 'Historia'),
+('Que adestrador dirixiu máis partidos na historia do Celta?', 'Víctor Fernández', 'Berizzo', 'Miguel Muñoz', 'Carlos Aimar', 'A', 3, 'Historia'),
+('Como se chamaba a cidade deportiva antes de chamarse A Madroa?', 'Cidade Deportiva de Coia', 'Cidade Deportiva de Vigo', 'Cidade Deportiva do Celta', 'Complexo Deportivo de Bembrive', 'A', 3, 'Historia'),
+('En que ano se creou o Celta B?', '1927', '1952', '1975', '1990', 'B', 3, 'Historia'),
+('Cal foi o mellor rexistro do Celta en LaLiga?', '4º', '5º', '6º', '7º', 'C', 2, 'Historia'),
+('En que tempada conseguiu o Celta a súa mellor puntuación en LaLiga?', '1998-99', '2000-01', '2015-16', '2025-26', 'D', 3, 'Historia'),
+('Que equipa eliminou ao Celta nas semifinais da UEFA 2001?', 'Barcelona', 'Liverpool', 'Alavés', 'Arsenal', 'D', 2, 'Historia'),
+('Cal foi o resultado da ida das semifinais da UEFA 2001 en Balaídos?', '2-0', '3-0', '1-0', '4-1', 'C', 3, 'Historia'),
+('Contra quen xogou o Celta a final da Copa da Liga en 1971?', 'Barcelona', 'Real Madrid', 'Athletic Club', 'Valencia', 'A', 3, 'Historia'),
+('En que ano se rematou a remodelación de Balaídos para o Mundial 2030?', '2028', '2029', '2030', '2031', 'A', 2, 'Historia'),
+('Cal dos seguintes equipos NUNCA se enfrontou ao Celta en competición oficial?', 'Bayern München', 'Juventus', 'Arsenal', 'Manchester United', 'D', 2, 'Historia'),
+('Quen era o delegado do Celta na época de Mostovoi?', 'Manuel Ángel', 'José Luis López', 'Jesús Casas', 'Carlos Méndez', 'A', 3, 'Historia'),
+('En que ano acudiu máis xente a Balaídos?', '1999', '2001', '2017', '2025', 'D', 3, 'Historia'),
+('Cal foi o marcador do Celta contra a Juventus na UEFA 2001?', '0-0 e 1-1', '1-0 e 0-2', '0-1 e 1-2', '1-1 e 0-1', 'A', 2, 'Historia');
+
+-- === JUGADORES (30 preguntas) ===
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, category) VALUES
+('Cal é o alcume de Iago Aspas?', 'O Mago', 'O Rei de Balaídos', 'A Lenda', 'O Capitán', 'B', 1, 'Jugadores'),
+('De que nacionalidade é Mazinho?', 'Arxentina', 'Brasil', 'Uruguai', 'Portugal', 'B', 1, 'Jugadores'),
+('Con que número xoga Iago Aspas?', '7', '9', '10', '24', 'C', 1, 'Jugadores'),
+('Cantos goles levaba Iago Aspas en 2026?', '180', '200', '210', '225', 'C', 2, 'Jugadores'),
+('Cal destes xogadores foi internacional con España?', 'Mostovoi', 'Mazinho', 'Míchel Salgado', 'Gustavo López', 'C', 1, 'Jugadores'),
+('Mostovoi xogou no Celta entre que anos?', '1994-2000', '1996-2002', '1998-2004', '1995-2001', 'B', 2, 'Jugadores'),
+('Cantos partidos disputou Míchel Salgado co Celta?', '200', '250', '290', '320', 'C', 2, 'Jugadores'),
+('Para que equipo marchou Míchel Salgado?', 'Barcelona', 'Real Madrid', 'Valencia', 'Atlético', 'B', 1, 'Jugadores'),
+('Cal destes xogadores NON é canterano do Celta?', 'Aspas', 'Óscar Mingueza', 'Hugo Sotelo', 'Damián Rodríguez', 'B', 2, 'Jugadores'),
+('Que xogador do Celta gañou a Bota de Prata do Mundial 2018?', 'Aspas', 'Isco', 'Hazard', 'Griezmann', 'A', 2, 'Jugadores'),
+('Cal destes xogadores xogou no Celta e no Barcelona?', 'Mostovoi', 'Mazinho', 'Nolito', 'Salinas', 'C', 2, 'Jugadores'),
+('Quen é o xogador estranxeiro con máis partidos no Celta?', 'Mostovoi', 'Mazinho', 'Gustavo López', 'Makelele', 'C', 3, 'Jugadores'),
+('De que equipo chegou Óscar Mingueza ao Celta?', 'Madrid', 'Barça', 'Valencia', 'Betis', 'B', 1, 'Jugadores'),
+('Que xogador do Celta gañou a Champions League?', 'Aspas', 'Makelele', 'Míchel Salgado', 'Mazinho', 'B', 2, 'Jugadores'),
+('Con que equipo fixo Makelele fama mundial?', 'Madrid', 'Chelsea', 'PSG', 'Marseille', 'A', 2, 'Jugadores'),
+('Cal destes xogadores militou no Celta e no Dépor?', 'Mostovoi', 'Aspas', 'Nolito', 'Míchel Salgado', 'C', 2, 'Jugadores'),
+('Quen marcou o gol 200 de Iago Aspas no Celta?', 'El mesmo', 'Contra o Barça', 'De penalty', 'Non se sabe', 'A', 3, 'Jugadores'),
+('Que centrocampista checo xogou no Celta?', 'Rosický', 'Poborský', 'Nedvěd', 'Čech', 'B', 3, 'Jugadores'),
+('Cal destes xogadores xogou de porteiro no Celta?', 'Pinto', 'Casillas', 'Valdés', 'Reina', 'A', 1, 'Jugadores'),
+('Como se chama o dianteiro turco que xogou no Celta en 2024?', 'Yılmaz', 'Mor', 'Ünüvar', 'Akgün', 'C', 3, 'Jugadores'),
+('Que xogador arxentino deixou 200.000€ no Celta ao ser traspasado?', 'Gustavo López', 'Pablo Hernández', 'Javier Aspas', 'Franco', 'B', 3, 'Jugadores'),
+('Cal destes xogadores é fillo de canteira?', 'Mostovoi', 'Salinas', 'Aspas', 'Mazinho', 'C', 1, 'Jugadores'),
+('Quen levaba o 10 antes de Iago Aspas?', 'Mostovoi', 'Gustavo López', 'Nolito', 'Méndez', 'B', 3, 'Jugadores'),
+('Que xogador do Celta foi campión do mundo de clubs?', 'Makelele', 'Míchel Salgado', 'Aspas', 'Pinto', 'B', 2, 'Jugadores'),
+('Cantos xogadores do Celta foron ao Mundial 2018?', '1', '2', '3', '4', 'A', 2, 'Jugadores'),
+('Quen adestrou a Mostovoi no Celta?', 'Berizzo', 'Víctor Fernández', 'Miguel Muñoz', 'Carlos Aimar', 'B', 2, 'Jugadores'),
+('Cal destes irmáns ASPAS xogou no Celta?', 'Iago e Jonathan', 'Iago e Javier', 'Iago e Alejandro', 'Iago e David', 'B', 2, 'Jugadores'),
+('Que centrocampista eslovaco xogou no Celta?', 'Hamšík', 'Škriniar', 'Lobotka', 'Kucka', 'C', 2, 'Jugadores'),
+('Cantos partidos xogou Aspas coa selección española?', '10', '18', '25', '32', 'B', 3, 'Jugadores'),
+('Cal era o alcume de Patxi Salinas?', 'O Zurdo', 'O Buitre', 'Pichichi', 'O Goleador', 'C', 3, 'Jugadores');
+
+-- === ESTADIO (15 preguntas) ===
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, category) VALUES
+('Cantos asentos ten Balaídos actualmente?', '25.000', '29.000', '32.000', '35.000', 'B', 1, 'Estadio'),
+('En que ano se inaugurou a Bancada de Río?', '1950', '1960', '1970', '1982', 'D', 3, 'Estadio'),
+('Cal é o alcume de Balaídos?', 'A Catedral', 'O Fortín', 'O Templo', 'O Coliseo', 'B', 1, 'Estadio'),
+('Cantas bancadas ten Balaídos?', '3', '4', '5', '6', 'B', 1, 'Estadio'),
+('Como se chama a bancada onde van os siareiros máis fieis?', 'Preferencia', 'Fondo', 'Grada de Río', 'Curva', 'D', 2, 'Estadio'),
+('Onde está situado Balaídos?', 'Centro de Vigo', 'Coia', 'O Calvario', 'As Travesas', 'B', 2, 'Estadio'),
+('Cantos metros cadrados ten a cidade deportiva A Madroa?', '50.000', '100.000', '150.000', '200.000', 'C', 3, 'Estadio'),
+('En que ano se pechou a Grada de Marcador?', '2015', '2018', '2020', '2022', 'B', 3, 'Estadio'),
+('Cantos campos de fútbol hai en A Madroa?', '2', '3', '4', '5', 'C', 3, 'Estadio'),
+('Como se chama o campo principal de A Madroa?', 'Campo de Coia', 'Campo Municipal', 'Campo 1', 'Estadio Municipal de Mos', 'C', 3, 'Estadio'),
+('Cal será a capacidade de Balaídos tras a remodelación para o Mundial 2030?', '35.000', '40.000', '45.000', '50.000', 'A', 2, 'Estadio'),
+('Que seleccións xogarán en Balaídos no Mundial 2030?', 'España e Portugal', 'España e Marrocos', 'Portugal e Marrocos', 'España, Portugal e Marrocos', 'D', 2, 'Estadio'),
+('Onde está a tenda oficial do Celta?', 'En Balaídos', 'No Centro Comercial', 'En Vía Norte', 'Na rúa Príncipe', 'A', 1, 'Estadio'),
+('Cada canto tempo se rega o céspede de Balaídos?', 'Cada día', 'Antes de cada partido', 'Unha vez á semana', 'Cada 2 días', 'B', 2, 'Estadio'),
+('Como se chama o speaker oficial de Balaídos?', 'Pablo Vázquez', 'Jorge Fernández', 'Manuel Lemos', 'Roberto Martínez', 'C', 3, 'Estadio');
+
+-- === CURIOSIDADES (20 preguntas) ===
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, category) VALUES
+('Cal é a cor tradicional do Celta?', 'Azul e vermello', 'Azul celeste e branco', 'Vermello e branco', 'Azul e amarelo', 'B', 1, 'Curiosidades'),
+('Que significa a cruz no escudo do Celta?', 'Relixión', 'O Reino de Galicia', 'A cruz de Santiago', 'A cidade de Vigo', 'B', 2, 'Curiosidades'),
+('Por que o Celta se chama "Celta"?', 'Pola rexión de Galicia', 'Polo pobo celta', 'Por un xogador', 'Por un patrocinador', 'B', 1, 'Curiosidades'),
+('Cal é o alcume dos afeccionados do Celta?', 'Celtistas', 'Celestes', 'Siareiros', 'Celticistas', 'C', 2, 'Curiosidades'),
+('Que xogador do Celta ten unha rúa en Vigo?', 'Mostovoi', 'Míchel Salgado', 'Aspas', 'Mazinho', 'B', 2, 'Curiosidades'),
+('Cal é o himno do Celta?', 'O Himno Galego', 'Celtia', 'O himno do RC Celta', 'Siareiros', 'C', 2, 'Curiosidades'),
+('Quen compuxo o himno do Celta?', 'Milladoiro', 'Carlos Jean', 'Luís Tosar', 'Siniestro Total', 'A', 3, 'Curiosidades'),
+('A que se dedicaba Carlos Mouriño antes do Celta?', 'Constructor', 'Hostaleiro', 'Empresario petroleiro', 'Avogado', 'C', 3, 'Curiosidades'),
+('Cantos abonados ten o Celta en 2026?', '18.000', '20.000', '22.000', '25.000', 'C', 1, 'Curiosidades'),
+('Cal é a mascota oficial do Celta?', 'Un león', 'Un celta', 'Un dragón', 'Un lobo', 'B', 1, 'Curiosidades'),
+('Que xogador do Celta ten máis seguidores en Instagram?', 'Aspas', 'Mingueza', 'Borja Iglesias', 'Beltrán', 'A', 1, 'Curiosidades'),
+('Cal foi o traspaso máis caro da historia do Celta (venda)?', 'Aspas ao Liverpool', 'Mostovoi ao Sevilla', 'Nolito ao City', 'Lobotka ao Napoli', 'D', 2, 'Curiosidades'),
+('Cal foi o traspaso máis caro da historia do Celta (compra)?', 'Borja Iglesias', 'Strand Larsen', 'Iago Aspas', 'Gabri Veiga', 'B', 3, 'Curiosidades'),
+('Que famoso actor galego é siareiro do Celta?', 'Antonio Resines', 'Luís Tosar', 'Javier Bardem', 'Antonio Banderas', 'B', 1, 'Curiosidades'),
+('Que famoso cantante galego fixo unha canción para o Celta?', 'Milladoiro', 'Siniestro Total', 'Los Suaves', 'Agradecidos', 'B', 3, 'Curiosidades'),
+('A que hora xoga habitualmente o Celta en casa?', '16:00', '18:30', '21:00', 'Varía', 'D', 1, 'Curiosidades'),
+('Cal é o partido de máxima rivalidade do Celta?', 'Contra o Dépor', 'Contra o Madrid', 'Contra o Barça', 'Contra o Balaídos', 'A', 1, 'Curiosidades'),
+('Como se chama o derbi galego?', 'Derbi do Noroeste', 'Derbi galego', 'O Noso Derbi', 'Derbi atlántico', 'D', 2, 'Curiosidades'),
+('Que significa "siareiro" en galego?', 'Afeccionado', 'Socio', 'Seguidor', 'Animador', 'A', 2, 'Curiosidades'),
+('Cantos títulos oficiais gañou o Celta?', '0', '1', '2', '3', 'A', 2, 'Curiosidades');
+
+-- === ACTUALIDAD (15 preguntas) ===
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option, difficulty, category) VALUES
+('Quen adestra ao Celta en 2026?', 'Berizzo', 'Giráldez', 'Coudet', 'Benítez', 'B', 1, 'Actualidad'),
+('En que posición quedou o Celta na Liga 2025-26?', '4º', '5º', '6º', '7º', 'C', 2, 'Actualidad'),
+('A que rolda chegou o Celta na UEFA 2025-26?', 'Semifinais', 'Cuartos', 'Oitavos', 'Fase de grupos', 'B', 2, 'Actualidad'),
+('Quen é a presidenta do Celta en 2026?', 'Marián Mouriño', 'Carmen Mouriño', 'Carmela Silva', 'Ana Pontón', 'A', 1, 'Actualidad'),
+('Cal destes xogadores é o capitán do Celta en 2026?', 'Aspas', 'Mingueza', 'Beltrán', 'Rodríguez', 'A', 1, 'Actualidad'),
+('Que dianteiro chegou cedido ao Celta en 2025?', 'Borja Iglesias', 'Iago Aspas', 'Strand Larsen', 'Alfonso', 'A', 2, 'Actualidad'),
+('Cal é o patrocinador principal do Celta?', 'Abanca', 'Estrella Galicia', 'Adidas', 'Air Europa', 'B', 1, 'Actualidad'),
+('Cantos puntos sumou o Celta na tempada 2025-26?', '55', '60', '65', '70', 'B', 3, 'Actualidad'),
+('Que xogador do Celta foi convocado coa selección española en 2025?', 'Aspas', 'Mingueza', 'Beltrán', 'Villar', 'B', 2, 'Actualidad'),
+('Cal é o valor de mercado do Celta en 2026?', '80M€', '100M€', '120M€', '150M€', 'C', 3, 'Actualidad'),
+('Que dorsal leva Hugo Sotelo?', '6', '8', '12', '14', 'D', 2, 'Actualidad'),
+('Quen é o máximo asistente do Celta en 2025-26?', 'Aspas', 'Mingueza', 'Bamba', 'López', 'D', 3, 'Actualidad'),
+('Cantos abonados ten o Celta na actualidade?', '18.000', '20.000', '22.000', '24.000', 'C', 1, 'Actualidad'),
+('Cal é o obxectivo do Celta para a tempada 2026-27?', 'Gañar a Liga', 'Volver a Europa', 'Copa do Rei', 'Non descender', 'B', 1, 'Actualidad'),
+('Que xogador do Celta ten a cláusula máis alta?', 'Aspas', 'Mingueza', 'Bamba', 'Rodríguez', 'B', 2, 'Actualidad');
