@@ -16,20 +16,35 @@ export default function AuthModal({ supabase, onClose }) {
     try {
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
-        if (error) throw error
+        if (error) {
+          if (error.message?.includes('Invalid login')) throw new Error('Email ou contrasinal incorrectos')
+          throw error
+        }
         onClose()
       } else {
-        const { data: signUpData, error } = await supabase.auth.signUp({ email, password, options: { data: { username: email.split('@')[0] } } })
-        if (error) throw error
-        if (signUpData?.user) {
-          await supabase.from('user_profiles').upsert({
-            id: signUpData.user.id,
-            username: email.split('@')[0],
-            display_name: email.split('@')[0]
-          })
+        const username = email.split('@')[0]
+        const { data: signUpData, error } = await supabase.auth.signUp({
+          email, password,
+          options: { data: { username } }
+        })
+        if (error) {
+          if (error.message?.includes('already registered')) throw new Error('Ese email xa está rexistrado. Inicia sesión.')
+          throw error
         }
-        setMessage('Conta creada! Inicia sesión.')
-        setMode('login')
+        if (signUpData?.user?.identities?.length === 0) {
+          setMessage('Ese email xa está rexistrado. Inicia sesión.')
+          setMode('login')
+        } else {
+          try {
+            await supabase.from('user_profiles').upsert({
+              id: signUpData.user.id,
+              username,
+              display_name: username
+            })
+          } catch {}
+          setMessage('Conta creada! Revisa o teu email para confirmar.')
+          setMode('login')
+        }
       }
     } catch (err) {
       setMessage(err.message)

@@ -63,17 +63,19 @@ export default function App() {
     })
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
-      if (session?.user) {
-        const username = session.user.user_metadata?.username || session.user.email?.split('@')[0] || 'siareiro'
-        supabase.from('user_profiles').upsert({
-          id: session.user.id,
-          username,
-          display_name: username
-        }).catch(() => {})
-      }
     })
     return () => subscription?.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (!user?.id) return
+    const username = user.user_metadata?.username || user.email?.split('@')[0] || 'siareiro'
+    supabase.from('user_profiles').upsert({
+      id: user.id,
+      username,
+      display_name: username
+    }).then().catch(() => {})
+  }, [user?.id])
 
   const fetchLegends = async () => {
     const { data } = await supabase.from('legends').select('*').limit(5)
