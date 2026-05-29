@@ -58,8 +58,12 @@ export default function LandingView({ legends, agentGender, onEnter }) {
             {legends.map((l, i) => (
               <motion.div key={l.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
                 className="bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-xl p-2 text-center hover:bg-slate-800/60 transition-colors">
-                <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full mx-auto mb-1.5 flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-blue-600/30">
-                  {l.name.charAt(0)}
+                <div className={`w-9 h-9 rounded-full mx-auto mb-1.5 overflow-hidden ${l.image_url ? '' : 'bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center'} shadow-lg shadow-blue-600/30`}>
+                  {l.image_url ? (
+                    <img src={l.image_url} alt={l.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-xs font-bold text-white">{l.name.charAt(0)}</span>
+                  )}
                 </div>
                 <p className="text-[10px] font-semibold text-white truncate leading-tight">{l.name}</p>
                 <p className="text-[7px] text-blue-200/60 truncate">{l.role}</p>
