@@ -39,6 +39,9 @@ export default function App() {
   const [knowledgeFacts, setKnowledgeFacts] = useState([])
   const [correctionFor, setCorrectionFor] = useState(null)
   const [correctionText, setCorrectionText] = useState('')
+  const [voices, setVoices] = useState([])
+  const [showVoicePicker, setShowVoicePicker] = useState(false)
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState(() => localStorage.getItem('chino_voice') || '')
   const messagesEndRef = useRef(null)
 
   const toggleAdmin = () => {
@@ -64,6 +67,12 @@ export default function App() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
     })
+    const loadVoices = () => {
+      const v = window.speechSynthesis.getVoices()
+      if (v.length > 0) setVoices(v)
+    }
+    loadVoices()
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices, { once: true })
     return () => subscription?.unsubscribe()
   }, [])
 
@@ -113,6 +122,10 @@ export default function App() {
     const allVoices = window.speechSynthesis.getVoices()
     if (allVoices.length === 0 && retry < 5) {
       return setTimeout(() => speak(text, gender, retry + 1), 300)
+    }
+    if (selectedVoiceURI) {
+      const saved = allVoices.find(v => v.voiceURI === selectedVoiceURI)
+      if (saved) { u.voice = saved; u.lang = saved.lang; u.rate = g === 'male' ? 1.0 : 1.1; window.speechSynthesis.speak(u); return }
     }
     const lang = detectLang(text)
     const langVoices = lang === 'en'
@@ -284,6 +297,31 @@ export default function App() {
             {agentGender === 'male' ? '👨' : '👩'}
           </button>
           <div className="w-px h-6 bg-slate-600 mx-1" />
+          <div className="relative">
+            <button onClick={() => setShowVoicePicker(!showVoicePicker)}
+              className={`p-1.5 rounded-full transition-colors ${selectedVoiceURI ? 'bg-blue-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-400'}`}>
+              <Volume2 size={13} />
+            </button>
+            {showVoicePicker && (
+              <div className="absolute right-0 top-full mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto">
+                <div className="p-2 border-b border-slate-700">
+                  <p className="text-[10px] text-slate-400 font-bold">VOZ MANUAL</p>
+                </div>
+                <button onClick={() => { setSelectedVoiceURI(''); setShowVoicePicker(false); localStorage.removeItem('chino_voice') }}
+                  className={`w-full text-left text-xs px-3 py-2 hover:bg-slate-700 transition-colors ${!selectedVoiceURI ? 'text-blue-400 bg-slate-700/50' : 'text-slate-300'}`}>
+                  🎙️ Auto (detectar idioma)
+                </button>
+                {voices.filter(v => v.lang.startsWith('es') || v.lang.startsWith('gl') || v.lang.startsWith('en')).map(v => (
+                  <button key={v.voiceURI} onClick={() => { setSelectedVoiceURI(v.voiceURI); setShowVoicePicker(false); localStorage.setItem('chino_voice', v.voiceURI) }}
+                    className={`w-full text-left text-xs px-3 py-2 hover:bg-slate-700 transition-colors flex items-center gap-2 ${selectedVoiceURI === v.voiceURI ? 'text-blue-400 bg-slate-700/50' : 'text-slate-300'}`}>
+                    <span>{v.lang.startsWith('es') ? '🇪🇸' : v.lang.startsWith('gl') ? '🇪🇸' : '🇬🇧'}</span>
+                    <span className="flex-1 truncate">{v.name}</span>
+                    <span className="text-[9px] text-slate-500">{v.lang}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           {user ? (
             <button onClick={() => supabase.auth.signOut()} className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 rounded-full px-2.5 py-1.5 transition-colors">
               <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
