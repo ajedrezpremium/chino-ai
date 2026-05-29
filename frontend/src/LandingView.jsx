@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle } from 'lucide-react'
 
@@ -10,33 +10,72 @@ const moments = [
   { img: '/2025 El regreso a Europa.webp', title: '2025 · Regreso a Europa', subtitle: 'Celta volve a competición continental', desc: 'Cuartos UEFA · 6º en LaLiga · Ilusión renovada' },
 ]
 
+const PARTICLES = 20
+
 export default function LandingView({ legends, agentGender, onEnter }) {
   const [idx, setIdx] = useState(0)
+  const [mouse, setMouse] = useState({ x: 0, y: 0 })
+  const containerRef = useRef(null)
 
   useEffect(() => {
     const t = setInterval(() => setIdx(i => (i + 1) % moments.length), 5000)
     return () => clearInterval(t)
   }, [])
 
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const onMove = (e) => {
+      const rect = el.getBoundingClientRect()
+      setMouse({ x: (e.clientX - rect.left) / rect.width - 0.5, y: (e.clientY - rect.top) / rect.height - 0.5 })
+    }
+    el.addEventListener('mousemove', onMove)
+    return () => el.removeEventListener('mousemove', onMove)
+  }, [])
+
   const m = moments[idx]
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col relative overflow-hidden">
+    <div ref={containerRef} className="min-h-screen bg-slate-900 flex flex-col relative overflow-hidden">
+      {/* Particles */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        {Array.from({ length: PARTICLES }).map((_, i) => (
+          <motion.div key={i}
+            className="absolute text-blue-400/20 text-xs select-none"
+            style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+            animate={{
+              y: [0, -30 - Math.random() * 40, 0],
+              opacity: [0.1, 0.4, 0.1],
+              rotate: [0, 360],
+            }}
+            transition={{ duration: 6 + Math.random() * 8, repeat: Infinity, delay: Math.random() * 5, ease: 'easeInOut' }}>
+            ✦
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Background with parallax */}
       <AnimatePresence mode="wait">
         <motion.div key={idx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1 }}
-          className="absolute inset-0">
+          className="absolute inset-0"
+          style={{ transform: `translate(${mouse.x * -15}px, ${mouse.y * -15}px)` }}>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/40 z-10" />
           <img src={m.img} alt={m.title} className="w-full h-full object-cover" />
         </motion.div>
       </AnimatePresence>
 
+      {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center z-20 p-6">
         <AnimatePresence mode="wait">
           <motion.div key={idx} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: 0.6 }}
             className="text-center max-w-lg">
-            <div className={`w-20 h-20 mx-auto mb-6 rounded-full border-2 overflow-hidden shadow-xl backdrop-blur-sm flex items-center justify-center ${agentGender === 'male' ? 'bg-blue-600/40 border-blue-400/30 shadow-blue-500/30' : 'bg-pink-600/40 border-pink-400/30 shadow-pink-500/30'}`}>
+            <div className={`w-20 h-20 mx-auto mb-4 rounded-full border-2 overflow-hidden shadow-xl backdrop-blur-sm flex items-center justify-center ${agentGender === 'male' ? 'bg-blue-600/40 border-blue-400/30 shadow-blue-500/30' : 'bg-pink-600/40 border-pink-400/30 shadow-pink-500/30'}`}>
               <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-full h-full object-cover rounded-full" />
             </div>
+            <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
+              className="text-[10px] uppercase tracking-[0.3em] text-blue-300/70 mb-2 font-semibold">
+              O primeiro axente de IA do fútbol mundial
+            </motion.p>
             <h2 className="text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-2xl">{m.title}</h2>
             <p className="text-lg text-blue-200 font-semibold mt-2 drop-shadow-lg">{m.subtitle}</p>
             <p className="text-sm text-white/70 mt-2 drop-shadow">{m.desc}</p>
