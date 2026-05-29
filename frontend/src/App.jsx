@@ -29,7 +29,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [currentTab, setCurrentTab] = useState('chat')
   const [adminMode, setAdminMode] = useState(() => localStorage.getItem('chino_admin') === 'true')
-  const [showLanding, setShowLanding] = useState(() => localStorage.getItem('chino_landing_v2') !== 'true')
+  const [showLanding, setShowLanding] = useState(() => sessionStorage.getItem('chino_landing') !== 'true')
   const [legends, setLegends] = useState([])
   const messagesEndRef = useRef(null)
 
@@ -142,7 +142,7 @@ export default function App() {
 
   const handleEnterApp = () => {
     setShowLanding(false)
-    localStorage.setItem('chino_landing_v2', 'true')
+    sessionStorage.setItem('chino_landing', 'true')
   }
 
   return (
