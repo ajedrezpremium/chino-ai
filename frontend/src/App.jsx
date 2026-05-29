@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, LogOut } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, LogOut, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
@@ -35,6 +35,9 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [showAuth, setShowAuth] = useState(false)
   const [legends, setLegends] = useState([])
+  const [knowledgeFacts, setKnowledgeFacts] = useState([])
+  const [correctionFor, setCorrectionFor] = useState(null)
+  const [correctionText, setCorrectionText] = useState('')
   const messagesEndRef = useRef(null)
 
   const toggleAdmin = () => {
@@ -49,6 +52,7 @@ export default function App() {
 
   useEffect(() => {
     fetchLegends()
+    fetchKnowledge()
     if ('speechSynthesis' in window) {
       window.speechSynthesis.getVoices()
       window.speechSynthesis.addEventListener('voiceschanged', () => {}, { once: true })
@@ -73,6 +77,11 @@ export default function App() {
   const fetchLegends = async () => {
     const { data } = await supabase.from('legends').select('*').limit(5)
     if (data) setLegends(data)
+  }
+
+  const fetchKnowledge = async () => {
+    const { data } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).limit(30)
+    if (data) setKnowledgeFacts(data.map(f => f.fact_text))
   }
 
   const [agentGender, setAgentGender] = useState('male')
@@ -149,6 +158,18 @@ export default function App() {
     loadChatHistory()
   }, [user?.id])
 
+  const handleCorrection = async (msgIdx) => {
+    const original = messages[msgIdx]?.text
+    if (!original || !correctionText.trim() || !user?.id) return
+    await supabase.from('corrections').insert({
+      user_id: user.id,
+      original_message: original,
+      correction_text: correctionText.trim()
+    }).catch(() => {})
+    setCorrectionFor(null)
+    setCorrectionText('')
+  }
+
   const handleSend = async (textOverride = null) => {
     const userText = textOverride || input
     if (!userText.trim()) return
@@ -176,6 +197,7 @@ export default function App() {
             model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
             messages: [
               { role: 'system', content: SYSTEM_PROMPT },
+              ...(knowledgeFacts.length > 0 ? [{ role: 'system', content: `Hechos verificados por usuarios:\n${knowledgeFacts.join('\n')}` }] : []),
               { role: 'user', content: userText }
             ]
           })
@@ -294,9 +316,31 @@ export default function App() {
                   <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
                     <p className="text-sm md:text-base">{msg.text}</p>
                     {msg.role === 'agent' && (
-                      <button onClick={() => speak(msg.text, agentGender)} className="mt-2 text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
-                        <Volume2 size={12} /> Escutar
-                      </button>
+                      <div className="flex items-center gap-2 mt-2">
+                        <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
+                          <Volume2 size={12} /> Escutar
+                        </button>
+                        {user && (
+                          <button onClick={() => setCorrectionFor(correctionFor === idx ? null : idx)}
+                            className="text-slate-500 hover:text-yellow-400 flex items-center gap-1 text-xs">
+                            <AlertTriangle size={10} /> Corrixir
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {correctionFor === idx && (
+                      <div className="mt-2 pt-2 border-t border-slate-700">
+                        <textarea value={correctionText} onChange={e => setCorrectionText(e.target.value)}
+                          placeholder="Escribe a corrección..."
+                          className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-yellow-500 mb-1" rows={2} />
+                        <div className="flex gap-1 justify-end">
+                          <button onClick={() => { setCorrectionFor(null); setCorrectionText('') }}
+                            className="text-[10px] text-slate-500 px-2 py-1 rounded hover:bg-slate-700">Cancelar</button>
+                          <button onClick={() => handleCorrection(idx)}
+                            className="text-[10px] bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-500 disabled:opacity-50 font-bold"
+                            disabled={!correctionText.trim()}>Enviar</button>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </motion.div>
