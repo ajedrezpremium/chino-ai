@@ -307,7 +307,7 @@ export default function App() {
       ) : currentTab === 'sections' ? (
         <SectionsView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (
-        <BusinessView onClose={() => setCurrentTab('chat')} />
+        <BusinessView supabase={supabase} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'gamer' ? (
         <ChinoGamer supabase={supabase} user={user} speak={speak} />
       ) : (

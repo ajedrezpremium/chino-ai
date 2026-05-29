@@ -1,35 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { TrendingUp, Users, Euro, BarChart3, Eye, Activity, X, Settings } from 'lucide-react'
+import { TrendingUp, Users, Euro, BarChart3, Eye, Activity, Play, MessageSquare } from 'lucide-react'
 
-const kpi = [
-  { label: 'Abonados', value: '22.000', unit: '', change: '+12%', icon: Users, color: 'blue' },
-  { label: 'Engagement Diario', value: '68', unit: '%', change: '+23%', icon: Activity, color: 'emerald' },
-  { label: 'Valor Plataforma', value: '2.5M', unit: '€', change: 'estimado', icon: Euro, color: 'yellow' },
-  { label: 'Retención', value: '91', unit: '%', change: '+8%', icon: TrendingUp, color: 'purple' },
-]
+export default function BusinessView({ supabase, onClose }) {
+  const [data, setData] = useState(null)
 
-const channels = [
-  { name: 'Chat IA', users: 85, color: 'bg-blue-500' },
-  { name: 'Chiño Gamer', users: 62, color: 'bg-emerald-500' },
-  { name: 'Rankings', users: 47, color: 'bg-yellow-500' },
-  { name: 'Business', users: 33, color: 'bg-purple-500' },
-]
+  useEffect(() => {
+    if (!supabase) return
+    Promise.all([
+      supabase.from('game_sessions').select('*').limit(1),
+      supabase.from('game_sessions').select('score', { count: 'exact', head: false }),
+      supabase.from('chat_history').select('id', { count: 'exact', head: false }),
+    ]).then(([sessionRes, countRes, chatRes]) => {
+      const totalSessions = countRes.count || 0
+      const totalMessages = chatRes.count || 0
+      const usersInSessions = sessionRes.data?.length ? new Set(sessionRes.data.map(s => s.user_id)).size : 0
+      setData({ totalSessions, totalMessages, usersInSessions })
+    }).catch(() => {
+      setData({ totalSessions: 0, totalMessages: 0, usersInSessions: 0 })
+    })
+  }, [supabase])
 
-const revenue = [
-  { tier: 'MVP', ingreso: 0, color: 'bg-blue-500/40' },
-  { tier: 'PRO', ingreso: 65, color: 'bg-blue-500' },
-  { tier: 'Enterprise', ingreso: 100, color: 'bg-blue-600' },
-]
+  const kpi = [
+    { label: 'Partidas xogadas', value: data ? String(data.totalSessions) : '...', unit: '', change: '+N/A', icon: Play, color: 'blue' },
+    { label: 'Mensaxes enviadas', value: data ? String(data.totalMessages) : '...', unit: '', change: '+N/A', icon: MessageSquare, color: 'emerald' },
+    { label: 'Valor Plataforma', value: '2.5M', unit: '€', change: 'estimado', icon: Euro, color: 'yellow' },
+    { label: 'Retención', value: '91', unit: '%', change: 'estimada', icon: TrendingUp, color: 'purple' },
+  ]
 
-const roadmap = [
-  { phase: 'FASE 1 · MVP', done: true, items: ['Chat IA histórico', 'Chiño Gamer', '3 idiomas', 'Rankings'], time: '24h', cost: '0€' },
-  { phase: 'FASE 2 · PRO', done: false, items: ['+500 preguntas', 'Premios reais', 'Auth abonados', 'Analytics'], time: 'Semana 2', cost: 'X€/mes' },
-  { phase: 'FASE 3 · Enterprise', done: false, items: ['App Oficial', 'Venta entradas', 'CRM completo', 'API partners'], time: 'Mes 2', cost: 'Y€/mes' },
-]
+  const channels = [
+    { name: 'Chat IA', users: 85, color: 'bg-blue-500' },
+    { name: 'Chiño Gamer', users: 62, color: 'bg-emerald-500' },
+    { name: 'Rankings', users: 47, color: 'bg-yellow-500' },
+    { name: 'Seccións', users: 40, color: 'bg-purple-500' },
+  ]
 
-export default function BusinessView({ onClose }) {
-  const [showDetails, setShowDetails] = useState(false)
+  const revenue = [
+    { tier: 'MVP', ingreso: 0, color: 'bg-blue-500/40' },
+    { tier: 'PRO', ingreso: 65, color: 'bg-blue-500' },
+    { tier: 'Enterprise', ingreso: 100, color: 'bg-blue-600' },
+  ]
+
+  const roadmap = [
+    { phase: 'FASE 1 · MVP', done: true, items: ['Chat IA histórico', 'Chiño Gamer', '3 idiomas', 'Rankings', 'Seccións'], time: '24h', cost: '0€' },
+    { phase: 'FASE 2 · PRO', done: false, items: ['+500 preguntas', 'Premios reais', 'Auth abonados', 'Analytics reais'], time: 'Semana 2', cost: 'X€/mes' },
+    { phase: 'FASE 3 · Enterprise', done: false, items: ['App Oficial', 'Venta entradas', 'CRM completo', 'API partners'], time: 'Mes 2', cost: 'Y€/mes' },
+  ]
 
   const Bar = ({ label, value, color, delay }) => (
     <div className="flex items-center gap-3">
@@ -56,7 +72,6 @@ export default function BusinessView({ onClose }) {
       </div>
 
       <div className="p-4 space-y-6">
-        {/* KPI Grid */}
         <div className="grid grid-cols-2 gap-3">
           {kpi.map((k, i) => (
             <motion.div key={k.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
@@ -71,7 +86,6 @@ export default function BusinessView({ onClose }) {
           ))}
         </div>
 
-        {/* Engagement Chart */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
           className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
           <h3 className="font-bold text-white mb-4 flex items-center gap-2"><BarChart3 size={16} className="text-blue-400" /> Engagement por funcionalidade</h3>
@@ -80,7 +94,6 @@ export default function BusinessView({ onClose }) {
           </div>
         </motion.div>
 
-        {/* Revenue Projection */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
           <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Euro size={16} className="text-yellow-400" /> Proxección de Ingresos</h3>
@@ -100,7 +113,6 @@ export default function BusinessView({ onClose }) {
           </div>
         </motion.div>
 
-        {/* Roadmap */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
           <h3 className="font-bold text-white mb-3">🗺️ Roadmap</h3>
           <div className="space-y-3">
@@ -122,7 +134,6 @@ export default function BusinessView({ onClose }) {
           </div>
         </motion.div>
 
-        {/* Cierre */}
         <div className="bg-gradient-to-r from-blue-900/40 via-blue-800/20 to-purple-900/40 border border-blue-500/30 rounded-xl p-6 text-center">
           <p className="text-sm text-blue-200 font-semibold mb-1">"O primeiro axente de IA na historia do fútbol"</p>
           <p className="text-xs text-slate-400">Chiño AI © 2026 · Listo para debutar · https://chinoaiagent.vercel.app</p>
