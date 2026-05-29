@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
+import SectionsView from './SectionsView'
 import LandingView from './LandingView'
 import AuthModal from './AuthModal'
 import ErrorBoundary from './ErrorBoundary'
@@ -257,6 +258,10 @@ export default function App() {
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'rankings' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Medal size={11} className="inline mr-0.5" />Ranking
           </button>
+          <button onClick={() => setCurrentTab('sections')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'sections' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Sparkles size={11} className="inline mr-0.5" />Seccións
+          </button>
           {adminMode && (
             <button onClick={() => setCurrentTab('biz')}
               className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'biz' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
@@ -297,6 +302,8 @@ export default function App() {
 
       {currentTab === 'rankings' ? (
         <RankingsView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} />
+      ) : currentTab === 'sections' ? (
+        <SectionsView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (
         <BusinessView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'gamer' ? (

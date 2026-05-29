@@ -47,3 +47,37 @@ CREATE TABLE IF NOT EXISTS corrections (
 ALTER TABLE corrections ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Usuarios poden enviar correccións" ON corrections FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Admin pode ver correccións" ON corrections FOR SELECT USING (TRUE);
+
+-- 6. Preguntas extra para Chiño Gamer (seed)
+INSERT INTO game_questions (question_text, option_a, option_b, option_c, option_d, correct_option) VALUES
+('En que ano se fundou o Celta?', '1906', '1923', '1931', '1945', 'B'),
+('Quen é o máximo goleador histórico?', 'Mostovoi', 'Salgado', 'Iago Aspas', 'Gustavo López', 'C'),
+('Como se chama o estadio do Celta?', 'Riazor', 'San Mamés', 'Balaídos', 'O Molinón', 'C'),
+('Que xogador era O Zar?', 'Mazinho', 'Mostovoi', 'Veloso', 'Salinas', 'B'),
+('Primeiro presidente do Celta?', 'Mouriño', 'Bárcena', 'Muñoz', 'Fernández', 'B'),
+('Cantas Copas do Rey gañou o Celta?', '0', '1', '2', '3', 'A'),
+('Cal é a mellor clasificación do Celta en LaLiga?', '3º', '4º', '5º', '6º', 'B'),
+('En que ano chegou o Celta a semifinais da Europa League?', '2015', '2016', '2017', '2018', 'C'),
+('A que equipo eliminou o Celta en Anfield?', 'Man Utd', 'Arsenal', 'Liverpool', 'Chelsea', 'C'),
+('Cal é a capacidade actual de Balaídos?', '25.000', '29.000', '35.000', '42.000', 'B'),
+('Quen é o xogador con máis partidos no Celta?', 'Aspas', 'Manolo Rodríguez', 'Salgado', 'Hugo Mallo', 'B'),
+('De que dous clubs naceu o Celta en 1923?', 'Fortuna e Sporting', 'Celta FC e Vigo FC', 'Real Vigo e Athletic', 'Fortuna e Celta', 'A'),
+('Que xogador do Celta gañou un Mundial?', 'Mostovoi', 'Mazinho', 'Aspas', 'Makelele', 'B'),
+('En que ano inaugurouse Balaídos?', '1923', '1928', '1935', '1940', 'B'),
+('Cal é o alcume de Iago Aspas?', 'O Zar', 'Príncipe das Bateas', 'O Mago', 'A Lenda', 'B'),
+('Que adestrador levou ao Celta ás semis de 2017?', 'Víctor Fernández', 'Luis Enrique', 'Berizzo', 'Giráldez', 'C'),
+('Cal é o máximo asistente histórico?', 'Mostovoi', 'Gustavo López', 'Aspas', 'Karpin', 'C'),
+('A que equipo lle gañou o Celta 4-0 en UEFA?', 'Milan', 'Juventus', 'Inter', 'Barcelona', 'B'),
+('Cal foi a maior goleada ao Dépor?', '6-0', '7-0', '13-0', '10-0', 'C'),
+('Que canteirán foi traspasado por 40M€?', 'Brais Méndez', 'Gabriel Veiga', 'Hugo Mallo', 'Aspas', 'B'),
+('Que xogador ruso foi icona do EuroCelta?', 'Karpin', 'Mostovoi', 'Osipov', 'Ivanov', 'B'),
+('Cal é o récord de puntos do Celta en Liga?', '60', '64', '68', '72', 'B'),
+('Que xogador brasileiro xogou no Celta e Dépor?', 'Ronaldo', 'Mazinho', 'Silvinho', 'Djalminha', 'C'),
+('A que equipo eliminou o Celta en 99 en Anfield?', 'Liverpool', 'Man Utd', 'Arsenal', 'Chelsea', 'A'),
+('Cal é o alcume de Balaídos?', 'O Fortín', 'O Templo', 'A Catedral', 'O Coliseo', 'A'),
+('Que xogador do Celta foi a 4 Mundiais?', 'Aspas', 'Mostovoi', 'Makelele', 'Mazinho', 'C'),
+('En que ano descendeu o Celta a Segunda?', '2004', '2005', '2007', '2011', 'C'),
+('Que xogador galego é o capitán actual?', 'Míngueza', 'Aspas', 'Mallo', 'Beltrán', 'B'),
+('Cantos goles fixo Borja Iglesias na 25-26?', '10', '12', '14', '16', 'C'),
+('Que adestrador actual dirixe o Celta?', 'Benítez', 'Giráldez', 'Coudet', 'Berizzo', 'B')
+ON CONFLICT DO NOTHING;
