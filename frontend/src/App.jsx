@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
@@ -22,12 +23,11 @@ const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || ''
 const USE_OPENROUTER = !!OPENROUTER_API_KEY
 
 export default function App() {
+  const { t } = useTranslation()
   const [messages, setMessages] = useState([
     { role: 'agent', text: 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras sobre a historia do Celta!' }
   ])
-  const initialMsg = (gender) => gender === 'male'
-    ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras sobre a historia do Celta!'
-    : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo do noso Celta!'
+  const initialMsg = (gender) => gender === 'male' ? t('chat.welcome_male') : t('chat.welcome_female')
   const [input, setInput] = useState('')
   const [isRecording, setIsRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -227,10 +227,10 @@ export default function App() {
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
       } else {
-        setMessages(prev => [...prev, { role: 'agent', text: 'Son Chiño! Aquí estou para falar do Celta. (Conecta unha API key en .env para respostas reais)' }])
+        setMessages(prev => [...prev, { role: 'agent', text: t('chat.no_key') }])
       }
     } catch {
-      setMessages(prev => [...prev, { role: 'agent', text: 'Perdona, estou tendo un problema técnico. Inténtao de novo!' }])
+      setMessages(prev => [...prev, { role: 'agent', text: t('chat.error') }])
     } finally {
       setIsLoading(false)
     }
@@ -260,30 +260,30 @@ export default function App() {
           </div>
           <div>
             <h1 className="font-bold text-lg leading-tight">{agentGender === 'male' ? 'Chiño' : 'Chiña'} AI</h1>
-            <p className={`text-xs ${agentGender === 'male' ? 'text-blue-300' : 'text-pink-300'}`}>{agentGender === 'male' ? 'O teu colega celeste' : 'A túa colega celeste'}</p>
+            <p className={`text-xs ${agentGender === 'male' ? 'text-blue-300' : 'text-pink-300'}`}>{agentGender === 'male' ? t('app.subtitle') : t('app.subtitle_female')}</p>
           </div>
         </div>
         <div className="flex items-center gap-1 tab-scroll">
           <button onClick={() => setCurrentTab('chat')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'chat' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Sparkles size={11} className="inline mr-0.5" />Chat
+            <Sparkles size={11} className="inline mr-0.5" />{t('header.chat')}
           </button>
           <button onClick={() => setCurrentTab('gamer')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'gamer' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Trophy size={11} className="inline mr-0.5" />Gamer
+            <Trophy size={11} className="inline mr-0.5" />{t('header.gamer')}
           </button>
           <button onClick={() => setCurrentTab('rankings')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'rankings' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Medal size={11} className="inline mr-0.5" />Ranking
+            <Medal size={11} className="inline mr-0.5" />{t('header.ranking')}
           </button>
           <button onClick={() => setCurrentTab('sections')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'sections' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Sparkles size={11} className="inline mr-0.5" />Seccións
+            <Sparkles size={11} className="inline mr-0.5" />{t('header.seccions')}
           </button>
           {adminMode && (
             <button onClick={() => setCurrentTab('biz')}
               className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'biz' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-              <BarChart3 size={11} className="inline mr-0.5" />Biz
+              <BarChart3 size={11} className="inline mr-0.5" />{t('header.biz')}
             </button>
           )}
           <div className="w-px h-6 bg-slate-600 mx-1" />
@@ -294,7 +294,7 @@ export default function App() {
 
           <button onClick={() => setAgentGender(g => {
               const newG = g === 'male' ? 'female' : 'male'
-              setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
+              setMessages([{ role: 'agent', text: newG === 'male' ? t('chat.switch_male') : t('chat.switch_female') }])
               return newG
             })}
             className={`text-xs px-1.5 py-1.5 rounded-full transition-colors font-bold ${agentGender === 'male' ? 'bg-blue-600 text-white' : 'bg-pink-600 text-white'}`}>
@@ -337,7 +337,7 @@ export default function App() {
             <button onClick={() => setShowAuth(true)}
               className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 rounded-full px-2.5 py-1.5 transition-colors">
               <LogIn size={11} className="text-white" />
-              <span className="text-[10px] font-bold text-white">Entrar</span>
+              <span className="text-[10px] font-bold text-white">{t('header.entrar')}</span>
             </button>
           )}
         </div>
@@ -370,12 +370,12 @@ export default function App() {
                     {msg.role === 'agent' && (
                       <div className="flex items-center gap-2 mt-2">
                         <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
-                          <Volume2 size={12} /> Escutar
+                          <Volume2 size={12} /> {t('header.escutar')}
                         </button>
                         {user && (
                           <button onClick={() => setCorrectionFor(correctionFor === idx ? null : idx)}
                             className="text-slate-500 hover:text-yellow-400 flex items-center gap-1 text-xs">
-                            <AlertTriangle size={10} /> Corrixir
+                            <AlertTriangle size={10} /> {t('header.corrixir')}
                           </button>
                         )}
                       </div>
@@ -383,14 +383,14 @@ export default function App() {
                     {correctionFor === idx && (
                       <div className="mt-2 pt-2 border-t border-slate-700">
                         <textarea value={correctionText} onChange={e => setCorrectionText(e.target.value)}
-                          placeholder="Escribe a corrección..."
+                          placeholder={t('chat.correction_placeholder')}
                           className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-yellow-500 mb-1" rows={2} />
                         <div className="flex gap-1 justify-end">
                           <button onClick={() => { setCorrectionFor(null); setCorrectionText('') }}
-                            className="text-[10px] text-slate-500 px-2 py-1 rounded hover:bg-slate-700">Cancelar</button>
+                            className="text-[10px] text-slate-500 px-2 py-1 rounded hover:bg-slate-700">{t('chat.cancel')}</button>
                           <button onClick={() => handleCorrection(idx)}
                             className="text-[10px] bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-500 disabled:opacity-50 font-bold"
-                            disabled={!correctionText.trim()}>Enviar</button>
+                            disabled={!correctionText.trim()}>{t('chat.send')}</button>
                         </div>
                       </div>
                     )}
@@ -421,14 +421,14 @@ export default function App() {
               </button>
               <input type="text" value={input} onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && handleSend()}
-                placeholder="Pregúntalle a Chiño..."
+                placeholder={t('chat.placeholder')}
                 className="flex-1 bg-slate-800 border border-slate-700 rounded-full px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors text-sm" />
               <button onClick={() => handleSend()} disabled={!input.trim() || isLoading}
                 className="p-3 bg-blue-600 rounded-full hover:bg-blue-500 disabled:opacity-50 transition-colors shadow-lg shadow-blue-600/30">
                 <Send size={20} />
               </button>
             </div>
-            <p className="text-center text-[10px] text-slate-500 mt-2">Chiño AI © 2026 — Real Club Celta de Vigo</p>
+            <p className="text-center text-[10px] text-slate-500 mt-2">{t('app.footer')}</p>
           </footer>
         </>
       )}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import LanguageSwitcher from './i18n/LanguageSwitcher'
 import { MessageCircle } from 'lucide-react'
 
 const moments = [
@@ -13,7 +15,9 @@ const moments = [
 const PARTICLES = 20
 
 export default function LandingView({ legends, agentGender, onEnter }) {
+  const { t, i18n } = useTranslation()
   const [idx, setIdx] = useState(0)
+  const [showLang, setShowLang] = useState(false)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
 
@@ -33,6 +37,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
     return () => el.removeEventListener('mousemove', onMove)
   }, [])
 
+  const handleLangSelected = () => setShowLang(false)
   const m = moments[idx]
 
   return (
@@ -54,6 +59,13 @@ export default function LandingView({ legends, agentGender, onEnter }) {
         ))}
       </div>
 
+      {/* Selector de idioma en pantalla completa (primeira vez) */}
+      {showLang && (
+        <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <LanguageSwitcher onSelect={handleLangSelected} landing />
+        </div>
+      )}
+
       {/* Background with parallax */}
       <AnimatePresence mode="wait">
         <motion.div key={idx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1 }}
@@ -63,6 +75,15 @@ export default function LandingView({ legends, agentGender, onEnter }) {
           <img src={m.img} alt={m.title} className="w-full h-full object-cover" />
         </motion.div>
       </AnimatePresence>
+
+      {/* Language badge top */}
+      <div className="absolute top-4 right-4 z-30">
+        <button onClick={() => setShowLang(true)}
+          className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors">
+          <span className="text-base">{i18n.language?.startsWith('gl') ? '🇪🇸' : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
+          {i18n.language?.startsWith('gl') ? 'Galego' : i18n.language?.startsWith('en') ? 'English' : 'Español'}
+        </button>
+      </div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center z-20 p-6">
@@ -74,7 +95,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
             </div>
             <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
               className="text-[10px] uppercase tracking-[0.3em] text-blue-300/70 mb-2 font-semibold">
-              O primeiro axente de IA do fútbol mundial
+              {t('landing.tagline')}
             </motion.p>
             <h2 className="text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-2xl">{m.title}</h2>
             <p className="text-lg text-blue-200 font-semibold mt-2 drop-shadow-lg">{m.subtitle}</p>
@@ -92,7 +113,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
 
       {legends.length > 0 && (
         <div className="z-20 px-4 pb-4">
-          <p className="text-[10px] text-blue-200/50 text-center mb-2 uppercase tracking-widest">LENDAS DO CELTA</p>
+          <p className="text-[10px] text-blue-200/50 text-center mb-2 uppercase tracking-widest">{t('landing.legend_card')}S DO CELTA</p>
           <div className="grid grid-cols-5 gap-2">
             {legends.map((l, i) => (
               <motion.div key={l.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
@@ -118,7 +139,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
         <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-900 flex items-center justify-center animate-pulse">
           <MessageCircle size={10} className="text-white" />
         </span>
-        <span className="absolute -bottom-7 text-[10px] text-white/70 font-medium whitespace-nowrap drop-shadow">{agentGender === 'male' ? 'Falar con Chiño' : 'Falar con Chiña'}</span>
+        <span className="absolute -bottom-7 text-[10px] text-white/70 font-medium whitespace-nowrap drop-shadow">{t('landing.cta')}</span>
       </motion.button>
     </div>
   )
