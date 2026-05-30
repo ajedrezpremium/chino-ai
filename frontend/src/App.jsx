@@ -6,7 +6,6 @@ import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
 import SectionsView from './SectionsView'
-import DemoTour from './DemoTour'
 import LandingView from './LandingView'
 import AuthModal from './AuthModal'
 import ErrorBoundary from './ErrorBoundary'
@@ -36,7 +35,7 @@ export default function App() {
   const [showLanding, setShowLanding] = useState(() => sessionStorage.getItem('chino_landing') !== 'true')
   const [user, setUser] = useState(null)
   const [showAuth, setShowAuth] = useState(false)
-  const [showDemo, setShowDemo] = useState(false)
+
   const [legends, setLegends] = useState([])
   const [knowledgeFacts, setKnowledgeFacts] = useState([])
   const [correctionFor, setCorrectionFor] = useState(null)
@@ -100,14 +99,14 @@ export default function App() {
 
   const [agentGender, setAgentGender] = useState('male')
   const detectLang = (text) => {
-    const lower = text.toLowerCase()
-    const glWords = ['non', 'pode', 'ben', 'moito', 'unha', 'ti', 'celeste', 'goleador', 'partido', 'historia', 'xogador', 'galicia', 'vigo', 'balaídos', 'xogar', 'mellor', 'sempre', 'nunca', 'porque', 'cousa', 'anos', 'campión', 'equipo', 'derbi']
-    const esWords = ['no', 'puede', 'bien', 'mucho', 'una', 'tú', 'goleador', 'partido', 'historia', 'jugador', 'españa', 'balai', 'mejor', 'siempre', 'nunca', 'porque', 'cosa', 'años', 'campeón', 'equipo', 'dépor']
+    const lower = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const glWords = ['non', 'unha', 'xogador', 'xogar', 'xoga', 'xogan', 'xogou', 'mellor', 'cousa', 'quen', 'galego', 'celeste', 'siareiro', 'adestrador', 'porteiro', 'canteiran', 'tempada', 'afeccion', 'tua', 'mina', 'desta', 'nese', 'aquel', 'eles', 'nos', 'vos', 'grazas', 'tamen', 'moi', 'ti', 'che', 'lle', 'derbi', 'hoxe', 'mais', 'polo', 'pola', 'cando', 'onde', 'asi', 'xa', 'aqui', 'sempre']
+    const esWords = ['no', 'una', 'jugador', 'jugar', 'mejor', 'cosa', 'quien', 'espanol', 'portero', 'canterano', 'temporada', 'aficion', 'futbol', 'hola', 'gracias', 'tambien', 'mucho', 'tu', 'te', 'le', 'ella', 'ellas', 'ellos', 'usted', 'nosotros', 'deportivo']
     const glCount = glWords.filter(w => lower.includes(w)).length
     const esCount = esWords.filter(w => lower.includes(w)).length
     if (glCount > esCount) return 'gl'
     if (esCount > glCount) return 'es'
-    if (/\b(the|is|was|are|were|have|has|been|will|would|could|hello|hi|thanks|football|player|team|club|match|game|goal|season|league|cup|europe|world|best|never|always)\b/i.test(lower)) return 'en'
+    if (/\b(the|is|was|are|were|have|has|been|will|would|could|should|who|what|when|where|why|how|which|that|this|these|those|do|does|did|can|shall|might|may|must|hello|hi|thanks|thank|football|player|team|club|match|game|goal|season|league|cup|europe|world|best|never|always|please|sorry|welcome)\b/i.test(lower)) return 'en'
     return 'es'
   }
   const pickVoice = (voices, gender) => {
@@ -216,6 +215,7 @@ export default function App() {
             messages: [
               { role: 'system', content: SYSTEM_PROMPT },
               ...(knowledgeFacts.length > 0 ? [{ role: 'system', content: `Hechos verificados por usuarios:\n${knowledgeFacts.join('\n')}` }] : []),
+              { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
               { role: 'user', content: userText }
             ]
           })
@@ -290,10 +290,7 @@ export default function App() {
             className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400">
             <Settings size={13} />
           </button>
-          <button onClick={() => setShowDemo(!showDemo)}
-            className="text-[10px] px-2 py-1.5 rounded-full bg-amber-700/50 hover:bg-amber-600/60 text-amber-300 font-bold transition-colors">
-            🎬 Demo
-          </button>
+
           <button onClick={() => setAgentGender(g => {
               const newG = g === 'male' ? 'female' : 'male'
               setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
@@ -437,9 +434,7 @@ export default function App() {
       <AnimatePresence>
         {showAuth && <AuthModal supabase={supabase} onClose={() => setShowAuth(false)} />}
       </AnimatePresence>
-      <AnimatePresence>
-        {showDemo && <DemoTour onNavigate={(tab) => { setCurrentTab(tab); setShowDemo(false) }} onClose={() => setShowDemo(false)} />}
-      </AnimatePresence>
+
 
       </motion.div>
     )}
