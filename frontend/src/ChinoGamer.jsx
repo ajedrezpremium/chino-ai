@@ -51,6 +51,14 @@ const playSound = (type) => {
 
 const TOTAL_QUESTIONS = 10
 const TIME_PER_QUESTION = 15
+const STORAGE_KEY = 'chino_seen_questions'
+
+const getSeen = () => {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
+}
+const saveSeen = (ids) => {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ids)) } catch {}
+}
 
 export default function ChinoGamer({ supabase, speak, user }) {
   const [tab, setTab] = useState('intro')
@@ -88,15 +96,22 @@ export default function ChinoGamer({ supabase, speak, user }) {
   }, [tab, score])
 
   const fetchQuestions = async () => {
+    const seen = getSeen()
     const { data } = await supabase
       .from('game_questions')
       .select('*')
       .limit(100)
+    let pool
     if (data && data.length > 0) {
-      const shuffled = data.sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS)
-      setQuestions(shuffled)
+      pool = data.filter(q => !seen.includes(`db_${q.id}`))
+      if (pool.length < TOTAL_QUESTIONS) { pool = data; saveSeen([]) }
+      const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS)
+      setQuestions(shuffled.map(q => ({ ...q, _qid: `db_${q.id}` })))
     } else {
-      setQuestions(fallbackQuestions)
+      pool = fallbackQuestions.filter((_, i) => !seen.includes(`fb_${i}`))
+      if (pool.length < TOTAL_QUESTIONS) { pool = fallbackQuestions; saveSeen([]) }
+      const shuffled = pool.sort(() => Math.random() - 0.5).slice(0, TOTAL_QUESTIONS)
+      setQuestions(shuffled.map((q, i) => ({ ...q, _qid: `fb_${fallbackQuestions.indexOf(q)}` })))
     }
   }
 
@@ -137,6 +152,8 @@ export default function ChinoGamer({ supabase, speak, user }) {
       setTimer(TIME_PER_QUESTION)
     } else {
       setTab('result')
+      const qids = questions.map(q => q._qid)
+      saveSeen([...new Set([...getSeen(), ...qids])])
       if (supabase && user?.id) {
         supabase.from('game_sessions').insert({
           user_id: user.id,
