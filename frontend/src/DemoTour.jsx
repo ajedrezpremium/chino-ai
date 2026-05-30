@@ -50,7 +50,7 @@ const steps = [
   },
 ]
 
-export default function DemoTour({ onNavigate }) {
+export default function DemoTour({ onNavigate, onClose }) {
   const [step, setStep] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -66,6 +66,7 @@ export default function DemoTour({ onNavigate }) {
     } else {
       setIsOpen(false)
       setStep(0)
+      if (onClose) onClose()
     }
   }
 

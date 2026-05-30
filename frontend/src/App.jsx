@@ -6,6 +6,7 @@ import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
 import SectionsView from './SectionsView'
+import DemoTour from './DemoTour'
 import LandingView from './LandingView'
 import AuthModal from './AuthModal'
 import ErrorBoundary from './ErrorBoundary'
@@ -35,6 +36,7 @@ export default function App() {
   const [showLanding, setShowLanding] = useState(() => sessionStorage.getItem('chino_landing') !== 'true')
   const [user, setUser] = useState(null)
   const [showAuth, setShowAuth] = useState(false)
+  const [showDemo, setShowDemo] = useState(false)
   const [legends, setLegends] = useState([])
   const [knowledgeFacts, setKnowledgeFacts] = useState([])
   const [correctionFor, setCorrectionFor] = useState(null)
@@ -288,6 +290,10 @@ export default function App() {
             className="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400">
             <Settings size={13} />
           </button>
+          <button onClick={() => setShowDemo(!showDemo)}
+            className="text-[10px] px-2 py-1.5 rounded-full bg-amber-700/50 hover:bg-amber-600/60 text-amber-300 font-bold transition-colors">
+            🎬 Demo
+          </button>
           <button onClick={() => setAgentGender(g => {
               const newG = g === 'male' ? 'female' : 'male'
               setMessages([{ role: 'agent', text: newG === 'male' ? 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras!' : 'Ola! Son Chiña, a túa colega celeste. Encantada de falar contigo!' }])
@@ -430,6 +436,9 @@ export default function App() {
 
       <AnimatePresence>
         {showAuth && <AuthModal supabase={supabase} onClose={() => setShowAuth(false)} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showDemo && <DemoTour onNavigate={(tab) => { setCurrentTab(tab); setShowDemo(false) }} onClose={() => setShowDemo(false)} />}
       </AnimatePresence>
 
       </motion.div>
