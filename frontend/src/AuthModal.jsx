@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { X, Loader, Send, Key, AtSign } from 'lucide-react'
+import { X, Loader, Send, Key, AtSign, Eye, EyeOff } from 'lucide-react'
 
 export default function AuthModal({ supabase, onClose }) {
   const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('info')
@@ -62,7 +63,10 @@ export default function AuthModal({ supabase, onClose }) {
   const handleGoogle = async () => {
     setLoading(true)
     setMessage('')
-    const { error } = await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } })
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin }
+    })
     if (error) { showError(error.message); setLoading(false) }
   }
 
@@ -109,8 +113,12 @@ export default function AuthModal({ supabase, onClose }) {
             </div>
             <div className="relative">
               <Key size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} required={mode === 'signup'} placeholder="Contrasinal"
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500" />
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required={mode === 'signup'} placeholder="Contrasinal"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-10 py-3 text-sm text-white focus:outline-none focus:border-blue-500" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
             <button type="submit" disabled={loading}
               className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2">

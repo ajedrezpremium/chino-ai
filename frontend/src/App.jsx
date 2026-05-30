@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, LogOut, AlertTriangle } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ChinoGamer from './ChinoGamer'
 import BusinessView from './BusinessView'
 import RankingsView from './RankingsView'
 import SectionsView from './SectionsView'
+import ProfileView from './ProfileView'
 import LandingView from './LandingView'
 import AuthModal from './AuthModal'
 import ErrorBoundary from './ErrorBoundary'
@@ -326,12 +327,11 @@ export default function App() {
             )}
           </div>
           {user ? (
-            <button onClick={() => supabase.auth.signOut()} className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 rounded-full px-2.5 py-1.5 transition-colors">
+            <button onClick={() => setCurrentTab('profile')} className={`flex items-center gap-1.5 rounded-full px-2.5 py-1.5 transition-colors ${currentTab === 'profile' ? 'bg-blue-600' : 'bg-slate-800 hover:bg-slate-700'}`}>
               <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
                 {user.email?.charAt(0).toUpperCase() || '?'}
               </div>
               <span className="text-[10px] text-slate-300 max-w-[60px] truncate">{user.email?.split('@')[0]}</span>
-              <LogOut size={10} className="text-slate-500" />
             </button>
           ) : (
             <button onClick={() => setShowAuth(true)}
@@ -343,7 +343,9 @@ export default function App() {
         </div>
       </header>
 
-      {currentTab === 'rankings' ? (
+      {currentTab === 'profile' ? (
+        <ProfileView supabase={supabase} user={user} agentGender={agentGender} setAgentGender={setAgentGender} speak={speak} onClose={(goto) => setCurrentTab(goto || 'chat')} />
+      ) : currentTab === 'rankings' ? (
         <RankingsView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'sections' ? (
         <SectionsView onClose={() => setCurrentTab('chat')} />

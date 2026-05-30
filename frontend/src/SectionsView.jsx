@@ -30,7 +30,7 @@ const sections = [
       { label: 'Pack familiar (4 pax)', price: '900€', badge: 'AFORRO' },
       { label: 'Abono xuvenil (-25)', price: '150€', badge: 'MOZO' },
     ],
-    link: 'https://abonos.rccelta.es',
+    link: 'https://rccelta.es/celtismo/celtistas',
     linkLabel: 'VER PLANES'
   },
   {
@@ -45,7 +45,7 @@ const sections = [
       { label: 'Adidas', price: 'Provedor Técnico', badge: 'OFICIAL' },
       { label: 'Gaes', price: 'Patrocinador Saúde', badge: null },
     ],
-    link: 'https://rccelta.es/patrocinadores',
+    link: 'https://rccelta.es/club/patrocinadores',
     linkLabel: 'VER TODOS'
   },
   {
@@ -60,7 +60,7 @@ const sections = [
       { label: 'Experiencia partido', price: '50€', badge: 'EXCLUSIVO' },
       { label: 'Grupos (+20 pax)', price: '8€/pax', badge: 'GRUPO' },
     ],
-    link: 'https://rccelta.es/visitas',
+    link: 'https://rccelta.es/entradas',
     linkLabel: 'RESERVAR TOUR'
   },
   {
@@ -75,8 +75,8 @@ const sections = [
       { label: 'Socio', price: 'Gratis', badge: 'GRATIS' },
       { label: 'Visita guiada', price: '15€', badge: 'GUIADA' },
     ],
-    link: 'https://rccelta.es/museo',
-    linkLabel: 'VER MUSEO'
+    link: 'https://rccelta.es/el-club/historia',
+    linkLabel: 'DESCUBRIR'
   },
   {
     id: 'membership',
@@ -90,7 +90,7 @@ const sections = [
       { label: 'Socio infantil (-14)', price: '50€/ano', badge: null },
       { label: 'Socio internacional', price: '120€/ano', badge: 'ONLINE' },
     ],
-    link: 'https://socios.rccelta.es',
+    link: 'https://rccelta.es/celtismo/celtistas',
     linkLabel: 'FACERTE SOCIO'
   },
 ]
