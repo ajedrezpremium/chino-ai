@@ -5,14 +5,15 @@ import { GaliciaFlag } from './i18n/LanguageSwitcher'
 import { MessageCircle } from 'lucide-react'
 
 const moments = [
-  { img: '/Mostovoi Celta.jpg', title: 'Aleksandr Mostovoi', subtitle: '"O Zar" · 1996–2002', desc: '72 goles · 235 partidos · 3 semifinais europeas' },
-  { img: '/Iago Aspas · MITO VIVIENTE.jpg', title: 'Iago Aspas', subtitle: 'Capitán · 2008–', desc: '210 goles · 450 partidos · Lenda viva' },
-  { img: '/11deMemoria Celta.jpg', title: 'O Soño Europeo', subtitle: 'UEFA 2000–01', desc: 'Contra a Juventus · Semifinais · Lendas en campo' },
-  { img: '/Celta de Vigo · ASCENSO A 1ª.jpg', title: 'O Regreso á Elite', subtitle: 'Ascenso a Primeira División', desc: 'Un club, unha cidade, unha historia de superación' },
-  { img: '/2025 El regreso a Europa.webp', title: '2025 · Regreso a Europa', subtitle: 'Celta volve a competición continental', desc: 'Cuartos UEFA · 6º en LaLiga · Ilusión renovada' },
+  { img: '/Mostovoi Celta.jpg' },
+  { img: '/Iago Aspas · MITO VIVIENTE.jpg' },
+  { img: '/11deMemoria Celta.jpg' },
+  { img: '/Celta de Vigo · ASCENSO A 1ª.jpg' },
+  { img: '/2025 El regreso a Europa.webp' },
 ]
 
 const PARTICLES = 20
+const MOMENT_KEYS = ['m0', 'm1', 'm2', 'm3', 'm4']
 
 const LANG_BTNS = [
   { code: 'gl', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
@@ -87,7 +88,7 @@ export default function LandingView({ agentGender, onEnter }) {
           className="absolute inset-0"
           style={{ transform: `translate(${mouse.x * -15}px, ${mouse.y * -15}px)` }}>
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-slate-900/40 z-10" />
-          <img src={m.img} alt={m.title} className="w-full h-full object-cover" />
+          <img src={m.img} alt={t(`landing.${MOMENT_KEYS[idx]}_title`)} className="w-full h-full object-cover" />
         </motion.div>
       </AnimatePresence>
 
@@ -103,9 +104,9 @@ export default function LandingView({ agentGender, onEnter }) {
               className="text-[10px] uppercase tracking-[0.3em] text-blue-300/70 mb-2 font-semibold">
               {t('landing.tagline')}
             </motion.p>
-            <h2 className="text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-2xl">{m.title}</h2>
-            <p className="text-lg text-blue-200 font-semibold mt-2 drop-shadow-lg">{m.subtitle}</p>
-            <p className="text-sm text-white/70 mt-2 drop-shadow">{m.desc}</p>
+            <h2 className="text-4xl md:text-6xl font-black text-white leading-tight drop-shadow-2xl">{t(`landing.${MOMENT_KEYS[idx]}_title`)}</h2>
+            <p className="text-lg text-blue-200 font-semibold mt-2 drop-shadow-lg">{t(`landing.${MOMENT_KEYS[idx]}_sub`)}</p>
+            <p className="text-sm text-white/70 mt-2 drop-shadow">{t(`landing.${MOMENT_KEYS[idx]}_desc`)}</p>
           </motion.div>
         </AnimatePresence>
 

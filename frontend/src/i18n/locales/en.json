@@ -30,7 +30,22 @@
     "legend_card": "Legend",
     "legends_subtitle": "CELTA LEGENDS",
     "partidos": "matches",
-    "goles": "goals"
+    "goles": "goals",
+    "m0_title": "Aleksandr Mostovoi",
+    "m0_sub": "\"The Tsar\" · 1996–2002",
+    "m0_desc": "72 goals · 235 matches · 3 European semi-finals",
+    "m1_title": "Iago Aspas",
+    "m1_sub": "Captain · 2008–",
+    "m1_desc": "210 goals · 450 matches · Living legend",
+    "m2_title": "The European Dream",
+    "m2_sub": "UEFA 2000–01",
+    "m2_desc": "Against Juventus · Semi-finals · Legends on the pitch",
+    "m3_title": "The Return to the Elite",
+    "m3_sub": "Promotion to First Division",
+    "m3_desc": "A club, a city, a story of overcoming",
+    "m4_title": "2025 · Return to Europe",
+    "m4_sub": "Celta returns to continental competition",
+    "m4_desc": "UEFA Quarter-finals · 6th in LaLiga · Renewed hope"
   },
   "chat": {
     "placeholder": "Ask Chiño...",

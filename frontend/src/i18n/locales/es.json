@@ -30,7 +30,22 @@
     "legend_card": "Leyenda",
     "legends_subtitle": "LEYENDAS DEL CELTA",
     "partidos": "partidos",
-    "goles": "goles"
+    "goles": "goles",
+    "m0_title": "Aleksandr Mostovoi",
+    "m0_sub": "\"El Zar\" · 1996–2002",
+    "m0_desc": "72 goles · 235 partidos · 3 semifinales europeas",
+    "m1_title": "Iago Aspas",
+    "m1_sub": "Capitán · 2008–",
+    "m1_desc": "210 goles · 450 partidos · Leyenda viva",
+    "m2_title": "El Sueño Europeo",
+    "m2_sub": "UEFA 2000–01",
+    "m2_desc": "Contra la Juventus · Semifinales · Leyendas en el campo",
+    "m3_title": "El Regreso a la Elite",
+    "m3_sub": "Ascenso a Primera División",
+    "m3_desc": "Un club, una ciudad, una historia de superación",
+    "m4_title": "2025 · Regreso a Europa",
+    "m4_sub": "Celta vuelve a competición continental",
+    "m4_desc": "Cuartos UEFA · 6º en LaLiga · Ilusión renovada"
   },
   "chat": {
     "placeholder": "Pregúntale a Chiño...",
