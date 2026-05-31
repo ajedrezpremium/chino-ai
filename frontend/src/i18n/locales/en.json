@@ -3,7 +3,9 @@
     "title": "Chiño AI",
     "subtitle": "Your celeste mate",
     "subtitle_female": "Your celeste mate",
-    "footer": "Chiño AI © 2026 — Real Club Celta de Vigo"
+    "footer": "Chiño AI © 2026 — Real Club Celta de Vigo",
+    "avatar_male": "Chiño",
+    "avatar_female": "Chiña"
   },
   "header": {
     "chat": "Chat",
@@ -26,6 +28,7 @@
     "es": "Spanish",
     "en": "English",
     "legend_card": "Legend",
+    "legends_subtitle": "CELTA LEGENDS",
     "partidos": "matches",
     "goles": "goals"
   },
@@ -39,7 +42,13 @@
     "error": "Sorry, I'm having a technical issue. Try again!",
     "correction_placeholder": "Write the correction...",
     "cancel": "Cancel",
-    "send": "Send"
+    "send": "Send",
+    "fallback": "Sorry, I couldn't process that.",
+    "chrome_voice": "Use Chrome for voice."
+  },
+  "voice": {
+    "manual": "MANUAL VOICE",
+    "auto_detect": "🎙️ Auto (detect language)"
   },
   "gamer": {
     "title": "Chiño Gamer",
@@ -58,7 +67,13 @@
     "points": "points",
     "question": "Question",
     "of": "of",
-    "seconds": "s"
+    "seconds": "s",
+    "grade_novice": "Novice",
+    "grade_legend": "Legend",
+    "grade_starter": "Starter",
+    "grade_promise": "Promise",
+    "grade": "Grade",
+    "new_record": "🎉 NEW RECORD! 🎉"
   },
   "rankings": {
     "title": "Rankings",
@@ -70,7 +85,14 @@
     "score": "Points",
     "badge": "Badge",
     "temporary": "TEMP",
-    "fans_subtitle": "Real fans + temporary"
+    "fans_subtitle": "Real fans + temporary",
+    "you": "You",
+    "is_you": "IS YOU",
+    "pts": "pts",
+    "fan_default": "Fan",
+    "fan_subtitle": "Fan Ranking",
+    "fan_empty": "Play the Celeste Challenge to appear here",
+    "footer": "Updated: May 2026 · 25 objective criteria · Weighted system"
   },
   "sections": {
     "title": "Sections",
@@ -139,7 +161,28 @@
     "abono_title": "Season Plan",
     "abono_desc": "You don't have a season plan yet",
     "abono_cta": "View season plans",
-    "logout": "Log out"
+    "logout": "Log out",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "name_placeholder": "Your name",
+    "store": "Official Store",
+    "tickets": "Tickets",
+    "membership_card": "Celtista Card",
+    "gamer_short": "Chiño Gamer",
+    "experiences_title": "Experiences"
+  },
+  "business": {
+    "title": "📊 Business Case",
+    "subtitle": "Value proposition · CEO RC Celta",
+    "engagement": "Engagement by feature",
+    "revenue": "Revenue Projection",
+    "free_tier": "Free (demo)",
+    "subscription": "Subscriber subscription",
+    "licenses": "Club licenses + partners",
+    "roadmap": "🗺️ Roadmap",
+    "quote": "\"The first AI agent in football history\"",
+    "footer": "Chiño AI © 2026 · Ready to launch"
   },
   "errors": {
     "boundary_title": "Oops! Something went wrong",

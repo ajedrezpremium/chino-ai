@@ -81,7 +81,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
         <button onClick={() => setShowLang(true)}
           className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors">
           <span className="text-base">{i18n.language?.startsWith('gl') ? '🇪🇸' : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
-          {i18n.language?.startsWith('gl') ? 'Galego' : i18n.language?.startsWith('en') ? 'English' : 'Español'}
+          {i18n.language?.startsWith('gl') ? t('landing.gl') : i18n.language?.startsWith('en') ? t('landing.en') : t('landing.es')}
         </button>
       </div>
 
@@ -91,7 +91,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
           <motion.div key={idx} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: 0.6 }}
             className="text-center max-w-lg">
             <div className={`w-20 h-20 mx-auto mb-4 rounded-full border-2 overflow-hidden shadow-xl backdrop-blur-sm flex items-center justify-center ${agentGender === 'male' ? 'bg-blue-600/40 border-blue-400/30 shadow-blue-500/30' : 'bg-pink-600/40 border-pink-400/30 shadow-pink-500/30'}`}>
-              <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-full h-full object-cover rounded-full" />
+              <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-full h-full object-cover rounded-full" />
             </div>
             <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
               className="text-[10px] uppercase tracking-[0.3em] text-blue-300/70 mb-2 font-semibold">
@@ -113,7 +113,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
 
       {legends.length > 0 && (
         <div className="z-20 px-4 pb-4">
-          <p className="text-[10px] text-blue-200/50 text-center mb-2 uppercase tracking-widest">{t('landing.legend_card')}S DO CELTA</p>
+          <p className="text-[10px] text-blue-200/50 text-center mb-2 uppercase tracking-widest">{t('landing.legends_subtitle')}</p>
           <div className="grid grid-cols-5 gap-2">
             {legends.map((l, i) => (
               <motion.div key={l.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
@@ -135,7 +135,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
 
       <motion.button onClick={onEnter} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
         className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}>
-        <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
+        <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
         <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-900 flex items-center justify-center animate-pulse">
           <MessageCircle size={10} className="text-white" />
         </span>

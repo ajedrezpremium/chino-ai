@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const playerRanking = [
   { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: '👑 Lenda' },
@@ -90,11 +91,14 @@ const badgeColors = ['from-yellow-500 to-amber-600', 'from-slate-400 to-slate-50
 const badgeLabels = ['🥇', '🥈', '🥉']
 
 export default function RankingsView({ supabase, user, onClose }) {
+  const { t } = useTranslation()
   const [tab, setTab] = useState('players')
   const [fans, setFans] = useState([])
+  const [loadingFans, setLoadingFans] = useState(false)
 
   useEffect(() => {
     if (tab === 'fans' && supabase) {
+      setLoadingFans(true)
       supabase.from('game_sessions')
         .select('id, score, questions_answered, user_id')
         .order('score', { ascending: false })
@@ -116,14 +120,15 @@ export default function RankingsView({ supabase, user, onClose }) {
           }))
           const combined = [...realFans, ...fakeFans.filter(f => realFans.length < 25)].slice(0, 25)
           setFans(combined)
+          setLoadingFans(false)
         })
     }
   }, [tab, supabase])
 
   const fanName = (f) => {
-    if (user && f.user_id === user.id) return 'Ti'
+    if (user && f.user_id === user.id) return t('rankings.you')
     if (f.username) return f.username
-    return `Siareiro #${String(f.id).slice(-3)}`
+    return `${t('rankings.fan_default')} #${String(f.id).slice(-3)}`
   }
 
   const TabButton = ({ id, label, icon }) => (
@@ -137,7 +142,7 @@ export default function RankingsView({ supabase, user, onClose }) {
     <div className="flex-1 overflow-y-auto z-10 pb-4">
       <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md p-4 border-b border-blue-500/20">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-xl font-black text-white">🏆 Rankings Celestes</h2>
+          <h2 className="text-xl font-black text-white">🏆 {t('rankings.title')}</h2>
           {onClose && (
             <button onClick={onClose} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">
               <Eye size={16} className="text-slate-400" />
@@ -145,9 +150,9 @@ export default function RankingsView({ supabase, user, onClose }) {
           )}
         </div>
         <div className="flex gap-2 tab-scroll">
-          <TabButton id="players" label="Xogadores" icon={<Trophy size={14} className="inline mr-1" />} />
-          <TabButton id="coaches" label="Adestradores" icon={<Award size={14} className="inline mr-1" />} />
-          <TabButton id="fans" label="Siareiros" icon={<Users size={14} className="inline mr-1" />} />
+          <TabButton id="players" label={t('rankings.players')} icon={<Trophy size={14} className="inline mr-1" />} />
+          <TabButton id="coaches" label={t('rankings.coaches')} icon={<Award size={14} className="inline mr-1" />} />
+          <TabButton id="fans" label={t('rankings.fans')} icon={<Users size={14} className="inline mr-1" />} />
         </div>
       </div>
 
@@ -169,7 +174,7 @@ export default function RankingsView({ supabase, user, onClose }) {
               </div>
               <div className="text-right">
                 <div className="text-lg font-black text-blue-400">{p.score}</div>
-                <div className="text-[10px] text-slate-500">pts</div>
+                <div className="text-[10px] text-slate-500">{t('rankings.pts')}</div>
               </div>
             </div>
           </motion.div>
@@ -191,7 +196,7 @@ export default function RankingsView({ supabase, user, onClose }) {
               </div>
               <div className="text-right">
                 <div className="text-lg font-black text-blue-400">{c.score}</div>
-                <div className="text-[10px] text-slate-500">pts</div>
+                <div className="text-[10px] text-slate-500">{t('rankings.pts')}</div>
               </div>
             </div>
           </motion.div>
@@ -200,10 +205,18 @@ export default function RankingsView({ supabase, user, onClose }) {
         {tab === 'fans' && (
           <div className="text-center py-8 text-slate-400">
             <Users size={40} className="mx-auto mb-3 text-blue-400" />
-            <p className="font-bold text-white text-lg">Ranking de Siareiros</p>
-            <p className="text-sm mt-1">Xoga a O Desafío Celeste para aparecer aquí</p>
+            <p className="font-bold text-white text-lg">{t('rankings.fan_subtitle')}</p>
+            <p className="text-sm mt-1">{t('rankings.fan_empty')}</p>
             <div className="mt-6 space-y-3 text-left">
-              {(fans.length > 0 ? fans : fakeFans).map((f, i) => (
+              {loadingFans ? (
+                Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="rounded-xl p-4 flex items-center gap-3 bg-slate-800/80 border border-slate-700">
+                    <div className="skeleton w-10 h-10 rounded-full" />
+                    <div className="flex-1"><div className="skeleton h-4 w-24 mb-1" /><div className="skeleton h-3 w-16" /></div>
+                    <div className="text-right"><div className="skeleton h-5 w-12 mb-1" /><div className="skeleton h-3 w-8 ml-auto" /></div>
+                  </div>
+                ))
+              ) : (fans.length > 0 ? fans : fakeFans).map((f, i) => (
                 <div key={f.id} className={`rounded-xl p-4 flex items-center gap-3 ${user && f.user_id === user.id ? 'bg-blue-900/40 border border-blue-500/40' : 'bg-slate-800/80 border border-slate-700'}`}>
                   <div className="w-10 h-10 rounded-full bg-blue-600/30 flex items-center justify-center font-black text-blue-400">
                     {i < 3 ? badgeLabels[i] : `#${i + 1}`}
@@ -211,14 +224,14 @@ export default function RankingsView({ supabase, user, onClose }) {
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <p className="font-bold text-white">{fanName(f)}</p>
-                      {user && f.user_id === user.id && <span className="text-[9px] bg-blue-600 text-white px-1.5 rounded-full font-bold">ES TI</span>}
-                      {f.id?.toString().startsWith('fake-') && <span className="text-[9px] bg-slate-700 text-slate-400 px-1.5 rounded-full font-bold">TEMP</span>}
+                      {user && f.user_id === user.id && <span className="text-[9px] bg-blue-600 text-white px-1.5 rounded-full font-bold">{t('rankings.is_you')}</span>}
+                      {f.id?.toString().startsWith('fake-') && <span className="text-[9px] bg-slate-700 text-slate-400 px-1.5 rounded-full font-bold">{t('rankings.temporary')}</span>}
                     </div>
-                    <p className="text-xs text-slate-400">{f.questions_answered || 0} preguntas</p>
+                    <p className="text-xs text-slate-400">{f.questions_answered || 0} {t('gamer.questions')}</p>
                   </div>
                   <div className="text-right">
                     <div className="text-lg font-black text-yellow-400">{f.score || 0}</div>
-                    <div className="text-[10px] text-slate-500">pts</div>
+                    <div className="text-[10px] text-slate-500">{t('rankings.pts')}</div>
                   </div>
                 </div>
               ))}
@@ -227,7 +240,7 @@ export default function RankingsView({ supabase, user, onClose }) {
         )}
 
         <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
-          Actualizado: Maio 2026 · 25 criterios obxectivos · Sistema ponderado
+          {t('rankings.footer')}
         </p>
       </div>
     </div>

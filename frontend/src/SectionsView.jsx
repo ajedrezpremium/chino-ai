@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ShoppingBag, Ticket, Star, MapPin, Building2, CreditCard, ExternalLink } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const sections = [
   {
@@ -111,18 +112,19 @@ const colorMap = {
 }
 
 export default function SectionsView({ onClose }) {
+  const { t } = useTranslation()
   return (
     <div className="flex-1 overflow-y-auto z-10 pb-4">
       <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md p-4 border-b border-blue-500/20">
         <div className="flex items-center justify-between mb-1">
-          <h2 className="text-xl font-black text-white">🌐 Seccións</h2>
+          <h2 className="text-xl font-black text-white">🌐 {t('sections.title')}</h2>
           {onClose && (
             <button onClick={onClose} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">
               <ExternalLink size={16} className="text-slate-400" />
             </button>
           )}
         </div>
-        <p className="text-xs text-slate-400">Explora o universo do RC Celta</p>
+        <p className="text-xs text-slate-400">{t('sections.subtitle')}</p>
       </div>
 
       <div className="p-4 space-y-6">
@@ -132,8 +134,8 @@ export default function SectionsView({ onClose }) {
             <div className={`bg-gradient-to-r ${section.color} p-4 flex items-center gap-3`}>
               <div className="text-white">{section.icon}</div>
               <div className="flex-1">
-                <h3 className="font-bold text-lg text-white">{section.title}</h3>
-                <p className="text-sm text-white/80">{section.desc}</p>
+                <h3 className="font-bold text-lg text-white">{t(`sections.${section.id}_title`)}</h3>
+                <p className="text-sm text-white/80">{t(`sections.${section.id}_desc`)}</p>
               </div>
             </div>
             <div className="p-4 space-y-2">
@@ -151,12 +153,12 @@ export default function SectionsView({ onClose }) {
             </div>
             <a href={section.link} target="_blank" rel="noopener noreferrer"
               className="block text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 transition-colors text-sm">
-              <ExternalLink size={14} className="inline mr-2" />{section.linkLabel}
+              <ExternalLink size={14} className="inline mr-2" />{t(`sections.${section.id}_link`)}
             </a>
           </motion.div>
         ))}
         <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
-          Enlaces oficiais do RC Celta de Vigo
+          {t('sections.footer')}
         </p>
       </div>
     </div>

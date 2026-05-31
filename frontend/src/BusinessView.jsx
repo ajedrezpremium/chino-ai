@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { TrendingUp, Users, Euro, BarChart3, Eye, Activity, Play, MessageSquare } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 export default function BusinessView({ supabase, onClose }) {
+  const { t } = useTranslation()
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -63,8 +65,8 @@ export default function BusinessView({ supabase, onClose }) {
     <div className="flex-1 overflow-y-auto z-10 pb-28">
       <div className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md p-4 border-b border-blue-500/20 flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-black text-white">📊 Business Case</h2>
-          <p className="text-xs text-blue-300">Propuesta de valor · Director General RC Celta</p>
+          <h2 className="text-xl font-black text-white">{t('business.title')}</h2>
+          <p className="text-xs text-blue-300">{t('business.subtitle')}</p>
         </div>
         <button onClick={onClose} className="p-2 bg-slate-800 rounded-lg hover:bg-slate-700">
           <Eye size={16} className="text-slate-400" />
@@ -88,7 +90,7 @@ export default function BusinessView({ supabase, onClose }) {
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
           className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
-          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><BarChart3 size={16} className="text-blue-400" /> Engagement por funcionalidade</h3>
+          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><BarChart3 size={16} className="text-blue-400" /> {t('business.engagement')}</h3>
           <div className="space-y-3">
             {channels.map((c, i) => <Bar key={c.name} label={c.name} value={c.users} color={c.color} delay={0.4 + i * 0.15} />)}
           </div>
@@ -96,7 +98,7 @@ export default function BusinessView({ supabase, onClose }) {
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
           className="bg-slate-800/80 border border-slate-700 rounded-xl p-5">
-          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Euro size={16} className="text-yellow-400" /> Proxección de Ingresos</h3>
+          <h3 className="font-bold text-white mb-4 flex items-center gap-2"><Euro size={16} className="text-yellow-400" /> {t('business.revenue')}</h3>
           <div className="flex items-end gap-4 h-32">
             {revenue.map((r, i) => (
               <div key={r.tier} className="flex-1 flex flex-col items-center gap-2">
@@ -107,14 +109,14 @@ export default function BusinessView({ supabase, onClose }) {
             ))}
           </div>
           <div className="flex justify-between mt-2 text-[10px] text-slate-500">
-            <span>Gratuito (demostración)</span>
-            <span>Suscripción abonados</span>
-            <span>Licencias club + partners</span>
+            <span>{t('business.free_tier')}</span>
+            <span>{t('business.subscription')}</span>
+            <span>{t('business.licenses')}</span>
           </div>
         </motion.div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
-          <h3 className="font-bold text-white mb-3">🗺️ Roadmap</h3>
+          <h3 className="font-bold text-white mb-3">{t('business.roadmap')}</h3>
           <div className="space-y-3">
             {roadmap.map((p, i) => (
               <div key={p.phase} className={`rounded-xl border p-4 ${p.done ? 'bg-blue-900/20 border-blue-500/40' : 'bg-slate-800/60 border-slate-700'}`}>
@@ -135,8 +137,8 @@ export default function BusinessView({ supabase, onClose }) {
         </motion.div>
 
         <div className="bg-gradient-to-r from-blue-900/40 via-blue-800/20 to-purple-900/40 border border-blue-500/30 rounded-xl p-6 text-center">
-          <p className="text-sm text-blue-200 font-semibold mb-1">"O primeiro axente de IA na historia do fútbol"</p>
-          <p className="text-xs text-slate-400">Chiño AI © 2026 · Listo para debutar · https://chinoaiagent.vercel.app</p>
+          <p className="text-sm text-blue-200 font-semibold mb-1">{t('business.quote')}</p>
+          <p className="text-xs text-slate-400">{t('business.footer')}</p>
         </div>
       </div>
     </div>

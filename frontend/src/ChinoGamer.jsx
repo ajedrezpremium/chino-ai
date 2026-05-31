@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { Trophy, Timer, Flame, Star, ArrowLeft, RefreshCw } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 
 const playSound = (type) => {
   try {
@@ -61,6 +62,7 @@ const saveSeen = (ids) => {
 }
 
 export default function ChinoGamer({ supabase, speak, user }) {
+  const { t } = useTranslation()
   const [tab, setTab] = useState('intro')
   const [questions, setQuestions] = useState([])
   const [currentIdx, setCurrentIdx] = useState(0)
@@ -137,7 +139,7 @@ export default function ChinoGamer({ supabase, speak, user }) {
     if (isCorrect) {
       setStreak(s => s + 1)
       playSound('correct')
-      speak('Correcto! Boa xogada!')
+      speak(t('gamer.correct'))
     } else {
       setStreak(0)
       playSound('wrong')
@@ -167,23 +169,35 @@ export default function ChinoGamer({ supabase, speak, user }) {
   if (tab === 'intro') {
     return (
       <main className="flex-1 overflow-y-auto p-6 z-10 flex items-center justify-center">
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-          className="bg-slate-800/80 border-2 border-blue-500/40 rounded-2xl p-8 text-center max-w-md w-full">
-          <Trophy size={64} className="text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-2xl font-black text-blue-400 mb-2">CHIÑO GAMER</h2>
-          <p className="text-gray-300 mb-2">O Desafío Celeste</p>
-          <div className="flex justify-center gap-4 mb-6 text-sm text-slate-400">
-            <span><Trophy size={14} className="inline mr-1" />{TOTAL_QUESTIONS} preguntas</span>
-            <span><Timer size={14} className="inline mr-1" />{TIME_PER_QUESTION}s</span>
-            <span><Flame size={14} className="inline mr-1" />Rachas</span>
+        {questions.length === 0 ? (
+          <div className="bg-slate-800/80 border-2 border-blue-500/40 rounded-2xl p-8 text-center max-w-md w-full">
+            <div className="skeleton w-16 h-16 rounded-full mx-auto mb-4" />
+            <div className="skeleton h-8 w-48 mx-auto mb-3" />
+            <div className="skeleton h-4 w-32 mx-auto mb-6" />
+            <div className="flex justify-center gap-4 mb-6">
+              <div className="skeleton h-4 w-20" /><div className="skeleton h-4 w-14" /><div className="skeleton h-4 w-14" />
+            </div>
+            <div className="skeleton h-12 w-40 mx-auto rounded-full" />
           </div>
-          {questions.length > 0 && (
-            <button onClick={startGame}
-              className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-blue-500/50 transition-all transform hover:scale-105 text-lg">
-              XOGAR AGORA
-            </button>
-          )}
-        </motion.div>
+        ) : (
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+            className="bg-slate-800/80 border-2 border-blue-500/40 rounded-2xl p-8 text-center max-w-md w-full">
+            <Trophy size={64} className="text-yellow-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-black text-blue-400 mb-2">{t('gamer.title').toUpperCase()}</h2>
+            <p className="text-gray-300 mb-2">{t('gamer.subtitle')}</p>
+            <div className="flex justify-center gap-4 mb-6 text-sm text-slate-400">
+              <span><Trophy size={14} className="inline mr-1" />{TOTAL_QUESTIONS} {t('gamer.questions')}</span>
+              <span><Timer size={14} className="inline mr-1" />{TIME_PER_QUESTION}{t('gamer.seconds')}</span>
+              <span><Flame size={14} className="inline mr-1" />{t('gamer.streak')}</span>
+            </div>
+            {questions.length > 0 && (
+              <button onClick={startGame}
+                className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-blue-500/50 transition-all transform hover:scale-105 text-lg">
+                {t('gamer.start').toUpperCase()}
+              </button>
+            )}
+          </motion.div>
+        )}
       </main>
     )
   }
@@ -196,10 +210,10 @@ export default function ChinoGamer({ supabase, speak, user }) {
       <main className="flex-1 overflow-y-auto p-4 z-10">
         <div className="max-w-lg mx-auto">
           <div className="flex justify-between items-center mb-4 text-sm">
-            <span className="text-blue-400 font-bold">Pregunta {currentIdx + 1}/{TOTAL_QUESTIONS}</span>
-            <span className="text-yellow-400 font-bold">{score} pts</span>
+            <span className="text-blue-400 font-bold">{t('gamer.question')} {currentIdx + 1}/{TOTAL_QUESTIONS}</span>
+            <span className="text-yellow-400 font-bold">{score} {t('gamer.points')}</span>
             <div className={`flex items-center gap-1 font-mono ${timer <= 5 ? 'text-red-500 animate-pulse' : 'text-white'}`}>
-              <Timer size={16} /> {timer}s
+              <Timer size={16} /> {timer}{t('gamer.seconds')}
             </div>
           </div>
 
@@ -209,7 +223,7 @@ export default function ChinoGamer({ supabase, speak, user }) {
 
           {streak > 1 && (
             <div className="text-center mb-3 text-orange-400 font-bold text-sm animate-pulse">
-              <Flame size={16} className="inline mr-1" />Racha de {streak}!
+              <Flame size={16} className="inline mr-1" />{t('gamer.streak')} {streak}!
             </div>
           )}
 
@@ -234,19 +248,19 @@ export default function ChinoGamer({ supabase, speak, user }) {
   if (tab === 'result') {
     const correct = answers.filter(a => a.correct).length
     const percent = Math.round((correct / TOTAL_QUESTIONS) * 100)
-    let grade = 'Novato'
-    if (percent >= 80) grade = 'Lenda'
-    else if (percent >= 60) grade = 'Titular'
-    else if (percent >= 40) grade = 'Promesa'
+    let grade = t('gamer.grade_novice')
+    if (percent >= 80) grade = t('gamer.grade_legend')
+    else if (percent >= 60) grade = t('gamer.grade_starter')
+    else if (percent >= 40) grade = t('gamer.grade_promise')
 
     return (
       <main className="flex-1 overflow-y-auto p-6 z-10 flex items-center justify-center">
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           className="bg-slate-800/80 border-2 border-yellow-500/40 rounded-2xl p-8 text-center max-w-md w-full">
           <Trophy size={72} className="text-yellow-400 mx-auto mb-2" />
-          <h2 className="text-2xl font-black text-white mb-1">PARTIDA COMPLETA!</h2>
-          <p className="text-5xl font-black text-blue-500 mb-2">{score} pts</p>
-          <p className="text-slate-400 mb-4">{correct}/{TOTAL_QUESTIONS} acertadas · Nivel: <span className="text-yellow-400 font-bold">{grade}</span></p>
+          <h2 className="text-2xl font-black text-white mb-1">{t('gamer.game_over')}</h2>
+          <p className="text-5xl font-black text-blue-500 mb-2">{score} {t('gamer.points')}</p>
+          <p className="text-slate-400 mb-4">{correct}/{TOTAL_QUESTIONS} · {t('gamer.grade')}: <span className="text-yellow-400 font-bold">{grade}</span></p>
 
           <div className="space-y-2 mb-6 text-left max-h-40 overflow-y-auto">
             {answers.map((a, i) => (
@@ -257,12 +271,12 @@ export default function ChinoGamer({ supabase, speak, user }) {
           </div>
 
           {score > 500 && (
-            <div className="text-center mb-4 text-lg animate-bounce">🎉 NOVO RÉCORD! 🎉</div>
+            <div className="text-center mb-4 text-lg animate-bounce">{t('gamer.new_record')}</div>
           )}
 
           <button onClick={startGame}
             className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-3 rounded-full font-bold shadow-lg transition-all transform hover:scale-105">
-            <RefreshCw size={16} className="inline mr-2" />XOGAR DE NOVO
+            <RefreshCw size={16} className="inline mr-2" />{t('gamer.play_again').toUpperCase()}
           </button>
         </motion.div>
       </main>

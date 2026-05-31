@@ -3,7 +3,9 @@
     "title": "Chiño AI",
     "subtitle": "Tu colega celeste",
     "subtitle_female": "Tu colega celeste",
-    "footer": "Chiño AI © 2026 — Real Club Celta de Vigo"
+    "footer": "Chiño AI © 2026 — Real Club Celta de Vigo",
+    "avatar_male": "Chiño",
+    "avatar_female": "Chiña"
   },
   "header": {
     "chat": "Chat",
@@ -26,6 +28,7 @@
     "es": "Español",
     "en": "English",
     "legend_card": "Leyenda",
+    "legends_subtitle": "LEYENDAS DEL CELTA",
     "partidos": "partidos",
     "goles": "goles"
   },
@@ -39,7 +42,13 @@
     "error": "Perdona, estoy teniendo un problema técnico. ¡Inténtalo de nuevo!",
     "correction_placeholder": "Escribe la corrección...",
     "cancel": "Cancelar",
-    "send": "Enviar"
+    "send": "Enviar",
+    "fallback": "Perdona, no pude procesar eso.",
+    "chrome_voice": "Usa Chrome para voz."
+  },
+  "voice": {
+    "manual": "SELECCIÓN MANUAL",
+    "auto_detect": "🎙️ Auto (detectar idioma)"
   },
   "gamer": {
     "title": "Chiño Gamer",
@@ -58,7 +67,13 @@
     "points": "puntos",
     "question": "Pregunta",
     "of": "de",
-    "seconds": "s"
+    "seconds": "s",
+    "grade_novice": "Novato",
+    "grade_legend": "Leyenda",
+    "grade_starter": "Titular",
+    "grade_promise": "Promesa",
+    "grade": "Nivel",
+    "new_record": "🎉 ¡NUEVO RÉCORD! 🎉"
   },
   "rankings": {
     "title": "Clasificaciones",
@@ -70,7 +85,14 @@
     "score": "Puntos",
     "badge": "Medalla",
     "temporary": "TEMP",
-    "fans_subtitle": "Aficionados reales + temporales"
+    "fans_subtitle": "Aficionados reales + temporales",
+    "you": "Tú",
+    "is_you": "ERES TÚ",
+    "pts": "pts",
+    "fan_default": "Aficionado",
+    "fan_subtitle": "Ranking de Aficionados",
+    "fan_empty": "Juega al Desafío Celeste para aparecer aquí",
+    "footer": "Actualizado: Mayo 2026 · 25 criterios objetivos · Sistema ponderado"
   },
   "sections": {
     "title": "Secciones",
@@ -139,7 +161,28 @@
     "abono_title": "Plan de Abonado",
     "abono_desc": "Aún no tienes un plan de abonado vinculado",
     "abono_cta": "Ver planes de abonado",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "theme": "Tema",
+    "dark": "Oscuro",
+    "light": "Claro",
+    "name_placeholder": "Tu nombre",
+    "store": "Tienda Oficial",
+    "tickets": "Entradas",
+    "membership_card": "Carnet Celtista",
+    "gamer_short": "Chiño Gamer",
+    "experiences_title": "Experiencias"
+  },
+  "business": {
+    "title": "📊 Business Case",
+    "subtitle": "Propuesta de valor · Director General RC Celta",
+    "engagement": "Engagement por funcionalidad",
+    "revenue": "Proyección de Ingresos",
+    "free_tier": "Gratuito (demostración)",
+    "subscription": "Suscripción abonados",
+    "licenses": "Licencias club + partners",
+    "roadmap": "🗺️ Roadmap",
+    "quote": "\"El primer agente de IA en la historia del fútbol\"",
+    "footer": "Chiño AI © 2026 · Listo para debutar"
   },
   "errors": {
     "boundary_title": "¡Ups! Algo salió mal",

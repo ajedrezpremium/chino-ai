@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import ChinoGamer from './ChinoGamer'
-import BusinessView from './BusinessView'
-import RankingsView from './RankingsView'
-import SectionsView from './SectionsView'
-import ProfileView from './ProfileView'
-import LandingView from './LandingView'
-import AuthModal from './AuthModal'
 import ErrorBoundary from './ErrorBoundary'
 import { SYSTEM_PROMPT } from './chino-knowledge'
+
+const ChinoGamer = lazy(() => import('./ChinoGamer'))
+const BusinessView = lazy(() => import('./BusinessView'))
+const RankingsView = lazy(() => import('./RankingsView'))
+const SectionsView = lazy(() => import('./SectionsView'))
+const ProfileView = lazy(() => import('./ProfileView'))
+const LandingView = lazy(() => import('./LandingView'))
+const AuthModal = lazy(() => import('./AuthModal'))
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL || '',
@@ -25,7 +26,7 @@ const USE_OPENROUTER = !!OPENROUTER_API_KEY
 export default function App() {
   const { t } = useTranslation()
   const [messages, setMessages] = useState([
-    { role: 'agent', text: 'Ola! Son Chiño, o teu colega celeste. Pregúntame o que queiras sobre a historia do Celta!' }
+    { role: 'agent', text: t('chat.welcome_male') }
   ])
   const initialMsg = (gender) => gender === 'male' ? t('chat.welcome_male') : t('chat.welcome_female')
   const [input, setInput] = useState('')
@@ -45,6 +46,13 @@ export default function App() {
   const [showVoicePicker, setShowVoicePicker] = useState(false)
   const [selectedVoiceURI, setSelectedVoiceURI] = useState(() => localStorage.getItem('chino_voice') || '')
   const messagesEndRef = useRef(null)
+
+  const [theme, setTheme] = useState(() => localStorage.getItem('chino_theme') || 'dark')
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('chino_theme', theme)
+  }, [theme])
 
   const toggleAdmin = () => {
     const next = !adminMode
@@ -141,7 +149,7 @@ export default function App() {
 
   const startListening = () => {
     if (!('webkitSpeechRecognition' in window)) {
-      alert('Usa Chrome para voz.')
+      alert(t('chat.chrome_voice'))
       return
     }
     const r = new window.webkitSpeechRecognition()
@@ -222,7 +230,7 @@ export default function App() {
           })
         })
         const data = await res.json()
-        const aiText = data.choices?.[0]?.message?.content || 'Perdona, non puiden procesar iso.'
+        const aiText = data.choices?.[0]?.message?.content || t('chat.fallback')
         setMessages(prev => [...prev, { role: 'agent', text: aiText }])
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
@@ -245,10 +253,13 @@ export default function App() {
     <ErrorBoundary>
     <AnimatePresence mode="wait">
       {showLanding ? (
+        <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center"><div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>}>
         <motion.div key="landing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
           <LandingView legends={legends} agentGender={agentGender} onEnter={handleEnterApp} />
         </motion.div>
+        </Suspense>
       ) : (
+        <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center"><div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>}>
         <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }}
           className="min-h-screen bg-slate-900 text-white flex flex-col relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-black opacity-90 z-0" />
@@ -256,10 +267,10 @@ export default function App() {
         <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className={`w-10 h-10 rounded-full overflow-hidden shadow-lg flex-shrink-0 ${agentGender === 'male' ? 'shadow-blue-500/50 bg-blue-600' : 'shadow-pink-500/50 bg-pink-600'}`}>
-            <img src="/chino-avatar.png" alt={agentGender === 'male' ? 'Chiño' : 'Chiña'} className="w-full h-full object-cover" />
+            <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-full h-full object-cover" />
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-tight">{agentGender === 'male' ? 'Chiño' : 'Chiña'} AI</h1>
+            <h1 className="font-bold text-lg leading-tight">{t('app.title')}</h1>
             <p className={`text-xs ${agentGender === 'male' ? 'text-blue-300' : 'text-pink-300'}`}>{agentGender === 'male' ? t('app.subtitle') : t('app.subtitle_female')}</p>
           </div>
         </div>
@@ -309,11 +320,11 @@ export default function App() {
             {showVoicePicker && (
               <div className="absolute right-0 top-full mt-2 w-64 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 max-h-64 overflow-y-auto">
                 <div className="p-2 border-b border-slate-700">
-                  <p className="text-[10px] text-slate-400 font-bold">VOZ MANUAL</p>
+                  <p className="text-[10px] text-slate-400 font-bold">{t('voice.manual')}</p>
                 </div>
                 <button onClick={() => { setSelectedVoiceURI(''); setShowVoicePicker(false); localStorage.removeItem('chino_voice') }}
                   className={`w-full text-left text-xs px-3 py-2 hover:bg-slate-700 transition-colors ${!selectedVoiceURI ? 'text-blue-400 bg-slate-700/50' : 'text-slate-300'}`}>
-                  🎙️ Auto (detectar idioma)
+                  {t('voice.auto_detect')}
                 </button>
                 {voices.filter(v => v.lang.startsWith('es') || v.lang.startsWith('gl') || v.lang.startsWith('en')).map(v => (
                   <button key={v.voiceURI} onClick={() => { setSelectedVoiceURI(v.voiceURI); setShowVoicePicker(false); localStorage.setItem('chino_voice', v.voiceURI) }}
@@ -344,7 +355,7 @@ export default function App() {
       </header>
 
       {currentTab === 'profile' ? (
-        <ProfileView supabase={supabase} user={user} agentGender={agentGender} setAgentGender={setAgentGender} speak={speak} onClose={(goto) => setCurrentTab(goto || 'chat')} />
+        <ProfileView supabase={supabase} user={user} agentGender={agentGender} setAgentGender={setAgentGender} speak={speak} theme={theme} setTheme={setTheme} onClose={(goto) => setCurrentTab(goto || 'chat')} />
       ) : currentTab === 'rankings' ? (
         <RankingsView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'sections' ? (
@@ -362,7 +373,7 @@ export default function App() {
                   className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {msg.role === 'agent' && (
                     <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-blue-600">
-                      <img src="/chino-avatar.png" alt="Chiño" className="w-full h-full object-cover" />
+                      <img src="/chino-avatar.png" alt={t('app.avatar_male')} className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
@@ -434,11 +445,12 @@ export default function App() {
       )}
 
       <AnimatePresence>
-        {showAuth && <AuthModal supabase={supabase} onClose={() => setShowAuth(false)} />}
+        {showAuth && <Suspense fallback={null}><AuthModal supabase={supabase} onClose={() => setShowAuth(false)} /></Suspense>}
       </AnimatePresence>
 
 
       </motion.div>
+        </Suspense>
     )}
     </AnimatePresence>
     </ErrorBoundary>

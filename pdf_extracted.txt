@@ -1,0 +1,881 @@
+--- PAGE 1 ---
+ 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+ 
+ 
+Diccionario Histórico de Términos del Fútbol 
+(DHTF): el léxico en el primer reglamento de fútbol 
+(1902) publicado en español* 
+Antoni Nomdedeu Rull 
+Universitat Rovira i Virgili 
+ 
+Recibido: 01-10-2014 
+Aceptado: 08-12-2014 
+ 
+Resumen: El Reglamento de foot-ball publicado por la Asociación 
+Clubs Foot-ball de Barcelona en 1902 fue el primer reglamento de fútbol 
+publicado en España y apareció en un contexto en el que tuvo lugar una 
+discusión lingüística, desde Antonio Viada (1902) hasta Federico Caro 
+(1919), en la que se dirimía la necesidad o no de castellanizar los angl i-
+cismos deportivos que iban llegando al español. Este primer léxico «ofi-
+cial» del fútbol en español se caracterizó en su mayor parte (55%) por 
+presentar términos en nuestro idioma, si bien el resto lo constituy ó una 
+parte importante de extranjerismos, cuestión que se explica debido a las 
+novedades futbolísticas que se estaban importando desde Inglaterra. 
+La finalidad última de este estudio es recopilar los términos  del 
+fútbol del reglamento analizado para incorporarlo s a la base de datos 
+documental que servirá de base del Diccionario Histórico de Términos del 
+Fútbol (DHTF). Es por ello que se ofrecen datos relativos a la presencia 
+de los términos en los diccionarios del español (solo se documenta el 
+25,8%) y a su representación en el Corpus diacrónico del español de la Real 
+Academia Española (se recoge el 46,3%), datos que evidencian la novedad 
+de los términos extraídos. 
+                                                 
+* Este estudio se inserta en el marco de la ayuda concedida por la Universitat Rovira i Virgili («Ajuts 
+per fomentar la incorporació i visualització d’investigadors emergents a la Universitat Rovira i 
+Virgili – Banco Santander 2013 (LINE2013)») por el proyecto: «Diccionario histórico de térmi-
+nos del fútbol (fase inicial)» (Ref. 2013LINE-04) (desde 01/07/2013 hasta 31/12/2014). 
+
+
+--- PAGE 2 ---
+186 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+Palabras clave: Historia del fútbol, Terminología del fútbol, Lexico-
+grafía española, Corpus, Reglamento 
+ 
+Abstract: The Football Regulation published by the «Asociación 
+Clubs Foot -ball» of Barcelona in 1902 w as the first football regulation 
+published in Spain and appeared in a historical context in which there 
+was a linguistic discussion, from Antonio Viada (1902) to Federico Caro 
+(1919), related to the opportunity whether to hispanicize or not sport 
+anglicisms which were gradually reaching Spanish language.  
+This first «official» football lexicon in Spanish was mostly characte r-
+ized by Spanish terms (55%), while the rest was mostly made of foreign 
+words, fact that can be explained due to the football novelties imported 
+from England. 
+The main goal of this study is to collect and then incorporate terms 
+into a documental database that will become the basis of the Diccionario 
+Histórico de Términos del Fútbol  (Historical Dictionary of Football Terms ) 
+(DHTF). That's w hy we present data about the presence of terms in 
+Spanish dictionaries (only 25.8% documented) and its representation in 
+the Corpus diacrónico del español of the Real Academia Española 
+(46.3% collected), what shows the novelty of the data presented. 
+Keywords: Football History, Football Terminology; Spanish lexicog-
+raphy; Corpus; Regulation. 
+ 
+1. INTRODUCCIÓN 
+A comienzos del siglo XX, el lenguaje del fútbol se hallaba en plena fase 
+de formación. El hecho de que en 1902 ya se disputaban, en Cataluña, 
+competiciones como la Copa Macaya o el concurso organizado por la 
+Federación Gimnástica Española hacía necesaria la presencia y divulg a-
+ción de una reglamentación del juego del fútbol, un sport que iba ganando 
+espacio lentamente entre las clases acomodadas españolas. 
+El Reglamento de foot -ball publicado por la Asociación Clubs Foot -ball 
+de Barcelona en 1902 apareció en un contexto, que se extenderá hasta 
+finales de la primera década del siglo XX, en el que el fútbol aún se pra c-
+ticaba de forma rudimentaria, como un dep orte fundamentalmente atlé-
+tico y amateur, con un escaso conocimiento de las reglas (García -Castell, 
+1968). Nos hallamos en la denominada «Etapa de gestación o regener a-
+
+--- PAGE 3 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 187 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+cionista» (1900-1919)1, fase que tuvo como colofón las demandas cole c-
+tivas del deporte para organizar la participación en los Juegos Olímpicos 
+de Amberes (Kuntz, 1919; Reparaz, 1919). En este período, los jóvenes 
+que jugaban al fútbol compatibilizaban la práctica de este juego con la de 
+otros deportes y rendían culto a la educación física. Eran conocidos c o-
+mo sportsmen y eran burgueses que emulaban las modas o costumbres de 
+la colonia anglosajona (Castro, 2012; Lagardera, 1990; Otero, 2003; T o-
+rrebadella, 2009), por lo común establecida en zonas de desarrollo indus-
+trial (Castro, 2012; Torrebadella, 2012; Torrebadella y Nomdedeu, 2014). 
+Antes de 1910 , a excepción de Barcelona, el fútbol apenas había 
+constituido una manifestación incipiente en las poblaciones de mayor 
+concentración urbana e industrial (Torrebadella, 2012). La ciudad de 
+Barcelona, en cambio, se identificó como la principal divulgadora del 
+fútbol y del deporte en general (Lagardera, 1996) 2. Así lo atestiguaron 
+varias publicaciones que se extendieron fuera de Cataluña, como Los 
+Deportes (1897-1910), El Mundo Deportivo  (1906) y una b ibliografía espe-
+cializada naciente, en la que el fútbol tomaba la iniciativa. Sin embargo, a 
+finales de 1902 en Madrid en donde el fútbol, a diferencia de Barcelona, 
+era practicado esencialmente por miembros de la alta burguesía y arist ó-
+cratas, se lidera ban iniciativas para crear una Federación Española de 
+Clubes de Foot -ball. Los intentos terminaron en la constitución de la 
+Asociación Madrileña de Foot -ball, que presidió Carlos Padrós 3. En la 
+capital, la revista Gran Vida (1903-1935) ofreció cobertura pu blicista al 
+foot-ball, que si bien mantuvo una posición de desventaja sobre otros 
+deportes aristocráticos, tuvo una presencia considerable en pocos años 
+(Otero, 2003). 
+En 1902 se creó oficialmente la Asociación Clubs Foot -ball de Ba r-
+celona, lo que demostraba el extraordinario desarrollo que el fútbol est a-
+ba alcanzando en esta ciudad (Torrebadella, 2012). Fue la primera ent i-
+dad de alcance regional de toda España como así se anunció en el núm. 
+44 de la revista Los Deportes, de 9 de noviembre de 1902 (p. 683) . Se 
+                                                 
+1 V. Torrebadella y Nomdedeu (2014) para consultar explicaciones detalladas sobre los textos ubic a-
+dos bajo este período. V. Torrebadella y Olivera (2014) para contar con más especificaciones 
+sobre el nacimiento de la prensa deportiva en España en el contexto regeneracionista. 
+2 Fuera de Cataluña, este deporte se desarrollaba principalmente en Madrid, en las principales ciud a-
+des portuarias d el Norte como en Bilbao, Vigo, A  Coruña o Gijón, además de Oviedo (Soto, 
+1930) y en  la zona Sur, en poblaciones como Jerez de la Frontera, Huelva o Sevilla (Castro, 
+2012). 
+3 Considerado uno de los pioneros y principales impulsores del fútbol en  España, ejerció de peri o-
+dista deportivo y de árbitro, fue fundador del  Real Madrid Club de Fút bol junto a su hermano 
+Juan Padrós, club que también presidió durante cinco años, entre otras ocupaciones. 
+
+--- PAGE 4 ---
+188 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+constituyó el 12 de noviembre de 1902 con el nombre de Asociación Clubs 
+Foot-ball («Asociación Clubs Football», 1902: 683) sin referencia alguna al 
+gentilicio, como resultado de la ampliación de la Federación Catalana 
+creada el 11 de noviembre de 1900 con el nombre de Foot-ball Asociación. 
+En esta época, no podemos referirnos a una literatura técnica naci o-
+nal del fútbol, porque, en general, casi no existía una bibliografía deporti-
+va (Torrebadella, 2011). Hay que tener en cuenta que la primera public a-
+ción importante del deporte español no llegaría hasta 1903 con el Manual 
+de Sport de Antonio Viada4, obra en la que Viada (1903: 15) se lamentó 
+del poco apego de los españoles al desarrollo deportivo y se refirió al 
+hecho de que el deporte estaba mucho más desarrollado en Europa que 
+en España, donde era prácticamente desconocido5. 
+En este contexto, el objetivo del presente estudio es exponer los d a-
+tos relativos al vaciado léxico del primer reglamento de fútbol publicado 
+en España, concretamente el Reglamento de foot-ball publicado por la As o-
+ciación Clubs Foot -ball de Barcelona en 1902. El análisis léxico de este 
+reglamento es fundamental, en el marco de la elaboración del Diccionario 
+Histórico de Términos del Fútbol  (DHTF)6, para poder determinar cómo se 
+asentó la terminología del fútbol que desde hacía algunos años iba apar e-
+ciendo poco a poco en la prensa española. 
+2. LOS TÉRMINOS DEL FÚTB OL EN E L PRIMER REGLAMENTO 
+DE FOOT-BALL EN ESPAÑOL 
+Dadas las circunstancias señaladas, la presencia y divulgación de una 
+reglamentación del juego se hacía necesaria, como así sucedió con el que 
+consideramos fue el primer Reglamento de foot -ball publicado en España, 
+promovido por la Asociación Clubs Foot -ball de Barcelona (1902). En 
+los Estatutos de la Asociación Clubs de Foot -ball aprobados por los clubes 
+Barcelona, Catalá, Catalonia, Catalunya, Español, Hispania, Iberia, Inte r-
+nacional, Irish, Salud, Universitari y X, que entraron en vigor el 1 de 
+enero de 1903 y que aparecieron publicados el 11 de octubre de 1903 en 
+el número 41 de la revista Los Deportes, ya hallamos la alusión a la nec e-
+sidad de «Reglamentar el juego de Foot -ball» (p. 646) en el artículo 11 
+relativo a las obligaciones de la Asociación. 
+                                                 
+4 Redactor de «Notas de sport» de la Ilustración Española y Americana (Torrebadella y Olivera, 2012). 
+5 Hasta la segunda década del siglo XX, el Manual de sport fue el único referente del deporte moderno 
+publicado en España. 
+6 Las bases de este proyecto están a la espera de publicarse (Nomdedeu y Torrebadella, 2014). 
+
+--- PAGE 5 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 189 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+ 
+Imágenes 1 y 2. Portada del Reglamento de foot-ball de 1902 y Estatutos de la 
+Asociación Clubs de Foot-ball de 1903 
+La publicación de este reglamento fue la base para aprender a jugar 
+con cierto orden y norma (Torrebadella y Nomdedeu, 2014), pues hay 
+que reparar en que en este período la enseñanza del juego se transmitía 
+oralmente por parte de los aficionados más aventajados –generalmente 
+líderes deportivos de la colonia inglesa –, lo que no era suficiente para 
+normativizar las continuas evoluciones del ju ego del fútbol. Obsérvese, 
+por ejemplo, que a partir del establecimiento de las 14 reglas del nuevo 
+código del fútbol, que conllevó la fundación de la Football Associ a-
+tion (FA), redactadas el 26 de octubre de 1863 por 11 clubes ingleses en 
+la Taverna Freemasons’ de Londres, las propias reglas iban sufriendo 
+modificaciones constantes: en 1871 se especificó que el portero era el 
+único jugador que podía disputar el balón con las manos en cualquier 
+parte del campo; en 1886 se decidió que el portero únicame nte podía 
+usar las manos en su propio campo; o en 1891 se introdujeron el tiro 
+desde el punto de penalti y las redes en las porterías. Y e ste primer r e-
+glamento de fútbol en español presentaba las últimas novedades sobre 
+los cambios que se iban produciendo en la reglamentación del juego. Un 
+buen ejemplo de ello lo representa el hecho de que el reglamento británi-
+co introdujo en 1902 el área penal y la línea central, novedades que, como se 
+observa en la imagen del rectángulo de juego adjunta, fueron incorpor a-
+das en el reglamento analizado.  
+ 
+
+
+--- PAGE 6 ---
+190 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+ 
+Imagen 3. Partes del terreno de juego del Reglamento de foot-ball de 1902 
+Con esta novedosa reglamentación, comenzaron a fijarse voces. En 
+la Tabla 1 se exponen todos los términos del fútbol que aparecen en el 
+reglamento objeto de estudio7: 
+área de la (meta) goal goal1 (meta) off-side (falso avance) 
+área de penalty (área de castigo) goal2 (tanto) partido (match) 
+back (defensor) goal kick (saque de meta) pelota 
+bando (team) goal line penalty (saque del castigo) 
+campo goal-keeper (guarda meta) penalty-kick (saque de 
+castigo) 
+campo de juego guarda meta (goal-keeper) poste 
+carga half-back (medio) poste-goal 
+centro del campo half-time (descanso) primer kick (primer saque) 
+corner (esquina) hands (manos) primer saque (primer kick) 
+corner-flag-kick (saque de 
+ángulo) 
+juez árbitro (referee) puerta (goal1) 
+corner-kick (saque de ángulo) juez de línea (lineman) referee (juez árbitro) 
+cronometeur (time Keeper) jugador saque 
+defensor (back) kick-off (primer saque) saque de ángulo (corner-kick) 
+delantero (forward) línea de meta (goal line) saque de castigo (penalty -
+kick) 
+descanso (half-time) línea lateral (touch line) saque de meta (goal kick) 
+entrar goal lineman (juez de línea) saque del castigo (penalty) 
+esquina (corner) manos (hands) saque libre (free-kick) 
+falso avance (off-side) marcar tanto sustitución 
+                                                 
+7 Los términos entre paréntesis también se incluyen en el reglamento analizado y se pr esentan del 
+mismo modo como se expone en la Tabla 1. 
+
+
+--- PAGE 7 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 191 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+foot-ball marco (goal) tanto 
+forward (delantero) match (partido) team (bando) 
+free-kick (saque libre) medio (half-back) time keeper (cronometeur) 
+fuera de juego (off-side) meta (goal) touch 
+  touch line (línea lateral) 
+De estos 67 términos, hay 30 extranjerismos (44,8%), 29 de los 
+cuales son anglicismos  área de penalty , back, corner, corner-flag-kick, corner-
+kick, entrar goal, foot-ball, forward, free-kick, goal1, goal2, goal kick, goal line, goal-
+keeper, half-back, half-time, hands, kick-off, lineman, match, off-side, penalty, penal-
+ty-kick, poste-goal, primer kick , referee, team, time keeper , touch y touch line  y 
+uno galicismo cronometeur. De los 29 anglicismos, hay 5 formados por 
+una palabra en español y otra en inglés área de la (meta) goal, área de penal-
+ty, entrar goal, poste goal y primer kick. Los 37 términos restantes (55,2%) 
+son formaciones íntegras en español, la mayor parte de ellos, concreta-
+mente 27, traducciones de los extranjerismos indicados. Este último 
+aspecto explica la importancia de la sinonimia o de la equivalencia, entre 
+inglés y español, de los términos del fútbol en este período, como descanso 
+(half-time)8. Hay, además, términos en inglés que se usaban como sinón i-
+mos, como corner-flag-kick y corner-kick. 
+Esta presencia anglosajona no solo se encontraba a nivel léxico, sino tam-
+bién por ejemplo en lo referente a las medidas reglamentarias del terreno de 
+juego, de la portería o de la pelota. Estas medidas se proporcionaban a partir del 
+sistema métrico decimal, pero entre paréntesis se incluían las mediciones, en 
+yardas, pulgadas u onzas, correspondientes al sistema anglosajón, como 
+se muestra en el ejemplo de la página 3 del reglamento: 
+C. –Pelota.– Es de cuero resistente con cámara interior de goma que se 
+llena de aire, siendo su circunferencia de 0,675 á 0,700 metros ( 27 á 28 
+inches ó pulgadas), generalmente llamadas de número 5 y su peso antes del 
+juego de 0,369 á 0,425 grs. (13 á 15 onzas inglesas). 
+Todo ello demuestra que el mundo anglosajón estaba muy vivo tanto en 
+los términos empleados como en las unidades de medida utilizadas. En los años 
+sucesivos comenzarían a surgir numerosos intentos de españolizar las voces. 
+3. SOBRE LA TRADUCCIÓN DE LOS TÉRMINOS DEL FÚTBOL 
+A partir del conocimiento actual sobre la formación del léxico futbo-
+lístico durante el siglo XX, podemos afirmar, si bien como hipótesis, que 
+                                                 
+8 En §3 se ofrecen más detalles sobre la necesidad de explicar y traducir los extranjerismos futbolísti-
+cos en esta etapa. 
+
+--- PAGE 8 ---
+192 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+los primeros términos del fútbol sufrieron , en algunos casos, un intento 
+de traducción infructuoso, pues en general se optó  por una política peri-
+odística de adopción de calcos literales, aunque finalmente terminaran 
+por arraigar los préstamos léxicos9. 
+Las reflexiones que los redactores y periodistas de la época escribi e-
+ron sobre la adaptación de los términos futbolísticos en la «Etapa de 
+gestación o regeneracionista» (1900 -1919) no fueron pocas. De Antonio 
+Viada (1902a -1902i) a Federico Caro (1919) tuvo lugar una discusión 
+lingüística en la que se dirimía la necesidad o no de castellanizar los a n-
+glicismos deportivos que iban llegando al español. Participaron de esta 
+controversia, fundamentalmente, «Un Delantero» (19 de enero de 1902), 
+Antonio Viada (en una serie de artículos publicados entre febrero y dic i-
+embre de 1902: 1 902a-1902i), Mariano de Cavia (1908a y 1908b), Carlos 
+Miranda (1908), Narciso Masferrer (1911 y 1912), Francisco Bru (1918) y 
+Federico Caro (1919). En estos escritos se trató, en general, de 
+españolizar las voces del foot-ball, en su mayor parte en inglés,  como así 
+refleja el vaciado léxico del reglamento objeto de estudio (§Tabla 1). 
+El artículo firmado por «Un Delantero» titulado «Foot -ball. La cues-
+tión del día», publicado en el número 3 de la revista Los Deportes el 19 de 
+enero de 1902 , es de gran valor para la historia del léxico español del 
+fútbol. En él ya se plantearon algunas de las cuestiones sobre la traducc i-
+ón de términos que se ubicarían en el centro del debate terminológico de 
+comienzos del siglo XX: «Mi parecer es contrario á una traducción más ó 
+menos fiel de todos los términos, pero sí favorable á la de algunos de 
+ellos» (Un Delantero, 1902: 38). Esta opinión se basó en la idea aceptada 
+por los teóricos de la terminología del siglo pasado según la cual su rasgo 
+principal debía ser su carácter universal: «Mi opinión contraria á un ca m-
+bio total de nombres (...) es debida á entender sería de gran utilidad exi s-
+tiera un lenguaje universal, no sólo para las relaciones mercantiles y c o-
+merciales, sí que también para las sociales y deportivas» (ibíd.). A este 
+respecto, en este artículo ya se mencionaron los términos del fútbol en 
+inglés, que, según el «Delantero», 
+los que desean dedicarse ú ocuparse del foot -ball deben adoptar los 
+primitivos nombres, universalmente usados, siendo mi parecer serán de 
+difícil traducción, y mejor seria dejarlas como están las palabras (...) no 
+sólo por ser la razón antedicha, sí que también por expresar el  signifi-
+cado con gran concisión (ibíd.: 38-39). 
+                                                 
+9 Este fenómeno ya se ha podido evidenciar a propósito de algunos términos en Tor rebadella y 
+Nomdedeu (2013). 
+
+--- PAGE 9 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 193 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+A este respecto, este autor mencionaba los términos corner kick, goal, 
+free kick, kick-off, kick, off-side, goal kick, behind y penalty, todos ellos, salvo 
+behind, documentados en el reglamento estudiado. Por otra parte, se ref e-
+ría al resto de términos, los cuales 
+podrán muy bien traducirse al español, pues son muchos los que  saben 
+que en Francia se designa el lugar de los jugadores por: goal = arrières; 
+demis, avants; pudiéndose asimismo traducir: match = team = linesman = referee 
+= goals lines = touch lines = time keeper = hands = half-time, etc. (ibíd.: 39) 
+Esta consideración subjetiva sobre la traducción de los términos no 
+era la que seguirían los autores sucesivos que se ocuparían de abordar 
+cómo había que referirse a los hechos y acciones del fútbol. Además, este 
+«Delantero» hizo un llamamiento a los que querían traducir las voces 
+inglesas del fútbol al español, exhortándoles a que 
+se pongan de acuerdo cuanto antes para adoptar uno definitivo, pues 
+queriendo todos traducirlos á su antojo, cada uno saca á relucir un 
+nombre nuevo y con ello va á armarse mayor confusión que a ntes, pues 
+si hay muchos que se quejan de no entender la palabra goal keeper, más 
+engorroso será saber si significan diferentes cosas: guarda meta, port e-
+ro, guardián, custodiante, si unos usan una pala bra de éstas y otros las 
+demás (ibíd.: 39). 
+A partir de  aquí, se optó mayoritariamente por la traducción de los 
+extranjerismos. En varios artículos sobre la cuestión de la adaptación de 
+los términos deportivos extranjeros, Antonio Viada, que colaboró con la 
+revista Los Deportes de 1897 a 1910,  publicó una serie de ocho artículos 
+«Sobre el vocabulario deportivo» (1902a -1902i) en los que expuso la 
+intención de españolizar los anglicismos del deporte. En el primero de 
+ellos (1902a), dirigido a Narciso Masferrer 10, Antonio Viada (1902a: 101) 
+planteó la problemática de los neologismos que no podían traducirse y 
+defendía claramente que su presencia enriquecía el idioma: 
+Porque es el caso que existen vocablos ¡hay que reconocerlo! que no 
+tienen traducción castellana. Representan objetos nuevos y se traen, 
+corno es natur al, nombres nuevos; nombres que hay que aceptar con 
+librea exótica, mientras el uso no los vista con traje de la tierra, ó sea 
+con asinencia ó desinencia castellana. Si los idiomas se cerraran en a b-
+soluto á la banda en esto de no admitir nombres nuevos, se  quedarían 
+pobres y estacionarios y no corresponderían á los progresos de las ideas. 
+                                                 
+10 Entre otras iniciativas, Narciso Masferrer participó en la fundación del FC Barcelona, fue vicepr e-
+sidente de este club, presidió la Federación Catalana de Fútbol, fue directivo del Comité Olí m-
+pico Español, del Comité Olímpic Català y fundador de  los periódicos El Mundo Deportivo  y Los 
+Deportes. 
+
+--- PAGE 10 ---
+194 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+Viada era partidario de la españolización de algunas palabras, pero no 
+de todas. En los artículos sucesivos a este primero, trató las cuestiones 
+relativas a la traducción de términos deportivos. En cada uno de ellos se 
+refirió casi de manera exclusiva a un deporte en particular: en 1902c a los 
+nombres de los deportes, en 1902d a la hípica, en 1902e al automovili s-
+mo, en 1902f al ciclismo, en 1902g aludió a los anglicismos, e n 1902h a 
+los juegos de pelota y en 1902i al remo y la vela. Por lo que respecta a los 
+del fútbol, en 1902c indicó que lo normal sería traducir el término foot-
+ball por pelota-pie o pelotapié, pero como « se trata de una voz tan en boga 
+como lo es foot-ball, que casi sería preferible españolizarla escribiendo 
+“futbol”, y aun mejor “fudbol”, como se pronuncia» (Viada, 1902c: 179). 
+Hay que tener en cuenta que el uso de los anglicismos futbolísticos en la 
+prensa de la época comenzaba a ser tan común  que Miguel Salvador 
+publicó en el número 8 de La Tipografía. Revista mensual ilustrada de artes 
+gráficas el artículo «Universidad Popular de Madrid. Palabras usadas en la 
+crítica de deportes por los periodistas. El foot -bal», en donde explicó el 
+significado de las vo ces sport, foot-ball, team, referee, goal, foreward, back, goal-
+keeper y corner. 
+Mariano de Cavia, en un contexto regeneracionista avanzado, fue el 
+periodista que divulgó su discurso sobre la castellanización de los angl i-
+cismos deportivos. Sirvan de ejempl o sus dos artículos publicados en El 
+Imparcial, «Balompié» el 1 de agosto de 1908 (1908a) y «El balompié en 
+marcha» el 5 de agosto de 1908 (1908b). Su intención españolizadora del 
+léxico futbolístico anglosajón fue mucho más allá de la de Antonio Viada 
+en los artículos susodichos. Por ejemplo, en 1908a criticó abiertamente a 
+aquellos que opinaban que la voz foot-ball era intraducible: 
+El término «football» no solamente no es intraducible, sino que al tr a-
+ducirlo al pie de la letra —ya que el pie toma tanta parte en ese juego—
+nos encontramos con un vocablo español de la más clara significación y 
+de la más castiza estructura. 
+El vocablo inglés es doble: está compuesto de «foot» (pie) y «ball» 
+(balón). (...) Disponiendo, pues, en nuestro idioma de las mismas dos  
+voces que en inglés, é igualmente precisas y breves, nada más lógico y 
+hacedero que componer la palabra balompié (...). 
+Defendía estas decisiones por conservar «la pureza y riqueza de esta 
+habla española» (Cavia, 1908a) y porque, según argumentaba, de est e 
+modo en español se sabía lo que se decía, mientras que en inglés no. Esta 
+propuesta fue secundada por varios periodistas, como por parte de Car-
+los Miranda (1908) en el artículo «¿Balompié?... ¿Bolapié?... ¿Bolopié?... 
+
+--- PAGE 11 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 195 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+Para Mariano de Cavia», publicado en El Liberal el 2 de agosto de 1908, o 
+por un anónimo (1908) en un artículo titulado «No se dice foot-ball, dígase 
+balompié», aparecido en El País el 3 de agosto de 1908 . Carlos Miranda 
+(1908: 2), con algunas discrepancias con la propuesta de Cavia, sugirió la 
+palabra «bolapié» por ser «de pura cepa española». Luis Zozaya (1908), 
+por otra parte, en el artículo titulado «Balompié y bolapié», publicado en 
+el Heraldo de Madrid el 3 de agosto de 1908, no aceptó ni foot-ball ni balom-
+pié, sino fotbal, pues de este modo se quitan, como afirma el propio Ziz a-
+ya, «letras inútiles» a semejanza de las palabras españolizadas «mitin, i n-
+terviú, voltio, toileta y otras tantas palabras». 
+Diez años después, nos hallamos con el artículo de Fr ancisco Bru 
+(1918), el que fuera Presidente del Colegio de Árbitros de Cataluña, tit u-
+lado «El balompié y sus voces», publicado en el número 74 de Madrid-
+Sport, del 28 de febrero de 1918. En él se indicaba que 
+a pesar de que tanto por parte de los Directori os como de los cronistas 
+y jugadores se ha convenido en desterrar por completo las palabras i n-
+glesas, sustituyèndolas por sus equivalentes en español, resulta que lo 
+mismo unos que otros continúan usando los vocablos ingleses; así v e-
+mos que nuestra nuestra  suprema autoridad del balompié continúa d e-
+nominándose Real Federación Española de Fott -ball, y que casi la tot a-
+lidad de las entidades que a este deporte se dedican no constituyen S o-
+ciedades, sino «Clubs de Foot -ball o Sportings Clubs», etc., etc., y que 
+los jugadores, al emplear los términos ingleses, no sólo los pronuncian 
+mal, sino que hasta llegan a desconocer su significado, enfermedad que 
+padecen también muchos de nuestros redactores deportivos (p. 1). 
+Ante esta defensa de traducir las palabras ingles as del balompié, aquí 
+nos encontramos ante la configuración naciente de la terminología futbo-
+lística en español. Bru denunció abiertamente el uso de anglicismos, no 
+sólo por cuestiones lingüísticas sino también «para ser más patriotas» 
+(1918: 1). Por ejemp lo, indicó que «Otros nos aseguran que “Pituso”, 
+“bak” del Musculatura S.F.B.C., despejó el peligro de un soberbio “ s-
+choot” que fué al “aut”. Han querido decirnos que el balón salió por la 
+línea de puerta» (ibíd.: 1). En esta línea, propuso la traducción d e «las 
+principales voces que los ingleses suelen emplear en el juego (...) para que 
+los que vayan a los campos sepan amenos lo que quieren decir con sus 
+gritos» (ibíd.): 
+Foot-ball: Balompié. 
+Match: Partido. 
+Toss: Elección de puerta o saque inicial. 
+Half-time: Medio tiempo (intermedio). 
+Goal: Puerta o meta. 
+
+--- PAGE 12 ---
+196 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+Goal: Tanto. 
+Goal-keeper: Portero o guardameta. 
+Goal-post: Marco de la puerta. 
+Goal-area: Area de puerta. 
+Goal-line: Línea de puerta. 
+ 
+Touch-line: Línea lateral. 
+Corner: Esquina (la que forman las líneas de puerta y lateral). 
+Corner-kick: Saque de esquina. 
+Corber-flag: Banderín de esquina. 
+Penalty-area: Area de castigo. 
+Penalty-kick: Saque de castigo. 
+Free-kick: Saque libre. 
+Kick-off: Salida o saque inicial. 
+Place-kick: Saque del centro. 
+Hands: Manos. 
+Foul: Juego sucio. 
+Fault: Falta. 
+Referée: Arbitro. 
+Linesman: Juez de línea. 
+Back: Defensa. 
+Half-back: Medio. 
+Forward: Delantero. 
+Off-side: Inhabilitado (Fuera de juego). 
+On-side: En juego. 
+Throw-in: Saque lateral. 
+Shot: Balón a puerta. 
+Dribbling: Regate. 
+Out-ball: Balón fuera por la línea lateral. 
+Team: Bando. 
+Moreu (1919) se sumó a este tendencia, pero no se mostró favorable 
+a la traducción de foot-ball por balompié, sobre todo por tratarse de una 
+voz arraigada en la prensa deportiva de otras naciones: 
+Unánimemente estiman acertada la traducción de la palabra inglesa foot-
+ball por balompié, hoy bastante usada. 
+En contra, creo que este es el único vocablo que no debe de traducirse, 
+y estoy de acuerdo con algunos de ellos al traducir todas las palabras 
+que con el foot-ball y demás deportes se relacionan. 
+Para lo dicho, me baso en la prensa de otros países. 
+Toda la francesa escribe foot -ball; hasta los alemanes, Portugal, Italia, 
+así como todas las naciones americanas, escriben la palabra inglesa. 
+
+--- PAGE 13 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 197 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+[...] Creo  que los deportes, genuinamente ingleses, debemos de resp e-
+tarles su título, si bien estimo muy conveniente, traducir, como he d i-
+cho más arriba, todas las palabras que con ellos se relacionan. Encue n-
+tro francamente ridículo, oir a los jugadores gritar: hand , shoot, corner, 
+goal, etc., etc. 
+Por otra parte, hallamos posiciones más cercanas al uso verdadero de 
+las voces y no tan próximas a la prescripción normativa de los defensores 
+de un lenguaje deportivo castizo. Las palabras de Federico Caro (1919: 1) 
+fueron diáfanas a este respecto: 
+¿Y qué inconveniente hay con la introducción de estos anglicismos en 
+nuestra lengua? ¿No basta el uso para hacer tomar carta oficial de nat u-
+raleza en un idioma, a vocablos que son hasta verdaderos disparates f i-
+lológicos. De todos modos, es inútil discutir: el uso precisamente, como 
+ha sucedido en otros deportes, el tennis y las carreras, por ejemplo, es 
+el que ha de establecer la ley, y ésta ha de ser sancionando nuestra op i-
+nión de usar las traducciones ya admitidas, como delante ros, medios, 
+etc., y arreglar al castellano las palabras inglesas que aún se us an, escri-
+biendo chut, gol, etc. 
+4. LOS TÉRMINOS DEL REGLAMENTOS EN LOS DICCIONARIOS 
+Ha podido observarse de qué manera  las voces foot-ball, futbol o ba-
+lompié, principalmente, y fotbal o fudbol, de manera más anecdótica, centra-
+ron una parte importante d el primer debate sobre terminología del d e-
+porte en español. Hoy sabemos, gracias al conocimiento de la presencia 
+de la terminología del fútbol en textos de la época 11, que desde 1902  la 
+palabra futbol se usaba con frecuencia en los textos producidos en 
+Cataluña, así como el predominio de foot-ball en el resto de España, hasta 
+que Mariano de Cavia lanzara, en 1908, el calco literal balompié, voz que 
+convivió con el préstamo léxico futbol (Pascual, 2012; Torrebadella y 
+Nomdedeu, 2013). Tanto en los textos que ya hemos analizado en otro 
+estudio (Torrebadella y Nomdedeu, 2013) como en los diccionarios de la 
+época, los términos futbol y balompié se impusieron definitivamente a foot-
+ball. Y es que incluso algún diccionario pareció sumarse a la labor de 
+castellanización de las voces del fútbol que se llevó a cabo en este perí o-
+do, pues fútbol y futbol se introdujeron en nuestros diccionarios más tarde 
+que balompié. Por ejemplo, l a palabra balompié se incorporó por primera 
+vez a un repertorio lexicográfico  en el Diccionario enciclopédico de la lengua 
+española de José Alemany y Boluf er (1917). El primer diccionario acad é-
+                                                 
+11 V. Torrebadella y Nomdedeu (2013) y Nomdedeu y Torrebadella (2014). 
+
+--- PAGE 14 ---
+198 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+mico en incluirla es el DMRAE de 1927. P ero, como se indicó bajo la 
+voz futbol en el Diccionario crítico etimológico castellano e hispánico (1984-1991) 
+de Joan Corominas y José Antonio Pascual, «no ha logrado generalizarse 
+el neologismo balompié, calco muy literal del nombre inglés, que sólo 
+alcanzó cierta difusión en la prensa madr ileña», razón por la cual balompié 
+aparece desde el DMRAE de 1950 y desde el DRAE de 1970 con una 
+remisión a la voz considerada principal, fútbol12. La palabra futbol, en cam-
+bio, se incorporó en el DRAE de 1936 –se introdujo también futbolista 
+«Jugador de futbol.»− con la definición «Juego que consiste en lanzar con 
+los pies un balón, según determinadas reglas», en donde se decidió sust i-
+tuir «condiciones» por «reglas», mientras que balompié no se incorporó 
+definitivamente al diccionario normativo del español hasta su edición de 
+1970, esta vez por medio de una definición sinonímica, «(De balón, y pie). 
+m. fútbol», tomada del DMRAE de 1950. 
+De los 67 términos futbolísticos del reglamento estudiado, 24 
+(35,8%) se registran en alguno de los diccionar ios del español campo 
+(DRAE-1970), carga (DRAE-1992), corner (DRAEM-1983), delantero (DRAE-
+1925), descanso (DRAEM-1989), foot-ball (Alemany y Bolufer, 1917 ), fuera de 
+juego (DRAE-1970), goal1 (Supl. De Alemany y Bolufer, 1917 ), goal2 (Rodríguez 
+Navas, 191 8), guarda meta  (Rodríguez Navas, 1918 ), juez de línea  (DRAEM-
+1983-85), línea de meta (DRAE-1984), marcar tanto (DRAE-1984), match (Ale-
+many y Bolufer, 1917 ), medio (DRAE-1984), meta (DRAE-1970), off-side 
+(DRAEM-1983-85), partido (DRAE-2001), pelota (DRAEM-1989), penalty 
+(DRAEM-1983-85), poste (DRAE-1984), puerta (DRAEM-1983-85), tanto 
+(DRAE-1899) y team (Alemany y Bolufer, 1917 ), de los cuales 8 (33,3%) 
+son anglicismos. Por otra parte, no se documentan en nuestra lexicogr a-
+fía 43 términos (64,2%) área de la (meta) goal , área de penalty , back, bando, 
+campo de juego, centro del campo, corner-flag-kick, corner-kick, cronometeur, defensor, 
+entrar goal, esquina, falso avance, forward, free-kick, goal kick, goal line, goal-keeper, 
+half-back, half-time, hands, juez árbitro , jugador, kick-off, línea lateral , lineman, 
+manos, marco, penalty-kick, poste goal , primer kick , primer saque , referee, saque, 
+saque de ángulo, saque de castigo, saque de meta, saque del castigo, saque libre, susti-
+tución, time keeper , touch y touch line , de los cuales 18 son anglicismos 
+                                                 
+12 La voz fútbol, por su parte, se introdujo, con tilde, en el DMRAE de 1927, contrariamente al uso 
+documentado mayoritariamente de la voz, sin tilde, en los textos de la época. La palabra futbol 
+se mantiene como única forma aceptada en las ediciones del DRA E de 1936, 1939, 1947, mien-
+tras que en las ediciones de 1927 y 1950 del DMRAE se registra solo la forma fútbol. A partir 
+de la edición de 1956 del DMRAE, se incluyen ambas formas, fútbol y futbol, apareciendo en 
+todos los casos la forma con tilde en primer  lugar, lo que denota una clara preferencia por 
+fútbol. 
+
+--- PAGE 15 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 199 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+(41,9%), un galicismo (2,3%) que en el reglamento aparece como sin ó-
+nimo de time keeper, 5 términos formados por una palabra en español y 
+otra en inglés (11,6%) área de la (meta) goal, área de penalty, entrar goal, poste 
+goal y primer kick y 19 términos en español (44,2%). Si tenemos en co n-
+sideración la tradicional poca aceptación de anglicismos en los diccion a-
+rios españoles, puede entenderse, en el marco de esta decisión histórica, 
+la escasa presencia de estas voces en sus páginas. Sin embargo, cuesta un 
+poco más justificar la ausencia de términos como defensor, juez árbitro o 
+saque de meta, palabras que siguen usándose hasta la actualidad. 
+5. LOS TÉRMINOS DEL REGLAMENTOS EN EL CORDE 
+El motivo de la búsque da de estos términos en el  Corpus diacrónico del 
+español (CORDE) de la Real Academia Española (RAE) se halla en el 
+objetivo último del vaciado terminológico del texto objeto de estudio, es 
+decir, contribuir al DHTF, y en la finalidad misma del corpus académico, 
+pues, como expone la RAE en la sección de Ayuda del Banco de datos 
+del español, «pretende servir tanto a un investigador interesado en la 
+existencia de una palabra o expresión o que quiera llevar a cabo un est u-
+dio gramatical, como a los lexicóg rafos que con sus materiales elaboren 
+el Diccionario histórico.» Se trata de un recurso muy valioso para los histor i-
+adores de la lengua, que pueden acudir a él, en ausencia de un diccionario 
+histórico del español, para conocer la documentación de las voces  y tra-
+tar de trazar la historia de algunas palabras. De ahí nuestro interés en 
+conocerlo, describir qué textos contiene y proponer la inclusión del r e-
+glamento analizado en el presente estudio por su importancia para la 
+historia del léxico español. 
+Se han b uscado todas las obras que presenta la RAE en su corpus, 
+tanto en el CREA como en el CORDE, con la palabra fútbol en el título13. 
+Por un lado, de las 27 obras que llevan dicha palabra en el título, la más 
+antigua es de 1955 Traducción de Fútbol. La Copa de l Mundo de Jules Rime t, 
+de Andrés Mercé Varela , clasificada bajo «SOCIEDAD: Deportes y 
+juegos». De las 27 obras, hay 22 que están clasificadas bajo «FICCIÓN: 
+Relatos». Se trata de los «Cuentos de fútbol» (Alfaguara, 1995), coordina-
+dos por Jorge Valdano, de autores como Bernardo Atxaga, Javier Marías, 
+Bryce Echenique, Miguel Delibes, Eduardo Galeano, Augusto Roa Ba s-
+tos, Mario Benedetti, Juan García Hortelano y Osvaldo Soriano, entre 
+                                                 
+13 Se ha realizado también las mismas búsquedas en el corpus del Nuevo diccionario histórico del 
+español (CDH) de la RAE sin obtener resultados distintos a los expuestos. 
+
+--- PAGE 16 ---
+200 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+otros. De los 5 textos restantes, hay 3 clasificados bajo «OCIO, VIDA 
+COTIDIANA: Deportes»: 
+CAPPA, Ángel (1996) : La intimidad del fútbol. Grandeza y miserias, juego y 
+entorno, Tercera Prensa-Hirungarren, Donostia. 
+GALEANO, Eduardo (1995): El fútbol. A sol y sombra, Siglo XXI, Madrid. 
+ORÚE, E.; GUTIÉRREZ, S. (2001): Locas por el fútbol. De las gradas al vestua-
+rio, Temas de hoy, Madrid. 
+Un libro bajo «SOCIEDAD: Deportes y juegos»: 
+MERCÉ VARELA, Andrés (1955) : Traducción de Fútbol. La Copa del Mundo 
+de Jules Rimet, Juventud, Barcelona. 
+Y uno bajo «SALUD: Salud»: 
+VV.AA. (1989): Control del dopaje en fútbol, RFEF, Madrid. 
+ No se registran obras que incluyan en el título las voces football, futbol 
+o balompié. 
+Por otro lado, cabe tener en cuenta, asimismo, que en el CORDE se 
+clasifican 49 documentos bajo la clasificación temática «S OCIEDAD: 
+Deportes y juegos», de los cuales solo uno es de fútbol, el antes citado 
+Traducción de Fútbol. La Copa del Mundo de Jules Rime t, de Andrés Mercé 
+Varela (1955). Además, de estos 49 do cumentos, 9 se refieren estrict a-
+mente a deportes, mientras que lo s 41 restantes se refieren a juegos, en 
+textos fechados entre 1283 Libro de ajedrez, dados y tablas  de Alfonso X 
+y 1859 Manual de juegos  de Carlos de Pravia . Y de los 9 textos que se 
+refieren a deportes entre 1889 y 1970 , salvo el único dedicado al f út-
+bol ya mencionado, 4 de ellos tratan del mundo del toreo, mientras que 
+uno del pugilismo, uno del boxeo, uno de la equitación y uno del 
+montañismo. Por lo tanto, la presencia de textos del fútbol en el COR-
+DE es exigua si tenemos en consideración la impor tancia y difusión de 
+este deporte a lo largo de todo el siglo XX. 
+La búsqueda de las 67 palabras extractadas del reglamento analizado 
+se ha realizado sin filtros, en primer lugar, y con el filtro por tema 
+«16211.- Deportes y juegos», en segundo lugar, sobr e todo para los té r-
+minos como campo o esquina, voces no exclusivas del fútbol o del deporte. 
+Desde un punto de vista estrictamente léxico, hay 36 términos 
+(53,7%) que no aparecen en el CORDE. De ellos, cabe distinguir las 28 
+consultas cuyo resultado devuelve el mensaje «No existen casos para esta 
+consulta» de los 8 casos restantes, en los que sí se recoge el término pero 
+no en sentido futbolístico. 
+Es cierto, por otro lado, que la mayor parte de estas ausencias, co n-
+cretamente 16, corresponde a extranjerismo s back, corner-flag-kick, corner-
+
+--- PAGE 17 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 201 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+kick, cronometeur, free-kick, goal kick, goal line, half -back, half-time, hands, kick-
+off, lineman, penalty -kick, time keeper , touch y touch line , o a los 5 términos 
+que contienen una voz en inglés ( área de la (meta) goal, área de penalty, entrar 
+goal, poste-goal y primer kick), pero se obvian 15 términos en español campo 
+de juego, falso avance, juez árbitro , línea de meta , línea lateral, marcar tanto, poste, 
+primer saque , saque, saque de ángulo, saque de castigo , saque d e meta , saque del 
+castigo, saque libre, sustitución, alguno de ellos de uso habitual en los textos 
+futbolísticos de las últimas décadas, como línea de meta o saque de meta. 
+Por lo que respecta a los 31 términos que sí se recogen en el COR-
+DE, destaca el hecho de que en 7 casos corner, goal1, goal2, guarda meta, 
+match, referee, teamse documentan en un texto firmado por Jaso titulado 
+«Los partidos del domingo y lunes », extraído del periódico El imparcial, 
+fechado el 26 de diciembre de 1922. Sirva de ejemplo, el contexto de la 
+voz match: 
+La segunda repetición de encuentro que se jugó en los dominios del 
+Racing fué de mayor fortuna para los forasteros, que consiguieron un 
+tanto de ventaja sobre los indígena s; pero no por ello resulta más m o-
+vido el «match», ni se dieron por más contentos los espectadores. 
+O las primeras 5 documentaciones en Traducción de Fútbol. La Copa del 
+Mundo de Jules Rimet de Andrés Mercé Varela, Juventud, Barcelona, 1955. 
+En el resto de registros, los textos empleados para la primera docume n-
+tación son: 
+forward: en José María Arguedas, Los ríos profundos, publicado en Perú 
+en 1958; 
+juez de línea: en la publicación periódica Campeón, de 1935, en un artículo 
+titulado «El juez de línea: la importancia de su misión» firmado por Champ. 
+penalty: aparece por primera vez en la publicación El Socialista, en un 
+artículo del 18 de septiembre de 1934  titulado «Oviedo 3; Celta de Vigo, 
+0», de autor desconocido. 
+Por tanto, la presencia de términos del fútbol en el CORDE y la re-
+presentación textual escogida es ampliable. Se cuenta básicamente con el 
+artículo titulado « Los partidos del domingo y lunes », extraído del peri ó-
+dico El imparcial, fechado el 26 de diciembre de 1922 y fi rmado por Jaso, 
+y con el libro Traducción de Fútbol. La Copa del Mundo de Jules Rime t, de 
+Andrés Mercé Varela, de 195514. 
+                                                 
+14 Hay que destacar que las bús quedas del CORDE no han resultado totalmente fiables. En el caso 
+de goal-keeper, que en nuestro reglamento se escribe separado por un guión, y que sí se encuentra 
+un contexto en el CORDE J. Miquelarena, «Inglaterra acepta ya el progreso del fútbol extra n-
+jero» [ABC, 25 de noviembre de 1951], párrafo n.º 1 , se ha buscado también escrito por sep a-
+
+--- PAGE 18 ---
+202 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+6. CONCLUSIONES 
+El Reglamento de foot -ball publicado por la Asociación Clubs Foot -ball 
+de Barcelona en 1902 fue fundamental para la fij ación de los términos 
+futbolísticos relacionados con las demarcaciones de los diferentes prot a-
+gonistas de este deporte sobre el terreno de juego. Algunos de ellos, 
+como hemos podido estudiar en otras ocasiones (Nomdedeu, 2004 a, 
+2004b y 2009), se mantuvieron en su forma original, otros fueron evol u-
+cionando hasta su forma actual. 
+Una vez más, se ha evidenciado la necesidad de estudiar textos hasta 
+ahora desconocidos o no tomados en consideración para encontrar e x-
+plicaciones sobre el uso del léxico en español y en concreto del léxico del 
+fútbol, disciplina de extraordinaria aparición en todo tipo de textos desde 
+finales del siglo XIX y hasta la actualidad. Con el texto estudiado, por un 
+lado, se adelanta en mucho la documentación textual de las voces del 
+fútbol a los textos que actualmente se incluyen en el CORDE y, por el 
+otro, s e presentan 36 de los 67 términos del fútbol del reglamento  
+(53,7%) que no aparecen en el CORDE. Asimismo, observamos que 43 
+términos (64,2%) no se registran en los diccionarios del  español, lo que 
+demuestra la necesidad de ahondar en el estudio del léxico del fútbol de 
+cara a la elaboración de un diccionario histórico del español. 
+A partir del vaciado léxico de textos como el presentado, iremos a-
+vanzando en la elaboración del DHTF y, paralelamente, en la docume n-
+tación y explicación de una parcela del léxico español paradigmática del 
+uso de las voces en los diversos medios de comunicación. 
+REFERENCIAS BIBLIOGRÁFICAS 
+ANÓNIMO (1908): «No se dice foot-ball, dígase balompié ». El País, 3 d e 
+agosto de 1908, p. 1. 
+ASOCIACIÓN CLUBS FOOT-BALL DE BARCELONA (1902): Reglamento de 
+foot-ball, Barcelona, 13 págs. 
+“ASOCIACIÓN CLUBS FOOTBALL” (1902): Los Deportes, nº 44, 9 de nov i-
+embre de 1902, p. 683. 
+BRU, Francisco (1918): «El balompié y sus voces», Madrid-Sport, nº 74, 28 
+de febrero de 1918, pp. 1-2. 
+CARO, Federico (1919): «Tecnología futbolística», Madrid-Sport, nº 120, 
+16 de enero de 1919, p. 1. 
+                                                                                                         
+rado (goal-keeper) y todo junto (goalkeeper). En ambos casos se indica que no existen casos para es-
+ta consulta, pero en cambio sí aparece goalkeeper en el contexto de goal. 
+
+--- PAGE 19 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 203 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+CAVIA, Mariano de (1908a): «Balompié», El Imparcial , 1 de agosto de 
+1908, p. 1. 
+CAVIA, Mariano de (1908b ): «El balompié en marcha», El Imparcial, 5 de 
+agosto de 1908, p. 1. 
+CASTRO, Juan (2012): Orígenes del fútbol sevillano. La olvidada memoria británi-
+ca, Punto Rojo Libros, Madrid. 
+DELANTERO, Un (1902): «Foot-ball. La cuestión del día», Los Deportes, nº 
+3, 19 de enero de 1902, pp. 38-40. 
+GARCÍA-CASTELL, Joan (1968): Historia del futbol català, Aymà, Barcelona. 
+KUNTZ, A. R. (1919): «Hace falta moverse». Madrid-Sport, nº 169 , 25 de 
+diciembre de 1919, pp. 3-4. 
+LAGARDERA OTERO, Francisco (1996): «Notas para una historia social 
+del deporte en España», Historia de la Educación , nº 14 -15, pp. 151 -
+172. 
+MASFERRER, Narciso (1911): «Periodistas deportivos I. Antonio Viada», 
+Mundo Deportivo, nº 305, 23 de noviembre de 1911, pp. 1-2. 
+MASFERRER, Narciso (1912): «Periodista s deportivos III. José Elías y 
+Juncosa», Mundo Deportivo, nº 316, 8 de febrero de 1912, p. 1. 
+MIRANDA, Carlos (1908): «¿Balompié?... ¿Bolapié?... ¿Bolopié?... Para 
+Mariano de Cavia», El Liberal, 2 de agosto de 1908, p. 2. 
+MOREU, A. S. (1919): «Filología deportiva», Madrid-Sport, nº 128, 13 de 
+marzo de 1919, pp. 1-2. 
+NOMDEDEU RULL, Antoni (2004a): «El léxico del fútbol en la lexicogr a-
+fía general monolingüe del español» en Paz Battaner y Janet DeCes a-
+ris (eds.), De Lexicografia: actes del I Symposium Internacional de Lexicogr a-
+fia (Barcelona, 16-18 de maig de 2002), IULA, Barcelona: pp. 619-640. 
+NOMDEDEU RULL, Antoni (2004b): Terminología del fútbol y diccionarios: 
+elaboración de un diccionario de especialidad para el gran público , Universitat 
+Autònoma de Barcelona, Barcelona Tesis doctoral. Dir. Cecilio Ga r-
+riga Escribano. 
+NOMDEDEU RULL, Antoni (2009): Diccionario de fútbol, en Anexos de Revis-
+ta de Lexicografía , nº 11, Servizo de Publicacións -Universidade da 
+Coruña, A Coruña, 158 pp. 
+NOMDEDEU RULL, Antoni y Xavier TORREBADELLA I FLIX (2014, en 
+prensa): « Diccionario Histórico de Términos del Fútbol  (DHTF): textos 
+fundamentales del período inicial (1890-1913)» en Anejos de Revista de 
+Lexicografía, Servizo de Publicacións -Universidade da Coruña, A 
+Coruña. 
+OTERO CARVAJAL, Luis Enrique (2003): «Ocio y deporte en el nacimien-
+to de la sociedad de masas. La socialización del deporte como práct i-
+
+--- PAGE 20 ---
+204 Antoni Nomdedeu Rull 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+ca y espectáculo en la España del primer tercio del siglo XX». Cua-
+dernos de Historia Contemporánea, nº 25, pp. 169-198. 
+PASCUAL, José Antonio (2012): « Sobre el léxico deportivo. A propósito 
+de un corpus modular para el NDHE», en Joseba A. Lakarra, Jo a-
+quín Gorrochategui y Blanca Urgell (Eds./Arg.), II Congreso de la C á-
+tedra Luis Michelena, Servicio Editorial de la Universidad del País Vas-
+co, Bilbao, pp. 1-22. 
+REAL ACADEMIA ESPAÑOLA: «Banco de datos ( CORDE) [en l í-
+nea]. Corpus diacrónico del español », <http://www.rae.es> [Fecha de la 
+consulta: 8 de septiembre de 2014]. 
+REPARAZ LINAZASORO, Federico (1919): «Olimpismo», Heraldo Deporti-
+vo, nº 165, 15 de diciembre de 1919, pp. 472-473. 
+SALVADOR, Miguel (1907): «Universidad Popular de Madrid. Palabras 
+usadas en la crítica de deportes por los periodistas. El foot -bal», La 
+Tipografía. Revista mensual ilustrada de artes gráficas, nº 8, pp. 75-76. 
+SOTO BARRERA, Joaquín (1930): Historia del fútbol en España , Compañía 
+Ibero-americana de Publicaciones, Madrid. 
+TORREBADELLA I FLIX, Xavier (2009): Contribución a la historia de la educ a-
+ción física en España. Estudio bio-bibliográfico en torno a la educación física y el 
+deporte (1800 -1939), Tesis doctoral no publicada. Departament 
+d’Història de l’Art i Història Social de la Universitat de Lleida, Lleida. 
+TORREBADELLA I FLIX, Xavier (2011): Repertorio bibliográfico inédito de la 
+educación física y el deporte en España (1800-1939). Fundación Universita-
+ria Española, Madrid. 
+TORREBADELLA I FLIX, Xavier (2012): «Orígenes del fútbol en Barcel o-
+na (1892-1903)», RICYDE- Revista Internacional de Ciencias del Deporte , 
+nº 27, pp. 80-102. 
+TORREBADELLA I FLIX, Xavier  y Antoni NOMDEDEU RULL (2013): 
+«Futbol, foot-ball, balompié… Los orígenes de la adaptación del len-
+guaje anglosajón en el deporte español», RICYDE-Revista Internacional 
+de Ciencias del Deporte, nº 31, pp. 5-22. 
+TORREBADELLA I FLIX, Xavier  y Antoni NOMDEDEU RULL (2014): 
+«Bibliographic repertoire of Football in Spain (1900 -1936). 121 
+works to interpret the social impact of football in contemporary hi s-
+tory». «Repertorio bibliográfico del fútbol en Espanya (1900 -1936). 
+121 obras para interpretar el impacto social del fútbol en la historia 
+contemporanea». «Repertori bibliogràfic del futbol a Espanya (1900 -
+1936). 121 obres per interpretar l’impacte social del futbol en la 
+història contemporània», Apunts, Educació física i esports, nº 115, 1r tr i-
+mestre (enero-marzo), pp. 7-32. 
+
+--- PAGE 21 ---
+ Diccionario histórico de términos del fútbol (DHTF): el léxico… 205 
+Cuadernos del Instituto Historia de la Lengua (2014), 9, 185-205 
+TORREBADELLA I FLIX, Xavier y Javier OLIVERA BETRÁN (2012): «Las 
+cien obras clave del repertorio bibliográfico español de la educación 
+fisica y el deporte en su proceso de legitimación e inst itucionalizaci-
+ón (1807-1938)», Revista General de Información y Documentación , nº 22, 
+pp. 119-168. 
+TORREBADELLA I FLIX, Xavier y Javier OLIVERA BETRÁN (2013): «The 
+Birth of the Sports Press in Spain Within the Regenerationist Co n-
+text of the Late Nineteenth  Century», The International Journal of the 
+History of Sport, nº 30, 18, pp. 2164-2196. 
+VIADA, Antonio (1902a): «¿En qué quedamos? A Narciso Masferrer», 
+Los Deportes, nº 7, 16 de febrero de 1902, pp. 100-102. 
+VIADA, Antonio (1902b): «Sobre el vocabulario d eportivo. A Narciso 
+Masferrer», Los Deportes, nº 10, 16 de marzo de 1902, pp. 147-149. 
+VIADA, Antonio (1902c): «Sobre el vocabulario deportivo II», Los Depor-
+tes, nº 12, 30 de marzo de 1902, pp. 179-180. 
+VIADA, Antonio (1902d): «Sobre el vocabulario deporti vo III», Los De-
+portes, nº 16, 27 de abril de 1902, pp. 243-245. 
+VIADA, Antonio (1902e): «Sobre el vocabulario deportivo IV», Los Depor-
+tes, nº 21, 1 de junio de 1902, pp. 323-325. 
+VIADA, Antonio (1902f): «Sobre el vocabulario deportivo V», Los Depor-
+tes, nº 24, 22 de junio de 1902, pp. 371-372. 
+VIADA, Antonio (1902g): «Sobre el vocabulario deportivo VI», Los Depor-
+tes, nº 33, 24 de agosto de 1902, pp. 507-508. 
+VIADA, Antonio (1902h): «Sobre el vocabulario deportivo VII”, Los 
+Deportes, 35, 7 de septiembre de 1902: 539-540. 
+VIADA, Antonio (1902i): “Sobre el vocabulario deportivo VIII», Los 
+Deportes, nº 51, 28 de diciembre de 1902, pp. 787-788. 
+VIADA, Antonio (1903): Manual del sport, Librería Internacional de Romo, 
+Madrid. 
+ZOZAYA, Luis (1908): «Balompié y bolapié», Heraldo de Madrid, 3 de agos-
+to de 1908. 
+ 
+ 
+
+

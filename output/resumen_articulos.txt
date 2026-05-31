@@ -1,0 +1,46 @@
+Total artículos scrapeados: 79
+Artículos históricos: 79
+Knowledge facts generados: 384
+
+--- TOP 10 ARTICULOS MAS RELEVANTES ---
+
+1. [historia] Vídeo | El Celta ya sabe lo que es jugar en Salónica ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/02/video-el-celta-ya-sabe-lo-que-es-jugar.html
+   2026-02 | Score: 13.0
+
+2. [historia] El Celta firma la mejor primera vuelta como visitante de su historia ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/01/el-celta-firma-la-mejor-primera-vuelta.html
+   2026-01 | Score: 12.9
+
+3. [historia] Celta - Leganés: El partido binario ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2025/03/celta-leganes-el-partido-binario.html
+   2025-03 | Score: 12.4
+
+4. [historia] Celta - Boca Juniors | Se cumplen 100 años del primer partido de un equipo argentino en Europa ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2025/03/celta-boca-juniors-se-cumplen-100-anos.html
+   2025-03 | Score: 11.5
+
+5. [partidos] Los primeros rivales confirmados del Celta en la Europa League ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/05/los-primeros-rivales-confirmados-del.html
+   2026-05 | Score: 11.1
+
+6. [historia] Partidos históricos ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2011/02/partidos-historicos.html
+   2011-02 | Score: 10.4
+
+7. [entrenadores] Mingueza: "Claudio tiene gran parte de culpa en que me estén pasando cosas tan bonitas"  ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2025/06/mingueza-claudio-tiene-gran-parte-de.html
+   2025-06 | Score: 9.5
+
+8. [historia] Fran Beltrán alcanza otro hito en su trayectoria como jugador del Celta ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2025/11/fran-beltran-alcanza-otro-hito-en-su.html
+   2025-11 | Score: 9.3
+
+9. [historia] Manu Fernández hace historia en el Celta ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2025/08/manu-fernandez-hace-historia-en-el-celta.html
+   2025-08 | Score: 8.9
+
+10. [historia] El Celta supera su récord de permanencia en Primera División  ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/04/el-celta-supera-su-record-de.html
+   2026-04 | Score: 8.6
+
