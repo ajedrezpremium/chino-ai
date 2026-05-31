@@ -15,9 +15,9 @@ const moments = [
 const PARTICLES = 20
 
 const LANG_BTNS = [
-  { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-5 h-4 inline-block align-middle" /> },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
+  { code: 'es', label: 'Español', flag: <span className="text-lg leading-none">🇪🇸</span> },
+  { code: 'en', label: 'English', flag: <span className="text-lg leading-none">🇬🇧</span> },
 ]
 
 export default function LandingView({ agentGender, onEnter }) {
@@ -64,18 +64,18 @@ export default function LandingView({ agentGender, onEnter }) {
         ))}
       </div>
 
-      {/* Language selector inline */}
-      <div className="absolute top-4 right-4 z-30 flex gap-1.5">
+      {/* Language selector */}
+      <div className="absolute top-6 right-6 z-30 flex gap-2">
         {LANG_BTNS.map(l => {
           const active = currentLang === l.code
           return (
             <button key={l.code} onClick={() => i18n.changeLanguage(l.code)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
                 active
-                  ? 'bg-blue-600/90 text-white shadow-lg shadow-blue-500/30 scale-105'
-                  : 'bg-slate-800/60 backdrop-blur-sm text-slate-400 hover:bg-slate-700/80 hover:text-white border border-slate-700/50'
+                  ? 'bg-white/15 backdrop-blur-md text-white shadow-lg shadow-black/20 ring-1 ring-white/30 scale-105'
+                  : 'bg-black/20 backdrop-blur-sm text-white/60 hover:text-white hover:bg-white/10 ring-1 ring-white/10 hover:ring-white/20'
               }`}>
-              <span className="flex items-center">{l.flag}</span>
+              {l.flag}
               <span>{l.label}</span>
             </button>
           )
