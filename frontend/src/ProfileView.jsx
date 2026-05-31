@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { X, Volume2, ExternalLink, LogOut } from 'lucide-react'
+import { X, Volume2, ExternalLink, LogOut, Settings, User, Trophy, ShoppingBag, Ticket, Star, Gamepad2, ChevronRight, Calendar } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { GaliciaFlag } from './i18n/LanguageSwitcher'
 
