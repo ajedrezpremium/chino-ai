@@ -16,7 +16,7 @@ const PARTICLES = 20
 const MOMENT_KEYS = ['m0', 'm1', 'm2', 'm3', 'm4']
 
 const LANG_BTNS = [
-  { code: 'gl', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
+  { code: 'gl', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
   { code: 'es', flag: <span className="text-sm leading-none">🇪🇸</span> },
   { code: 'en', flag: <span className="text-sm leading-none">🇬🇧</span> },
 ]

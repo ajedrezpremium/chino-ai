@@ -177,12 +177,12 @@ export default function ProfileView({ supabase, user, agentGender, setAgentGende
             </div>
             <div className="flex items-center justify-between bg-slate-900/50 rounded-xl px-4 py-3">
               <div className="flex items-center gap-2">
-                <span className="text-base">{i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-5 h-4 inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
+                <span className="text-base">{i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
                 <span className="text-sm text-white">{t('profile.language')}</span>
               </div>
               <div className="flex gap-1">
                 {[
-                  { code: 'gl', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
+                  { code: 'gl', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
                   { code: 'es', flag: '🇪🇸' },
                   { code: 'en', flag: '🇬🇧' },
                 ].map(l => {
