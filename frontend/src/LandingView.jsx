@@ -15,9 +15,9 @@ const moments = [
 const PARTICLES = 20
 
 const LANG_BTNS = [
-  { code: 'gl', label: 'GL', flag: <GaliciaFlag className="w-3.5 h-2.5 inline-block align-middle" /> },
-  { code: 'es', label: 'ES', flag: <span className="text-xs leading-none">🇪🇸</span> },
-  { code: 'en', label: 'EN', flag: <span className="text-xs leading-none">🇬🇧</span> },
+  { code: 'gl', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
+  { code: 'es', flag: <span className="text-sm leading-none">🇪🇸</span> },
+  { code: 'en', flag: <span className="text-sm leading-none">🇬🇧</span> },
 ]
 
 export default function LandingView({ agentGender, onEnter }) {
@@ -65,18 +65,17 @@ export default function LandingView({ agentGender, onEnter }) {
       </div>
 
       {/* Language selector */}
-      <div className="absolute top-5 right-5 z-30 flex gap-1">
+      <div className="absolute top-4 right-4 z-30 flex gap-1">
         {LANG_BTNS.map(l => {
           const active = currentLang === l.code
           return (
             <button key={l.code} onClick={() => i18n.changeLanguage(l.code)}
-              className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold tracking-wider transition-all duration-150 ${
+              className={`flex items-center px-1.5 py-1 rounded text-[11px] font-bold transition-all duration-150 ${
                 active
-                  ? 'bg-white/25 text-white shadow-sm'
-                  : 'bg-black/30 text-white/50 hover:text-white/80 hover:bg-black/20'
+                  ? 'bg-white/20 text-white ring-1 ring-white/30'
+                  : 'text-white/50 hover:text-white/80 hover:bg-white/10'
               }`}>
               {l.flag}
-              <span>{l.label}</span>
             </button>
           )
         })}
