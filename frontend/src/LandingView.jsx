@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import LanguageSwitcher from './i18n/LanguageSwitcher'
+import { GaliciaFlag } from './i18n/LanguageSwitcher'
 import { MessageCircle } from 'lucide-react'
 
 const moments = [
@@ -14,10 +14,15 @@ const moments = [
 
 const PARTICLES = 20
 
+const LANG_BTNS = [
+  { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-5 h-4 inline-block align-middle" /> },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+]
+
 export default function LandingView({ legends, agentGender, onEnter }) {
   const { t, i18n } = useTranslation()
   const [idx, setIdx] = useState(0)
-  const [showLang, setShowLang] = useState(false)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const containerRef = useRef(null)
 
@@ -37,7 +42,7 @@ export default function LandingView({ legends, agentGender, onEnter }) {
     return () => el.removeEventListener('mousemove', onMove)
   }, [])
 
-  const handleLangSelected = () => setShowLang(false)
+  const currentLang = i18n.language?.startsWith('gl') ? 'gl' : i18n.language?.startsWith('en') ? 'en' : 'es'
   const m = moments[idx]
 
   return (
@@ -59,12 +64,23 @@ export default function LandingView({ legends, agentGender, onEnter }) {
         ))}
       </div>
 
-      {/* Selector de idioma en pantalla completa (primeira vez) */}
-      {showLang && (
-        <div className="absolute inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <LanguageSwitcher onSelect={handleLangSelected} landing />
-        </div>
-      )}
+      {/* Language selector inline */}
+      <div className="absolute top-4 right-4 z-30 flex gap-1.5">
+        {LANG_BTNS.map(l => {
+          const active = currentLang === l.code
+          return (
+            <button key={l.code} onClick={() => i18n.changeLanguage(l.code)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-semibold transition-all duration-200 ${
+                active
+                  ? 'bg-blue-600/90 text-white shadow-lg shadow-blue-500/30 scale-105'
+                  : 'bg-slate-800/60 backdrop-blur-sm text-slate-400 hover:bg-slate-700/80 hover:text-white border border-slate-700/50'
+              }`}>
+              <span className="flex items-center">{l.flag}</span>
+              <span>{l.label}</span>
+            </button>
+          )
+        })}
+      </div>
 
       {/* Background with parallax */}
       <AnimatePresence mode="wait">
@@ -75,15 +91,6 @@ export default function LandingView({ legends, agentGender, onEnter }) {
           <img src={m.img} alt={m.title} className="w-full h-full object-cover" />
         </motion.div>
       </AnimatePresence>
-
-      {/* Language badge top */}
-      <div className="absolute top-4 right-4 z-30">
-        <button onClick={() => setShowLang(true)}
-          className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-full px-3 py-1.5 text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors">
-          <span className="text-base">{i18n.language?.startsWith('gl') ? '🇪🇸' : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
-          {i18n.language?.startsWith('gl') ? t('landing.gl') : i18n.language?.startsWith('en') ? t('landing.en') : t('landing.es')}
-        </button>
-      </div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center z-20 p-6">

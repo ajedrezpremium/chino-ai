@@ -4,7 +4,7 @@ import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
-import LanguageSwitcher from './i18n/LanguageSwitcher'
+import { GaliciaFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
@@ -25,7 +25,7 @@ const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || ''
 const USE_OPENROUTER = !!OPENROUTER_API_KEY
 
 export default function App() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [messages, setMessages] = useState([
     { role: 'agent', text: t('chat.welcome_male') }
   ])
@@ -45,6 +45,7 @@ export default function App() {
   const [correctionText, setCorrectionText] = useState('')
   const [voices, setVoices] = useState([])
   const [showVoicePicker, setShowVoicePicker] = useState(false)
+  const [showLangDropdown, setShowLangDropdown] = useState(false)
   const [selectedVoiceURI, setSelectedVoiceURI] = useState(() => localStorage.getItem('chino_voice') || '')
   const messagesEndRef = useRef(null)
 
@@ -340,7 +341,31 @@ export default function App() {
               </div>
             )}
           </div>
-          <LanguageSwitcher />
+          <div className="relative">
+            <button onClick={() => setShowLangDropdown(d => !d)}
+              className="p-1 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-xs">
+              {i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}
+            </button>
+            {showLangDropdown && (
+              <div className="absolute right-0 top-full mt-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden min-w-[130px]">
+                {[
+                  { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
+                  { code: 'es', label: 'Español', flag: '🇪🇸' },
+                  { code: 'en', label: 'English', flag: '🇬🇧' },
+                ].map(l => {
+                  const active = i18n.language?.startsWith(l.code)
+                  return (
+                    <button key={l.code} onClick={() => { i18n.changeLanguage(l.code); setShowLangDropdown(false) }}
+                      className={`w-full text-left text-xs px-3 py-2 flex items-center gap-2 hover:bg-slate-700 transition-colors ${active ? 'text-blue-400 bg-slate-700/50' : 'text-slate-300'}`}>
+                      <span className="flex items-center">{l.flag}</span>
+                      <span className="flex-1">{l.label}</span>
+                      {active && <span className="text-blue-400">✓</span>}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </div>
           {user ? (
             <button onClick={() => setCurrentTab('profile')} className={`flex items-center gap-1.5 rounded-full px-2.5 py-1.5 transition-colors ${currentTab === 'profile' ? 'bg-blue-600' : 'bg-slate-800 hover:bg-slate-700'}`}>
               <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">

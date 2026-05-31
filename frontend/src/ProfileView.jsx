@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { User, Trophy, Calendar, Settings, LogOut, ShoppingBag, Ticket, Gamepad2, Star, Clock, Target, Volume2, ChevronRight } from 'lucide-react'
+import { X, Volume2, ExternalLink, LogOut } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { GaliciaFlag } from './i18n/LanguageSwitcher'
 
 export default function ProfileView({ supabase, user, agentGender, setAgentGender, speak, theme, setTheme, onClose }) {
   const [profile, setProfile] = useState(null)
@@ -10,7 +11,7 @@ export default function ProfileView({ supabase, user, agentGender, setAgentGende
   const [displayName, setDisplayName] = useState('')
   const [saved, setSaved] = useState(false)
   const [loading, setLoading] = useState(true)
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
     if (!user?.id) return
@@ -173,6 +174,27 @@ export default function ProfileView({ supabase, user, agentGender, setAgentGende
                 className={`text-xs px-3 py-1.5 rounded-full font-bold transition-colors ${theme === 'dark' ? 'bg-slate-700 text-white' : 'bg-amber-400 text-slate-900'}`}>
                 {theme === 'dark' ? t('profile.dark') : t('profile.light')}
               </button>
+            </div>
+            <div className="flex items-center justify-between bg-slate-900/50 rounded-xl px-4 py-3">
+              <div className="flex items-center gap-2">
+                <span className="text-base">{i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-5 h-4 inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
+                <span className="text-sm text-white">{t('profile.language')}</span>
+              </div>
+              <div className="flex gap-1">
+                {[
+                  { code: 'gl', flag: <GaliciaFlag className="w-4 h-3 inline-block align-middle" /> },
+                  { code: 'es', flag: '🇪🇸' },
+                  { code: 'en', flag: '🇬🇧' },
+                ].map(l => {
+                  const active = i18n.language?.startsWith(l.code)
+                  return (
+                    <button key={l.code} onClick={() => i18n.changeLanguage(l.code)}
+                      className={`text-xs px-2 py-1 rounded-full transition-colors font-bold ${active ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:text-white'}`}>
+                      <span className="flex items-center">{l.flag}</span>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </motion.div>
