@@ -116,8 +116,7 @@ export default function LandingView({ agentGender, onEnter }) {
       </div>
 
       <motion.button onClick={onEnter} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-        className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}
-        title={t('app.title')}>
+        className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}>
         <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
         <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-900 flex items-center justify-center animate-pulse">
           <MessageCircle size={10} className="text-white" />
