@@ -120,11 +120,13 @@ export default function App() {
     return 'es'
   }
   const pickVoice = (voices, gender) => {
-    const male = /pablo|raul|jorge|david|male|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam/i
-    const female = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller|samantha|karen|susan|julia|emma|olivia|ava|sophia|mía|charlotte|victoria/i
+    const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    const male = /pablo|raul|jorge|david|male|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam|diego|antonio|miguel|angel|jose|francisco|carlos|alejandro|fernando|sergio|javier|manuel|juan|vicente|enrique|ramon|pedro|luis/i
+    const female = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller|samantha|karen|susan|julia|emma|olivia|ava|sophia|mia|charlotte|victoria|monica|paulina|carmen|ana|maria|isabel|dolores|teresa|rosa|cristina|patricia|silvia|beatriz|andrea|claudia|paula|marta|irene|alba|lucia|noelia/i
+    const name = (v) => normalize(v.name)
     return gender === 'male'
-      ? voices.find(v => male.test(v.name)) || voices.find(v => !female.test(v.name))
-      : voices.find(v => female.test(v.name)) || voices.find(v => !male.test(v.name))
+      ? voices.find(v => male.test(name(v))) || voices.find(v => !female.test(name(v)))
+      : voices.find(v => female.test(name(v))) || voices.find(v => !male.test(name(v)))
   }
   const speak = (text, gender, retry = 0) => {
     if (!('speechSynthesis' in window)) return

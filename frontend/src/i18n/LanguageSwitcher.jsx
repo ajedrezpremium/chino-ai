@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 
 const GaliciaFlag = ({ className }) => (
   <svg viewBox="0 0 4 3" className={className}>
-    <rect width="4" height="3" fill="#0398cf"/>
-    <polygon points="0,0 4,3" fill="white"/>
+    <rect width="4" height="3" fill="white"/>
+    <polygon points="0,0 4,3" fill="#0398cf"/>
   </svg>
 )
 
