@@ -97,9 +97,6 @@ export default function LandingView({ agentGender, onEnter }) {
         <AnimatePresence mode="wait">
           <motion.div key={idx} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -40 }} transition={{ duration: 0.6 }}
             className="text-center max-w-lg">
-            <div className={`w-20 h-20 mx-auto mb-4 rounded-full border-2 overflow-hidden shadow-xl backdrop-blur-sm flex items-center justify-center ${agentGender === 'male' ? 'bg-blue-600/40 border-blue-400/30 shadow-blue-500/30' : 'bg-pink-600/40 border-pink-400/30 shadow-pink-500/30'}`}>
-              <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-full h-full object-cover rounded-full" />
-            </div>
             <motion.p initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
               className="text-[10px] uppercase tracking-[0.3em] text-blue-300/70 mb-2 font-semibold">
               {t('landing.tagline')}
@@ -119,10 +116,14 @@ export default function LandingView({ agentGender, onEnter }) {
       </div>
 
       <motion.button onClick={onEnter} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-        className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}>
+        className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}
+        title={t('app.title')}>
         <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-11 h-11 rounded-full group-hover:scale-110 transition-transform duration-300" />
         <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-900 flex items-center justify-center animate-pulse">
           <MessageCircle size={10} className="text-white" />
+        </span>
+        <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg pointer-events-none">
+          {t('app.title')}
         </span>
         <span className="absolute -bottom-7 text-[10px] text-white/70 font-medium whitespace-nowrap drop-shadow">{t('landing.cta')}</span>
       </motion.button>
