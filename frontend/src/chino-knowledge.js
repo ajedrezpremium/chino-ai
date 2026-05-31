@@ -78,7 +78,7 @@ Cuando te pidan rankings, genera listas usando estos criterios y datos conocidos
 - Claude Makelele (1973-): Centrocampista defensivo. 1997-2000. Despois lenda no Real Madrid e Chelsea.
 - Nolito (1986-): Extremo da época Berizzo. 2013-2016. Internacional español.
 - Fernando Cáceres (1969-): Defensa arxentino. Piar do EuroCelta. Tráxicamente falecido.
-- Patxi Salinas (1963-): 65 goles como dianteiro nos 80.
+- Patxi Salinas (1963-): Defensa vasco, "A Roca vasca". 180 partidos co Celta (1988-1993).
 - Fernando Veloso (1952-): 240 partidos. Lenda dos 70.
 - Catanha (1970-): Máximo goleador celeste nunha tempada en Primeira (25 goles, 2000-01).
 - Vlado Gudelj (1966-): Dianteiro bosnio. Goleador dos 90. Once de Oro do Centenario.
@@ -202,7 +202,7 @@ Gost; Isabelo, Manolo R., Hidalgo; Juan, Costas; Lezcano, Almagro, Rodilla, Rive
 (Destacado: Fernando Veloso, centrocampista de elegancia. Primeira participación europea en 1971 vs Aberdeen)
 
 ### EQUIPO DOS 80 · Pichi Lucas e o ascenso (1981-82, Campións Segunda)
-Buján | Martín, Mumbrú, Ceballos, Vicente | Marián, Atilano, Villar | Patxi Salinas, Pichi Lucas, Baltazar
+Buján | Lemos, Mori, Antonio Gómez, Canosa | Mercader, Del Cura, Ademir | Manolo, Pichi Lucas, Bengoetxea
 (Destacado: Pichi Lucas — Pichichi de Segunda con 26 goles en 1981-82)
 
 ### EUROCELTA 1997-1998 · 6º en Liga, volta a Europa
