@@ -140,7 +140,8 @@
     "error_confirmed": "Please confirm your email first. Use \"Magic Link\" to get a new link.",
     "error_registered": "This email is already registered. Log in.",
     "success_created": "Account created! Check your email to confirm.",
-    "enter_email": "Enter an email first"
+    "enter_email": "Enter an email first",
+    "or": "OR"
   },
   "profile": {
     "title": "My Profile",

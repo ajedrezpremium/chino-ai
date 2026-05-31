@@ -140,7 +140,8 @@
     "error_confirmed": "Confirma tu email antes de entrar. Usa \"Link mágico\" para recibir un nuevo enlace.",
     "error_registered": "Ese email ya está registrado. Inicia sesión.",
     "success_created": "¡Cuenta creada! Revisa tu email para confirmar.",
-    "enter_email": "Introduce un email primero"
+    "enter_email": "Introduce un email primero",
+    "or": "O"
   },
   "profile": {
     "title": "Mi Perfil",

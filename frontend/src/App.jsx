@@ -89,7 +89,7 @@ export default function App() {
 
   useEffect(() => {
     if (!user?.id) return
-    const username = user.user_metadata?.username || user.email?.split('@')[0] || 'siareiro'
+    const username = user.user_metadata?.username || user.email?.split('@')[0] || t('rankings.fan_default')
     supabase.from('user_profiles').upsert({
       id: user.id,
       username,

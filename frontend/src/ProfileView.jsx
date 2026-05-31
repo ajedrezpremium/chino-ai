@@ -82,7 +82,7 @@ export default function ProfileView({ supabase, user, agentGender, setAgentGende
                     className="bg-white/20 border border-white/30 rounded-lg px-3 py-1.5 text-sm text-white w-full focus:outline-none focus:border-white/60"
                     placeholder={t('profile.name_placeholder')} autoFocus />
                   <button onClick={saveProfile} className="bg-white text-blue-700 font-bold px-3 py-1.5 rounded-lg text-xs whitespace-nowrap">{t('profile.save')}</button>
-                  <button onClick={() => setEditing(false)} className="text-white/70 text-xs px-2">X</button>
+                  <button onClick={() => setEditing(false)}><X size={14} className="text-white/70" /></button>
                 </div>
               ) : (
                 <>

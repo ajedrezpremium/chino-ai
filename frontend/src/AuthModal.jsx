@@ -154,7 +154,7 @@ export default function AuthModal({ supabase, onClose }) {
         {mode !== 'magic' && (
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-700" /></div>
-            <div className="relative flex justify-center"><span className="bg-slate-800 px-3 text-[10px] text-slate-500">OU</span></div>
+            <div className="relative flex justify-center"><span className="bg-slate-800 px-3 text-[10px] text-slate-500">{t('auth.or')}</span></div>
           </div>
         )}
 

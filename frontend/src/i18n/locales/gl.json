@@ -140,7 +140,8 @@
     "error_confirmed": "Confirma o teu email antes de entrar. Usa \"Link máxico\" para recibir un novo enlace.",
     "error_registered": "Ese email xa está rexistrado. Inicia sesión.",
     "success_created": "Conta creada! Revisa o teu email para confirmar.",
-    "enter_email": "Introduce un email primeiro"
+    "enter_email": "Introduce un email primeiro",
+    "or": "OU"
   },
   "profile": {
     "title": "O meu Perfil",
