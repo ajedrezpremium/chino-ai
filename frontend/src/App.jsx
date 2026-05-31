@@ -253,6 +253,11 @@ export default function App() {
     sessionStorage.setItem('chino_landing', 'true')
   }
 
+  const handleGoLanding = () => {
+    sessionStorage.removeItem('chino_landing')
+    setShowLanding(true)
+  }
+
   return (
     <ErrorBoundary>
     <AnimatePresence mode="wait">
@@ -270,7 +275,7 @@ export default function App() {
 
         <header className="z-10 p-4 bg-slate-800/80 backdrop-blur-md border-b border-blue-500/30 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-full overflow-hidden shadow-lg flex-shrink-0 ${agentGender === 'male' ? 'shadow-blue-500/50 bg-blue-600' : 'shadow-pink-500/50 bg-pink-600'}`}>
+          <div className={`w-10 h-10 rounded-full overflow-hidden shadow-lg flex-shrink-0 cursor-pointer ${agentGender === 'male' ? 'shadow-blue-500/50 bg-blue-600' : 'shadow-pink-500/50 bg-pink-600'}`} onClick={handleGoLanding} title={t('app.back_landing')}>
             <img src="/chino-avatar.png" alt={agentGender === 'male' ? t('app.avatar_male') : t('app.avatar_female')} className="w-full h-full object-cover" />
           </div>
           <div>
