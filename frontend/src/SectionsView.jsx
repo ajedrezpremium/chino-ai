@@ -11,10 +11,10 @@ const sections = [
     color: 'from-blue-600 to-blue-800',
     desc: 'Camisetas, bufandas, roupa oficial e agasallos do RC Celta',
     items: [
-      { label: 'Primeira equipación 25/26', price: '85€', badge: 'NOVA' },
-      { label: 'Segunda equipación 25/26', price: '75€', badge: 'NOVA' },
-      { label: 'Bufanda oficial', price: '25€', badge: null },
-      { label: 'Chaqueta oficial', price: '120€', badge: null },
+      { key: 'store_0', price: '85€', badge: 'NOVA' },
+      { key: 'store_1', price: '75€', badge: 'NOVA' },
+      { key: 'store_2', price: '25€', badge: null },
+      { key: 'store_3', price: '120€', badge: null },
     ],
     link: 'https://shop.rccelta.es',
     linkLabel: 'IR Á TENDA'
@@ -26,10 +26,10 @@ const sections = [
     color: 'from-yellow-500 to-amber-700',
     desc: 'Sé parte do Celta. Disfruta de Balaídos toda a tempada',
     items: [
-      { label: 'Abono xeral', price: 'Desde 280€', badge: null },
-      { label: 'Abono socio', price: 'Desde 220€', badge: 'SOCIO' },
-      { label: 'Pack familiar (4 pax)', price: '900€', badge: 'AFORRO' },
-      { label: 'Abono xuvenil (-25)', price: '150€', badge: 'MOZO' },
+      { key: 'season_0', priceKey: 'season_0_price', badge: null },
+      { key: 'season_1', priceKey: 'season_1_price', badge: 'SOCIO' },
+      { key: 'season_2', price: '900€', badge: 'AFORRO' },
+      { key: 'season_3', price: '150€', badge: 'MOZO' },
     ],
     link: 'https://rccelta.es/celtismo/celtistas',
     linkLabel: 'VER PLANES'
@@ -41,10 +41,10 @@ const sections = [
     color: 'from-green-600 to-green-800',
     desc: 'Empresas que fan grande o RC Celta',
     items: [
-      { label: 'Estrella Galicia', price: 'Patrocinador Principal', badge: 'OFICIAL' },
-      { label: 'Abanca', price: 'Patrocinador Financeiro', badge: 'OFICIAL' },
-      { label: 'Adidas', price: 'Provedor Técnico', badge: 'OFICIAL' },
-      { label: 'Gaes', price: 'Patrocinador Saúde', badge: null },
+      { key: 'sponsors_0', priceKey: 'sponsors_0_price', badge: 'OFICIAL' },
+      { key: 'sponsors_1', priceKey: 'sponsors_1_price', badge: 'OFICIAL' },
+      { key: 'sponsors_2', priceKey: 'sponsors_2_price', badge: 'OFICIAL' },
+      { key: 'sponsors_3', priceKey: 'sponsors_3_price', badge: null },
     ],
     link: 'https://rccelta.es/club/patrocinadores',
     linkLabel: 'VER TODOS'
@@ -56,10 +56,10 @@ const sections = [
     color: 'from-purple-600 to-purple-800',
     desc: 'Visita guiada ao templo celeste: vestiarios, césped, museo',
     items: [
-      { label: 'Tour básico', price: '12€', badge: null },
-      { label: 'Tour VIP + museo', price: '25€', badge: 'VIP' },
-      { label: 'Experiencia partido', price: '50€', badge: 'EXCLUSIVO' },
-      { label: 'Grupos (+20 pax)', price: '8€/pax', badge: 'GRUPO' },
+      { key: 'tour_0', price: '12€', badge: null },
+      { key: 'tour_1', price: '25€', badge: 'VIP' },
+      { key: 'tour_2', price: '50€', badge: 'EXCLUSIVO' },
+      { key: 'tour_3', price: '8€/pax', badge: 'GRUPO' },
     ],
     link: 'https://rccelta.es/entradas',
     linkLabel: 'RESERVAR TOUR'
@@ -71,10 +71,10 @@ const sections = [
     color: 'from-red-600 to-red-800',
     desc: 'A historia viva do club. Trofeos, camisetas históricas, Mostovoi, Aspas...',
     items: [
-      { label: 'Entrada xeral', price: '8€', badge: null },
-      { label: 'Entrada reducida', price: '5€', badge: null },
-      { label: 'Socio', price: 'Gratis', badge: 'GRATIS' },
-      { label: 'Visita guiada', price: '15€', badge: 'GUIADA' },
+      { key: 'museum_0', price: '8€', badge: null },
+      { key: 'museum_1', price: '5€', badge: null },
+      { key: 'museum_2', priceKey: 'museum_2_price', badge: 'GRATIS' },
+      { key: 'museum_3', price: '15€', badge: 'GUIADA' },
     ],
     link: 'https://rccelta.es/el-club/historia',
     linkLabel: 'DESCUBRIR'
@@ -86,10 +86,10 @@ const sections = [
     color: 'from-cyan-600 to-cyan-800',
     desc: 'Únete á familia celeste. Vota, participa, sé parte do club',
     items: [
-      { label: 'Socio numerario', price: '180€/ano', badge: 'RECOMENDADO' },
-      { label: 'Socio xuvenil', price: '90€/ano', badge: null },
-      { label: 'Socio infantil (-14)', price: '50€/ano', badge: null },
-      { label: 'Socio internacional', price: '120€/ano', badge: 'ONLINE' },
+      { key: 'membership_0', price: '180€/ano', badge: 'RECOMENDADO' },
+      { key: 'membership_1', price: '90€/ano', badge: null },
+      { key: 'membership_2', price: '50€/ano', badge: null },
+      { key: 'membership_3', price: '120€/ano', badge: 'ONLINE' },
     ],
     link: 'https://rccelta.es/celtismo/celtistas',
     linkLabel: 'FACERTE SOCIO'
@@ -142,12 +142,12 @@ export default function SectionsView({ onClose }) {
               {section.items.map((item, ii) => (
                 <div key={ii} className="flex items-center justify-between bg-slate-900/50 rounded-xl px-4 py-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-white">{item.label}</span>
+                    <span className="text-sm text-white">{t(`sections.${item.key}`)}</span>
                     {item.badge && (
                       <span className={`text-[9px] ${colorMap[item.badge] || 'bg-blue-600'} text-white px-1.5 py-0.5 rounded-full font-bold`}>{item.badge}</span>
                     )}
                   </div>
-                  <span className="text-sm font-bold text-blue-400">{item.price}</span>
+                  <span className="text-sm font-bold text-blue-400">{item.priceKey ? t(`sections.${item.priceKey}`) : item.price}</span>
                 </div>
               ))}
             </div>
