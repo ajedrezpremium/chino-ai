@@ -15,9 +15,9 @@ const moments = [
 const PARTICLES = 20
 
 const LANG_BTNS = [
-  { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
-  { code: 'es', label: 'Español', flag: <span className="text-lg leading-none">🇪🇸</span> },
-  { code: 'en', label: 'English', flag: <span className="text-lg leading-none">🇬🇧</span> },
+  { code: 'gl', label: 'GL', flag: <GaliciaFlag className="w-3.5 h-2.5 inline-block align-middle" /> },
+  { code: 'es', label: 'ES', flag: <span className="text-xs leading-none">🇪🇸</span> },
+  { code: 'en', label: 'EN', flag: <span className="text-xs leading-none">🇬🇧</span> },
 ]
 
 export default function LandingView({ agentGender, onEnter }) {
@@ -65,15 +65,15 @@ export default function LandingView({ agentGender, onEnter }) {
       </div>
 
       {/* Language selector */}
-      <div className="absolute top-6 right-6 z-30 flex gap-2">
+      <div className="absolute top-5 right-5 z-30 flex gap-1">
         {LANG_BTNS.map(l => {
           const active = currentLang === l.code
           return (
             <button key={l.code} onClick={() => i18n.changeLanguage(l.code)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+              className={`flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold tracking-wider transition-all duration-150 ${
                 active
-                  ? 'bg-white/15 backdrop-blur-md text-white shadow-lg shadow-black/20 ring-1 ring-white/30 scale-105'
-                  : 'bg-black/20 backdrop-blur-sm text-white/60 hover:text-white hover:bg-white/10 ring-1 ring-white/10 hover:ring-white/20'
+                  ? 'bg-white/25 text-white shadow-sm'
+                  : 'bg-black/30 text-white/50 hover:text-white/80 hover:bg-black/20'
               }`}>
               {l.flag}
               <span>{l.label}</span>
