@@ -122,12 +122,19 @@ export default function App() {
   }
   const pickVoice = (voices, gender) => {
     const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-    const male = /pablo|raul|jorge|david|male|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam|diego|antonio|miguel|angel|jose|francisco|carlos|alejandro|fernando|sergio|javier|manuel|juan|vicente|enrique|ramon|pedro|luis/i
-    const female = /helena|zira|laura|elena|sabina|dalia|female|mujer|muller|samantha|karen|susan|julia|emma|olivia|ava|sophia|mia|charlotte|victoria|monica|paulina|carmen|ana|maria|isabel|dolores|teresa|rosa|cristina|patricia|silvia|beatriz|andrea|claudia|paula|marta|irene|alba|lucia|noelia/i
+    const male = /pablo|raul|jorge|david|masculin|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam|diego|antonio|miguel|angel|jose|francisco|carlos|alejandro|fernando|sergio|javier|manuel|juan|vicente|enrique|ramon|pedro|luis|alfred|hector|omar|ricardo|eduardo|felipe|andres|mario|jesus/i
+    const female = /helena|zira|laura|elena|sabina|dalia|femenin|mujer|samantha|karen|susan|julia|emma|olivia|ava|sophia|mia|charlotte|victoria|monica|paulina|carmen|ana|maria|isabel|dolores|teresa|rosa|cristina|patricia|silvia|beatriz|andrea|claudia|paula|marta|irene|alba|lucia|noelia|valentina|camila|gabriela|daniela|carolina|maite|siri|kyoko|yuna|moira|tessa|alicia|maren|nora|selma|katja|heidi|sarah|fiona|emily|chloe|grace|zoe|ruby|olive|paisley|reagan|jamie|quinn|jordan|avery|charlie/i
     const name = (v) => normalize(v.name)
-    return gender === 'male'
-      ? voices.find(v => male.test(name(v))) || voices.find(v => !female.test(name(v)))
-      : voices.find(v => female.test(name(v))) || voices.find(v => !male.test(name(v)))
+    const matchGender = (v) => gender === 'male' ? male.test(name(v)) : female.test(name(v))
+    const notOpposite = (v) => gender === 'male' ? !female.test(name(v)) : !male.test(name(v))
+    if (gender === 'male') {
+      return voices.find(v => male.test(name(v)))
+        || voices.find(v => !female.test(name(v)))
+        || voices[0]
+    }
+    return voices.find(v => female.test(name(v)))
+      || voices.find(v => !male.test(name(v)))
+      || voices[0]
   }
   const speak = (text, gender, retry = 0) => {
     if (!('speechSynthesis' in window)) return
@@ -139,7 +146,7 @@ export default function App() {
     }
     if (selectedVoiceURI) {
       const saved = allVoices.find(v => v.voiceURI === selectedVoiceURI)
-      if (saved) { u.voice = saved; u.lang = saved.lang; u.rate = g === 'male' ? 1.0 : 1.1; window.speechSynthesis.speak(u); return }
+      if (saved && matchGender(saved)) { u.voice = saved; u.lang = saved.lang; u.rate = g === 'male' ? 1.0 : 1.1; window.speechSynthesis.speak(u); return }
     }
     const lang = detectLang(text)
     const langVoices = lang === 'en'

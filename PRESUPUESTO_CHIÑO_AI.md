@@ -12,6 +12,7 @@
 | **Mantenimiento mensual** | **350 €/mes** |
 | **Escalado a V2.0 (completo)** | **+18.000 €** |
 | **TOTAL PROYECTO COMPLETO (V1 + V2)** | **43.000 € + mantenimiento** |
+| *del cual: Profesor Chess IA (nuevo)* | *2.000 € (dentro de V2.0)* |
 
 > *"Chiño AI es la primera plataforma de agentes de inteligencia artificial oficial de un club de fútbol en la historia del mundo. No hay precedente. No hay competencia. Es un activo de marca, marketing, negocio y comunidad en uno."*
 
@@ -89,13 +90,12 @@
 
 ## 4. V2.0 — ESCALADO Y FAMILIA DE AGENTES (+18.000 €)
 
-### 4.1 Business Intelligence en vivo (+5.000 €)
+### 4.1 Business Intelligence en vivo (+4.000 €)
 
 | Concepte | Detalle | Precio |
 |---|---|---|
 | Dashboard ejecutivo con KPIs reales | Gráficos de retención, conversión, ingresos, calor de uso | 2.500 € |
 | Datos de abonados integrados | Consultas sobre censo de socios (sin datos sensibles) | 1.500 € |
-| Alertas automáticas al club | "Esta semana 300 personas preguntaron por abonos" | 1.000 € |
 
 ### 4.2 Chat transaccional (+4.000 €)
 
@@ -105,15 +105,16 @@
 | Carrito de tienda oficial | Merchandising sin salir del chat | 1.500 € |
 | Pasarela de pago (Stripe) | Integración simple | 500 € |
 
-### 4.3 Familia de 5 agentes especializados (+5.000 €)
+### 4.3 Familia de 6 agentes especializados (+6.000 €)
 
 | Agente | Función | Precio |
 |---|---|---|
 | 🤖 Chiño Base | Historia, cultura, trivia | (ya incluido en V1) |
-| 💰 Agente Económico | Ingresos, ticketing, abonos, patrocinios | 1.500 € |
-| ⚽ Agente Deportivo | Plantilla, tácticas, scouting, rivales | 1.500 € |
-| 🌱 Agente Canteira | A Madroa, juveniles, promesas | 1.000 € |
-| 🏛️ Agente Institucional | Preguntas corporativas, socios, historia oficial | 1.000 € |
+| 💰 Agente Económico | Ingresos, ticketing, abonos, patrocinios | 1.200 € |
+| ⚽ Agente Deportivo | Plantilla, tácticas, scouting, rivales | 1.200 € |
+| 🌱 Agente Canteira | A Madroa, juveniles, promesas | 800 € |
+| 🏛️ Agente Institucional | Preguntas corporativas, socios, historia oficial | 800 € |
+| 🎓 **Profesor Chess IA (NUEVO)** | Fútbol y educación en valores | 2.000 € |
 
 ### 4.4 Expansión Gamer (+2.000 €)
 
@@ -136,6 +137,8 @@
 | Tests (Vitest + Playwright) | 500 € |
 
 > **TOTAL V2.0 (completo) = +18.000 €**
+
+> *Nota: Se ha redistribuido el presupuesto: las alertas automáticas de BI pasan a una fase posterior, y se incorpora el Profesor Chess IA — un agente de educación en valores que no existe en ningún otro club del mundo.*
 
 ---
 
@@ -180,8 +183,8 @@
 | **Semana 2-3** | Recopilar feedback de abonados reales (test con 10-20 socios) |
 | **Semana 4** | Decisión de escalado a V2.0 |
 | **Mes 2** | Integración con API de ticketing (si aplica) |
-| **Mes 3** | Primer agente económico operativo |
-| **Mes 4-6** | Familia completa de agentes |
+| **Mes 3** | Primer agente económico operativo + Profesor Chess IA (MVP) |
+| **Mes 4-6** | Familia completa de agentes + Historias semanales del Profesor Chess |
 
 ---
 

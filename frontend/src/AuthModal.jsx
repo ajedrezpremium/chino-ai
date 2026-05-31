@@ -43,6 +43,15 @@ export default function AuthModal({ supabase, onClose }) {
         if (signUpData?.user?.identities?.length === 0) {
           showError(t('auth.error_registered'))
           setMode('login')
+        } else if (signUpData?.session) {
+          try {
+            await supabase.from('user_profiles').upsert({
+              id: signUpData.user.id,
+              username,
+              display_name: username
+            })
+          } catch {}
+          onClose()
         } else {
           try {
             await supabase.from('user_profiles').upsert({
@@ -83,9 +92,9 @@ export default function AuthModal({ supabase, onClose }) {
   }
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
+      <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={e => e.stopPropagation()}
         className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-sm relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white">
           <X size={18} />

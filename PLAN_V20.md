@@ -57,7 +57,7 @@
 ## 🚀 FASE 2 — EXPERIENCIA Y COMUNIDAD
 
 ### 2.1 Familia de Agentes (el "más" diferencial)
-**Qué:** 5 agentes especializados, cada uno con prompt + contexto propio.
+**Qué:** 6 agentes especializados, cada uno con prompt + contexto propio.
 
 | Agente | Función | Prompt base |
 |---|---|---|
@@ -66,16 +66,42 @@
 | ⚽ **Agente Deportivo** | Plantilla, tácticas, scouting, rivales | Datos estadísticos + alineaciones |
 | 🌱 **Agente Canteira** | A Madroa, juveniles, promesas | Datos de cantera + informes |
 | 🏛️ **Agente Institucional** | Preguntas corporativas, socios, historia oficial | Documentos oficiales + FAQ |
+| 🎓 **Profesor Chess IA** | Fútbol y educación en valores | Historias vitales + lecciones |
 
 **Valor para el DG:** "No es un chat, es una plataforma de agentes. Escalable a cualquier área del club."
 
-### 2.2 Chiño Gamer — Expansión
+### 2.2 Profesor Chess IA — Fútbol y Educación en Valores (NUEVO)
+
+**Qué:** Un agente narrativo que cuenta historias reales de futbolistas que rompieron barreras gracias al esfuerzo, la constancia y el talento. Cada historia lleva una enseñanza vital.
+
+**Ejemplos de historias:**
+- **Hakimi y Mbappé** — Dos hijos de inmigrantes, criados en barrios humildes, que llegaron a ser campeones de Europa. Sus padres no tenían dinero, pero tenían un sueño. La constancia y el talento rompieron todas las barreras.
+- **Iago Aspas** — El niño de Moaña que soñaba con Balaídos. Nadie creía en él, pero su abuelo le enseñó que "querer es poder". Hoy es leyenda del Celta y de LaLiga.
+- **Luis Suárez (Vallecas)** — Creció sin agua caliente en casa. El fútbol fue su única salida. Llegó a ser Balón de Oro. Su lema: "Nunca dejes de creer."
+
+**Formato:**
+- Cada semana, "El Profe Chess" aparece con una historia nueva en el chat
+- La historia se cuenta en formato interactivo: el usuario puede elegir cómo avanza la narración
+- Al final, una "pregunta reflexión" invita al usuario a compartir su propia historia o aprendizaje
+- Las historias se pueden compartir en redes sociales con una tarjeta visual personalizada
+
+**Valor diferencial:**
+- Conecta emocionalmente con las familias y los más jóvenes
+- Refuerza la marca Celta como club comprometido con la educación y los valores
+- Contenido viral compartible: "La historia de superación de [Jugador] contada por IA"
+- Diferenciación frente a cualquier otro club: ningún equipo tiene un "profesor de valores" con IA
+- Posible partnership con colegios, fundaciones y obras sociales
+- Sinergia con la Fundación Celta y su programa de valores
+
+**Valor para el DG:** "Esto no lo tiene ningún club del mundo. Educa, emociona y genera marca. Los patrocinadores querrán estar asociados a esto."
+
+### 2.3 Chiño Gamer — Expansión
 - **500+ preguntas** en Supabase (categorizadas: historia, jugadores, actualidad, estadísticas, curiosidades)
 - **Reto semanal** con premio real (descuento en tienda, abono gratis, experiencia VIP)
 - **Tabla de líderes semanal** con badges (Bronce, Plata, Oro, Celeste Legend)
 - **Compartir resultado** en redes sociales
 
-### 2.3 Noticias automáticas del Celta
+### 2.4 Noticias automáticas del Celta
 - Scraping cada 6h de moiceleste.com + farodevigo.es
 - Resumen automático generado por Chiño
 - Sección "Últimas novas" en el chat
@@ -109,9 +135,9 @@ Ejecutar `supabase-migration-v1.sql` en el dashboard de Supabase para activar:
 | Fase | Puntos | Impacto | Dependencias |
 |---|---|---|---|
 | FASE 1 · Negocio | 13 puntos | 🔴 Crítico | API ticketing, Edge Functions |
-| FASE 2 · Experiencia | 8 puntos | 🟠 Alto | Scraping, Edge Functions |
+| FASE 2 · Experiencia | 10 puntos | 🟠 Alto | Scraping, Edge Functions, Profesor Chess |
 | FASE 3 · Infraestructura | 5 puntos | 🟡 Medio | Ninguna |
-| **TOTAL V2.0** | **26 puntos** | — | — |
+| **TOTAL V2.0** | **28 puntos** | — | — |
 
 ---
 
