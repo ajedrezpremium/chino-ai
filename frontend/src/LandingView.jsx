@@ -20,7 +20,7 @@ const LANG_BTNS = [
   { code: 'en', label: 'English', flag: '🇬🇧' },
 ]
 
-export default function LandingView({ legends, agentGender, onEnter }) {
+export default function LandingView({ agentGender, onEnter }) {
   const { t, i18n } = useTranslation()
   const [idx, setIdx] = useState(0)
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
@@ -117,28 +117,6 @@ export default function LandingView({ legends, agentGender, onEnter }) {
           ))}
         </div>
       </div>
-
-      {legends.length > 0 && (
-        <div className="z-20 px-4 pb-4">
-          <p className="text-[10px] text-blue-200/50 text-center mb-2 uppercase tracking-widest">{t('landing.legends_subtitle')}</p>
-          <div className="grid grid-cols-5 gap-2">
-            {legends.map((l, i) => (
-              <motion.div key={l.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
-                className="bg-slate-900/50 backdrop-blur-md border border-white/10 rounded-xl p-2 text-center hover:bg-slate-800/60 transition-colors">
-                <div className={`w-9 h-9 rounded-full mx-auto mb-1.5 overflow-hidden ${l.image_url ? '' : 'bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center'} shadow-lg shadow-blue-600/30`}>
-                  {l.image_url ? (
-                    <img src={l.image_url} alt={l.name} className="w-full h-full object-cover" />
-                  ) : (
-                    <span className="text-xs font-bold text-white">{l.name.charAt(0)}</span>
-                  )}
-                </div>
-                <p className="text-[10px] font-semibold text-white truncate leading-tight">{l.name}</p>
-                <p className="text-[7px] text-blue-200/60 truncate">{l.role}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <motion.button onClick={onEnter} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
         className={`fixed bottom-6 right-6 z-30 w-16 h-16 rounded-full shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center group ${agentGender === 'male' ? 'bg-gradient-to-br from-blue-500 to-blue-700 hover:shadow-blue-400/60' : 'bg-gradient-to-br from-pink-500 to-pink-700 hover:shadow-pink-400/60'}`}>
