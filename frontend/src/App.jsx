@@ -4,6 +4,7 @@ import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
+import LanguageSwitcher from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
@@ -337,6 +338,7 @@ export default function App() {
               </div>
             )}
           </div>
+          <LanguageSwitcher />
           {user ? (
             <button onClick={() => setCurrentTab('profile')} className={`flex items-center gap-1.5 rounded-full px-2.5 py-1.5 transition-colors ${currentTab === 'profile' ? 'bg-blue-600' : 'bg-slate-800 hover:bg-slate-700'}`}>
               <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
