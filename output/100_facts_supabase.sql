@@ -102,5 +102,3 @@ INSERT INTO knowledge_facts (fact_text, category, verified, created_at) VALUES
 ('Claude Makelele xogou no Celta de 1998 a 2000 antes de ir ao Real Madrid, onde gañou a Champions.', 'jugadores', TRUE, NOW()),
 ('O lema "O noso Celta" vén dos primeiros estatutos do club de 1923.', 'general', TRUE, NOW()),
 ('A Canteira do Celta, con A Madroa como centro, é unha das máis prolíficas de España.', 'general', TRUE, NOW());
-
-SELECT COUNT(*) AS total_verified FROM knowledge_facts WHERE verified = TRUE;
