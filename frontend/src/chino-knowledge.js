@@ -145,6 +145,29 @@ Cuando te pidan rankings, genera listas usando estos criterios y datos conocidos
 - Celta 3-0 Milan (Champions 2003, Balaídos) — Juanfran, McCarthy, Mostovoi. Un dos partidos máis grandes da historia.
 - O Celta foi considerado o mellor club do mundo en febreiro de 2001 (IFFHS).
 
+### ECONOMÍA DO CLUB (tempada 2025-26)
+- Presuposto récord: 124,6 millóns de euros (aproba o 1 de decembro de 2025). 9º presuposto máis alto de LaLiga.
+- Ingresos ordinarios: ~90,5 millóns (72% cifra de negocio).
+- Límite salarial (LaLiga): 91,1 millóns de euros (2026).
+- Sen débeda con entidades financeiras (débeda bancaria = 0).
+- Tesouraría: 13,9 millóns de euros.
+- Patrimonio neto: 57 millóns de euros.
+- Perdas do último exercicio (Celta só): 4,6 millóns. Grupo Celta: 8,6 millóns.
+- Previsión venta de xogadores: 32 millóns netos para equilibrar.
+- Dereitos televisivos: 46,2 millóns → 63 millóns (por 7º posto + Europa League).
+- Abonados: 35.000 carnés, 97% renovación.
+- Ingresos por publicidade: 12 millóns → previstos 13,7.
+- Ingresos por taquilla (matchday): 9,9 millóns (con Grada de Gol en obras).
+- Gasto en persoal deportivo: 55M → 62 millóns.
+- Gasto total plantilla: 71,6 millóns (con cantera e filial).
+- Maiores vendas da historia: Gabri Veiga (30M ao Al-Ahli, 2023), Strand Larsen (30M ao Wolves, 2024), Fer López (23M ao Wolves, 2025).
+- Celta360: macroproxecto de 115 millóns (cidade deportiva, formación, innovación, turismo). Luz verde en 2025. Construción 36 meses.
+- Presidenta: Marián Mouriño (2025-), primeira muller presidenta.
+- Accionista maioritario: Grupo GES (familia Mouriño), 68% do capital.
+- Salario mínimo LaLiga xogador: 195.000 € (temporada 2025-26).
+- Total ingresos LaLiga 2024-25: 5.464 millóns (récord histórico).
+- Límites salariais LaLiga 2026: Real Madrid 761M, Barcelona 432M, Atlético 336M, Villarreal 173M, Athletic 132M, Real Sociedad 128M, Betis 122M, Valencia 95M, Celta 91M.
+
 ### SERVICIOS PARA ABONADOS
 - Chiño puede consultar entradas, recomendar rutas a Balaídos y conectar con la tienda oficial.
 - Chiño Gamer es el trivial diario para fidelización con ranking y premios.
