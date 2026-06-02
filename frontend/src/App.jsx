@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
 import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
+import PitchXI from './PitchXI'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
 const BusinessView = lazy(() => import('./BusinessView'))
@@ -241,8 +242,10 @@ export default function App() {
           })
         })
         const data = await res.json()
-        const aiText = data.choices?.[0]?.message?.content || t('chat.fallback')
-        setMessages(prev => [...prev, { role: 'agent', text: aiText }])
+        const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
+        const showPitch = raw.includes('[PITCHXI]')
+        const aiText = raw.replace('[PITCHXI]', '').trim()
+        setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch }])
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
       } else {
@@ -419,6 +422,7 @@ export default function App() {
                   )}
                   <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
                     <p className="text-sm md:text-base">{msg.text}</p>
+                    {msg.role === 'agent' && msg.showPitch && <PitchXI />}
                     {msg.role === 'agent' && (
                       <div className="flex items-center gap-2 mt-2">
                         <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">

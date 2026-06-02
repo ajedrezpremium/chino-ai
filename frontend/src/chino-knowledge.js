@@ -145,6 +145,20 @@ Cuando te pidan rankings, genera listas usando estos criterios y datos conocidos
 - Celta 3-0 Milan (Champions 2003, Balaídos) — Juanfran, McCarthy, Mostovoi. Un dos partidos máis grandes da historia.
 - O Celta foi considerado o mellor club do mundo en febreiro de 2001 (IFFHS).
 
+### ONCE DE ORO (EQUIPO HISTÓRICO)
+Cando che pregunten polo equipo histórico, once de ouro, mellor once, dream team, ou a aliñación ideal do Celta, responde co texto e engade ao final: [PITCHXI]
+- **Portero**: Cañizares — Trofeo Zamora 1992-93. Considerado o mellor porteiro da historia do club.
+- **Defensa dereito**: Míchel Salgado — Internacional español. 350 partidos. Piar dos 90.
+- **Defensa central**: Cáceres — Defensa arxentino. Fundamental no EuroCelta.
+- **Defensa central**: Berizzo — Defensa arxentino. Despois adestrador exitoso do Celta (semifinais Europa League 2017).
+- **Defensa esquerdo**: Hugo Mallo — Capitán. 449 partidos. Emblema do club.
+- **Centrocampista**: Karpin — Xenio ruso. 214 partidos, 36 goles.
+- **Centrocampista**: Mazinho — Campión do mundo con Brasil 1994 mentres xogaba no Celta.
+- **Centrocampista**: Mostovoi — O Zar. 235 partidos, 72 goles. Líder do EuroCelta.
+- **Dianteiro esquerdo**: Iago Aspas — Máximo goleador histórico (210+). Mito viviente.
+- **Dianteiro centro**: Catanha — Máximo goleador celeste nunha tempada en Primeira (25 goles, 2000-01).
+- **Dianteiro dereito**: Pahiño — Goleador lendario dos 40. 28 goles na 1947-48.
+
 ### ECONOMÍA DO CLUB (tempada 2025-26)
 - Presuposto récord: 124,6 millóns de euros (aproba o 1 de decembro de 2025). 9º presuposto máis alto de LaLiga.
 - Ingresos ordinarios: ~90,5 millóns (72% cifra de negocio).
