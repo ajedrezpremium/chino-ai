@@ -1,5 +1,5 @@
 -- 100 verified facts for Supabase knowledge_facts table
--- Generated for V2.0 demo
+-- Generated for V2.0 demo - includes Javier Maté, Cañizares, Cavallero, Pinto, etc.
 
 INSERT INTO knowledge_facts (fact_text, category, verified, created_at) VALUES
 ('Fue un 23 de agosto de 1923, hace hoy 88 años, cuando se completó la fusión de Fortuna y Real Vigo Sporting, dando así paso a un nuevo club, el Real Club Celta de Vigo, que representaría a la ciudad viguesa con su presencia, a Galicia con sus colores y a la historia gallega con su nombre', 'historia', TRUE, NOW()),
@@ -67,13 +67,23 @@ INSERT INTO knowledge_facts (fact_text, category, verified, created_at) VALUES
 ('Con motivo de las obras de remodelación del estadio de Balaídos, el museo del club ha cambiado de ubicación: ahora se encuentra en la grada de Marcador, donde este pasado viernes reabrió sus puertas con novedades significativas', 'historia', TRUE, NOW()),
 ('Una de las principales incorporaciones es una zona dedicada a "As Celtas", así como una sala inmersiva que permite vivir de forma completamente distinta el himno del centenario, "Oliveira dos cen anos", compuesto por C', 'historia', TRUE, NOW()),
 ('Se quiere un museo dinámico, activo, un punto de encuentro para la comunidad celeste. "Esta apertura viene acompañada de nuevas experiencias, no solo en los tours de fin de semana, sino con muchas actividades que haremos para que el celtismo pueda disfrutar el estadio de otra forma", añade Vila', 'historia', TRUE, NOW()),
+('Javier Maté é o porteiro con máis partidos na historia do Celta: 369 partidos entre 1981 e 1993.', 'jugadores', TRUE, NOW()),
+('Javier Maté conseguiu 4 ascensos a Primeira División co Celta (1982, 1985, 1987, 1992), un récord compartido con Manolo e Gelo.', 'jugadores', TRUE, NOW()),
+('Santiago Cañizares gañou o Trofeo Zamora co Celta na tempada 1992-93, sendo considerado o mellor porteiro da historia do club.', 'jugadores', TRUE, NOW()),
+('Pablo Cavallero gañou o Trofeo Zamora na tempada 2002-03 co Celta, sendo peza clave do EuroCelta.', 'jugadores', TRUE, NOW()),
+('José Manuel Pinto gañou o Trofeo Zamora na tempada 2005-06 co Celta antes de ir ao Barcelona.', 'jugadores', TRUE, NOW()),
+('Javier Maté foi o descubridor de Iago Aspas, detectando o seu talento cando era infantil en A Madroa e xestionando o seu carácter explosivo.', 'jugadores', TRUE, NOW()),
+('O Celta ten 3 porteiros na súa historia que gañaron o Trofeo Zamora: Cañizares (1993), Cavallero (2003) e Pinto (2006).', 'jugadores', TRUE, NOW()),
+('Sergio Álvarez xogou 250+ partidos co Celta e foi capitán, sendo un dos porteiros máis queridos pola afección.', 'jugadores', TRUE, NOW()),
+('Vicente Guaita, con experiencia en Premier League e LaLiga, fichou polo Celta en 2023 achegando veteranía.', 'jugadores', TRUE, NOW()),
+('Rubén Blanco é un porteiro formado na canteira do Celta, con máis de 100 partidos no primeiro equipo.', 'jugadores', TRUE, NOW()),
 ('O Celta foi fundado o 23 de agosto de 1923 trala fusión do Real Vigo Sporting e o Real Fortuna.', 'historia', TRUE, NOW()),
 ('O primeiro partido oficial do Celta foi o 30 de setembro de 1923 contra o Boetticher, gañando 7-0.', 'historia', TRUE, NOW()),
 ('O Celta ascendeu a Primeira División por primeira vez na tempada 1935-36.', 'historia', TRUE, NOW()),
 ('O Celta foi subcampión da Copa do Rei en 1948, perdendo a final contra o Sevilla por 4-1.', 'historia', TRUE, NOW()),
 ('O Celta foi subcampión da Copa do Xeneralísimo en 1971, perdendo contra o Barcelona por 4-3.', 'historia', TRUE, NOW()),
 ('O Celta foi subcampión da Copa do Rei en 2001, perdendo contra o Zaragoza na final por 3-1.', 'historia', TRUE, NOW()),
-('A mellor clasificación histórica do Celta en LaLiga é o 4° posto, acadado en 1947-48 e 2002-03.', 'historia', TRUE, NOW()),
+('A mellor clasificación histórica do Celta en LaLiga é o 4º posto, acadado en 1947-48 e 2002-03.', 'historia', TRUE, NOW()),
 ('O Celta participou na Copa da UEFA por primeira vez na tempada 1998-99.', 'historia', TRUE, NOW()),
 ('O Celta acadou as semifinais da Europa League na tempada 2016-17.', 'historia', TRUE, NOW()),
 ('O Celta eliminou ao Liverpool en Anfield nos oitavos de final da Europa League 2016-17.', 'historia', TRUE, NOW()),
@@ -85,22 +95,12 @@ INSERT INTO knowledge_facts (fact_text, category, verified, created_at) VALUES
 ('A capacidade orixinal de Balaídos era de 15.000 espectadores.', 'estadio', TRUE, NOW()),
 ('O récord de asistencia en Balaídos é de 45.000 espectadores nun partido contra o Barcelona en 1941.', 'estadio', TRUE, NOW()),
 ('En 1982 Balaídos foi sede do Mundial de España, albergando 3 partidos do Grupo 5.', 'estadio', TRUE, NOW()),
-('Pahiño foi o primeiro gran goleador do Celta, con 28 goles na tempada 1947-48.', 'jugadores', TRUE, NOW()),
+('Pahiño foi o primeiro gran goleador do Celta, con 28 goles na tempada 1947-48, gañando o Trofeo Pichichi de Segunda.', 'jugadores', TRUE, NOW()),
 ('Herminio foi o primeiro xogador do Celta en disputar un Mundial, o de Brasil 1950.', 'jugadores', TRUE, NOW()),
-('Manolo Rodríguez é o xogador con máis partidos oficiais na historia do Celta: 512.', 'jugadores', TRUE, NOW()),
-('Iago Aspas debutou co primeiro equipo do Celta o 29 de outubro de 2008.', 'jugadores', TRUE, NOW()),
-('Mostovoi marcou 72 goles co Celta entre 1996 e 2004.', 'jugadores', TRUE, NOW()),
-('Aleksandr Mostovoi era coñecido como "O Zar" e foi a gran estrela do EuroCelta.', 'jugadores', TRUE, NOW()),
-('Míchel Salgado xogou 350 partidos co Celta antes de ir ao Real Madrid.', 'jugadores', TRUE, NOW()),
-('Mazinho foi campión do mundo co Brasil en 1994 mentres xogaba no Celta.', 'jugadores', TRUE, NOW()),
-('Claude Makelele xogou no Celta de 1998 a 2000 antes de ir ao Real Madrid.', 'jugadores', TRUE, NOW()),
-('Gustavo López, "El Cuervo", xogou 8 tempadas no Celta e 366 partidos.', 'jugadores', TRUE, NOW()),
-('Valeri Karpin xogou no Celta de 1997 a 2002, marcando 36 goles en 214 partidos.', 'jugadores', TRUE, NOW()),
-('Hugo Mallo xogou 449 partidos co Celta entre 2010 e 2023, sendo capitán.', 'jugadores', TRUE, NOW()),
-('Borja Iglesias marcou 14 goles na tempada 2025-26 co Celta en todas as competicións.', 'jugadores', TRUE, NOW()),
+('Mostovoi marcou 72 goles co Celta entre 1996 e 2004, sendo a gran estrela do EuroCelta.', 'jugadores', TRUE, NOW()),
+('Mazinho foi campión do mundo co Brasil en 1994 mentres xogaba no Celta de Vigo.', 'jugadores', TRUE, NOW()),
+('Claude Makelele xogou no Celta de 1998 a 2000 antes de ir ao Real Madrid, onde gañou a Champions.', 'jugadores', TRUE, NOW()),
 ('O lema "O noso Celta" vén dos primeiros estatutos do club de 1923.', 'general', TRUE, NOW()),
-('O Celta ten unha Fundación que promove o deporte e a educación en valores en Galicia.', 'general', TRUE, NOW()),
-('A Canteira do Celta é unha das máis prolíficas de España, con A Madroa como centro de formación.', 'general', TRUE, NOW()),
-('O Celta B xoga en Segunda Federación e é a porta de entrada ao primeiro equipo.', 'general', TRUE, NOW());
+('A Canteira do Celta, con A Madroa como centro, é unha das máis prolíficas de España.', 'general', TRUE, NOW());
 
 SELECT COUNT(*) AS total_verified FROM knowledge_facts WHERE verified = TRUE;

@@ -87,6 +87,20 @@ Cuando te pidan rankings, genera listas usando estos criterios y datos conocidos
 - Borja Oubiña (1982-): Canteirán. Centrocampista. Lesións truncaron a súa carreira. Agora asistente técnico.
 - Cañizares (1969-): Portero nos 90 (cedido). Once de Oro do Centenario.
 
+### PORTEIROS HISTÓRICOS
+- Javier Maté (1957-): 369 partidos (1981-1993). Portero con MÁS partidos na historia do Celta. 4 ascensos a Primeira (récord). Titular indiscutible dos 80. Partido mítico: ascenso Sestao 1987. Foi secretario técnico e descubridor de Iago Aspas.
+- Santiago Cañizares (1969-): Trofeo Zamora 1992-93 co Celta. 25 partidos (cedido 1995-96). Considerado o mellor porteiro da historia do club. Once de Oro do Centenario.
+- Pablo Cavallero (1974-): Trofeo Zamora 2002-03. Mítico no EuroCelta. Portero na era dourada (1999-2004).
+- José Manuel Pinto (1975-): Trofeo Zamora 2005-06 co Celta. Titular na 2005-07. Moi querido en Balaídos.
+- Manuel Rodríguez "Manolo" (1950-): Xogador de campo, non porteiro. O xogador con máis partidos (512).
+- Sergio Álvarez (1986-): 250+ partidos. Capitán. Emblema da afición. Salvo ao Celta en momentos críticos (2012-2020).
+- Vicente Guaita (1987-): Experiencia en Premier e LaLiga. Chegou en 2023, achegando seguridade e veteranía.
+- Rubén Blanco (1995-): Canteirán. Titular varias tempadas. 100+ partidos. Internacional sub-21.
+- Iván Villar (1997-): Canteirán. Pieza útil na plantilla. Respondeu cando o equipo precisou.
+- Joan Capó (1952-): Portero dos 80, compartiu portería con Maté nos primeiros anos.
+- Patxi Villanueva (1968-): Promesa dos 90, relegou a Maté ao banco. Competiu con Cañizares.
+- Yoel Rodríguez (1988-): Canteirán. Porteiro en tempadas 2010-2014. Cedido posteriormente.
+
 ### ENTRENADORES HISTÓRICOS
 - Carlos Aimar (1993-94): Final de Copa 1994.
 - Víctor Fernández (1998-2002): Las 3 semifinales europeas. Era dorada.
