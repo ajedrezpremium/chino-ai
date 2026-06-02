@@ -372,7 +372,7 @@ const fallbackQuestions = [
   { question_text: 'Cal era o alcume de Vladimir Gudelj?', option_a: 'O Xigante', option_b: 'O Tanque', option_c: 'O Canón', option_d: 'A Torre', correct_option: 'B' },
   { question_text: 'Que xogador do Celta xogou 4 Mundiais?', option_a: 'Aspas', option_b: 'Mostovoi', option_c: 'Makelele', option_d: 'Mazinho', correct_option: 'C' },
   { question_text: 'En que ano se retirou Míchel Salgado?', option_a: '2006', option_b: '2008', option_c: '2010', option_d: '2012', correct_option: 'D' },
-  { question_text: 'Cal foi o primeiro partido do Celta en Primeira?', option_a: '1923', option_b: '1929', option_c: '1935', option_d: '1940', correct_option: 'B' },
+  { question_text: 'Cal foi o primeiro partido do Celta en Primeira?', option_a: '1923', option_b: '1929', option_c: '1935', option_d: '1940', correct_option: 'D' },
   { question_text: 'Cantos goles precisa Aspas para chegar a 250?', option_a: '30', option_b: '35', option_c: '40', option_d: '45', correct_option: 'C' },
   { question_text: 'Que adestrador do Celta gañou unha Champions?', option_a: 'Berizzo', option_b: 'Benítez', option_c: 'Luis Enrique', option_d: 'Víctor Fernández', correct_option: 'C' },
   { question_text: 'Cal é a posición natural de Míngueza?', option_a: 'Lateral', option_b: 'Central', option_c: 'Medio', option_d: 'Ambas', correct_option: 'D' },

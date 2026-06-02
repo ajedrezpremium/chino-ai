@@ -1,6 +1,6 @@
 Total artículos scrapeados: 79
 Artículos históricos: 79
-Knowledge facts generados: 384
+Knowledge facts generados: 375
 
 --- TOP 10 ARTICULOS MAS RELEVANTES ---
 
@@ -20,27 +20,27 @@ Knowledge facts generados: 384
    http://www.moiceleste.com/2025/03/celta-boca-juniors-se-cumplen-100-anos.html
    2025-03 | Score: 11.5
 
-5. [partidos] Los primeros rivales confirmados del Celta en la Europa League ~ Celta de Vigo Moi Celeste
-   http://www.moiceleste.com/2026/05/los-primeros-rivales-confirmados-del.html
-   2026-05 | Score: 11.1
-
-6. [historia] Partidos históricos ~ Celta de Vigo Moi Celeste
+5. [historia] Partidos históricos ~ Celta de Vigo Moi Celeste
    http://www.moiceleste.com/2011/02/partidos-historicos.html
    2011-02 | Score: 10.4
 
-7. [entrenadores] Mingueza: "Claudio tiene gran parte de culpa en que me estén pasando cosas tan bonitas"  ~ Celta de Vigo Moi Celeste
-   http://www.moiceleste.com/2025/06/mingueza-claudio-tiene-gran-parte-de.html
-   2025-06 | Score: 9.5
-
-8. [historia] Fran Beltrán alcanza otro hito en su trayectoria como jugador del Celta ~ Celta de Vigo Moi Celeste
+6. [historia] Fran Beltrán alcanza otro hito en su trayectoria como jugador del Celta ~ Celta de Vigo Moi Celeste
    http://www.moiceleste.com/2025/11/fran-beltran-alcanza-otro-hito-en-su.html
    2025-11 | Score: 9.3
 
-9. [historia] Manu Fernández hace historia en el Celta ~ Celta de Vigo Moi Celeste
+7. [historia] Manu Fernández hace historia en el Celta ~ Celta de Vigo Moi Celeste
    http://www.moiceleste.com/2025/08/manu-fernandez-hace-historia-en-el-celta.html
    2025-08 | Score: 8.9
 
-10. [historia] El Celta supera su récord de permanencia en Primera División  ~ Celta de Vigo Moi Celeste
+8. [historia] El Celta supera su récord de permanencia en Primera División  ~ Celta de Vigo Moi Celeste
    http://www.moiceleste.com/2026/04/el-celta-supera-su-record-de.html
    2026-04 | Score: 8.6
+
+9. [jugadores] Ilaix Moriba, el mejor del Celta ante el Sevilla  ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/05/ilaix-moriba-el-mejor-del-celta-ante-el.html
+   2026-05 | Score: 8.3
+
+10. [jugadores] Matías Vecino, el mejor del Celta ante el Olympique Lyonnais ~ Celta de Vigo Moi Celeste
+   http://www.moiceleste.com/2026/03/matias-vecino-el-mejor-del-celta-ante.html
+   2026-03 | Score: 8.1
 
