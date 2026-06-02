@@ -228,18 +228,34 @@ export default function App() {
           headers['HTTP-Referer'] = 'https://chinoaiagent.vercel.app'
           headers['X-Title'] = 'Chiño AI'
         }
+
+        // Fetch recent corrections for auto-learning
+        let correctionsStr = ''
+        try {
+          const { data: recentCorrections } = await supabase
+            .from('corrections')
+            .select('original_message, correction_text')
+            .order('created_at', { ascending: false })
+            .limit(30)
+          if (recentCorrections?.length > 0) {
+            correctionsStr = recentCorrections.map(c =>
+              `- Usuario corrixiu: "${c.original_message.substring(0, 100)}" → "${c.correction_text.substring(0, 100)}"`
+            ).join('\n')
+          }
+        } catch {}
+
+        const messages = [
+          { role: 'system', content: SYSTEM_PROMPT },
+          ...(knowledgeFacts.length > 0 ? [{ role: 'system', content: `Hechos verificados:\n${knowledgeFacts.join('\n')}` }] : []),
+          ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
+          { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
+          { role: 'user', content: userText }
+        ]
+
         const res = await fetch(baseUrl, {
           method: 'POST',
           headers,
-          body: JSON.stringify({
-            model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
-            messages: [
-              { role: 'system', content: SYSTEM_PROMPT },
-              ...(knowledgeFacts.length > 0 ? [{ role: 'system', content: `Hechos verificados por usuarios:\n${knowledgeFacts.join('\n')}` }] : []),
-              { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
-              { role: 'user', content: userText }
-            ]
-          })
+          body: JSON.stringify({ model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini', messages })
         })
         const data = await res.json()
         const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
