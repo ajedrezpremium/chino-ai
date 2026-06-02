@@ -13,8 +13,11 @@ i18n
     fallbackLng: 'es',
     defaultNS: 'translation',
     interpolation: { escapeValue: false },
+    supportedLngs: ['gl', 'es', 'en'],
+    nonExplicitSupportedLngs: true,
+    load: 'languageOnly',
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       lookupLocalStorage: 'chino_lang',
       caches: ['localStorage'],
     },
