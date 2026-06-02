@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { GaliciaFlag } from './i18n/LanguageSwitcher'
+import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { MessageCircle } from 'lucide-react'
 
 const moments = [
@@ -16,9 +16,9 @@ const PARTICLES = 20
 const MOMENT_KEYS = ['m0', 'm1', 'm2', 'm3', 'm4']
 
 const LANG_BTNS = [
-  { code: 'gl', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
-  { code: 'es', flag: <span className="text-sm leading-none">🇪🇸</span> },
-  { code: 'en', flag: <span className="text-sm leading-none">🇬🇧</span> },
+  { code: 'gl', flag: <><GaliciaFlag className="w-[18px] h-[12px] inline-block align-middle" /><span className="ml-1 text-[10px] font-bold">GL</span></> },
+  { code: 'es', flag: <><SpainFlag className="w-[18px] h-[12px] inline-block align-middle" /><span className="ml-1 text-[10px] font-bold">ES</span></> },
+  { code: 'en', flag: <><UKFlag className="w-[18px] h-[12px] inline-block align-middle" /><span className="ml-1 text-[10px] font-bold">EN</span></> },
 ]
 
 export default function LandingView({ agentGender, onEnter }) {

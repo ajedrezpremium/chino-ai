@@ -2,9 +2,28 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const GaliciaFlag = ({ className }) => (
-  <svg viewBox="0 0 4 3" className={className}>
-    <rect width="4" height="3" fill="white"/>
-    <polygon points="0,0 4,0.8 4,1.6 0,0.8" fill="#0398cf"/>
+  <svg viewBox="0 0 3 2" className={className}>
+    <rect width="3" height="2" fill="#fff"/>
+    <polygon points="0,0 0.45,0 3,1.55 3,2 2.55,2 0,0.45" fill="#0398cf"/>
+  </svg>
+)
+
+export const SpainFlag = ({ className }) => (
+  <svg viewBox="0 0 3 2" className={className}>
+    <rect width="3" height="2" fill="#c60b1e"/>
+    <rect y="0.5" width="3" height="1" fill="#ffc400"/>
+  </svg>
+)
+
+export const UKFlag = ({ className }) => (
+  <svg viewBox="0 0 3 2" className={className}>
+    <rect width="3" height="2" fill="#012169"/>
+    <path d="M0,0 L3,2 M3,0 L0,2" stroke="#fff" strokeWidth="0.6"/>
+    <path d="M0,0 L3,2 M3,0 L0,2" stroke="#c60b1e" strokeWidth="0.25"/>
+    <rect width="3" height="0.25" fill="#fff" y="0.875"/>
+    <rect width="3" height="0.25" fill="#c60b1e" y="0.9"/>
+    <rect x="1.375" width="0.25" height="2" fill="#fff"/>
+    <rect x="1.4" width="0.25" height="2" fill="#c60b1e"/>
   </svg>
 )
 
@@ -12,9 +31,9 @@ export default function LanguageSwitcher({ onSelect, landing }) {
   const { i18n, t } = useTranslation()
 
   const langs = [
-    { code: 'gl', flag: <GaliciaFlag className="inline-block w-5 h-4 align-middle" />, flagBig: <GaliciaFlag className="w-12 h-9" />, color: 'border-blue-500 hover:bg-blue-600/20' },
-    { code: 'es', flag: '🇪🇸', flagBig: '🇪🇸', color: 'border-yellow-500 hover:bg-yellow-600/20' },
-    { code: 'en', flag: '🇬🇧', flagBig: '🇬🇧', color: 'border-red-500 hover:bg-red-600/20' },
+    { code: 'gl', flag: <GaliciaFlag className="inline-block w-5 h-4 align-middle" />, flagBig: <GaliciaFlag className="w-16 h-12" />, color: 'border-blue-500 hover:bg-blue-600/20' },
+    { code: 'es', flag: <SpainFlag className="inline-block w-5 h-4 align-middle" />, flagBig: <SpainFlag className="w-16 h-12" />, color: 'border-yellow-500 hover:bg-yellow-600/20' },
+    { code: 'en', flag: <UKFlag className="inline-block w-5 h-4 align-middle" />, flagBig: <UKFlag className="w-16 h-12" />, color: 'border-red-500 hover:bg-red-600/20' },
   ]
 
   const handleSelect = (code) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { X, Volume2, ExternalLink, LogOut, Settings, User, Trophy, ShoppingBag, Ticket, Star, Gamepad2, ChevronRight, Calendar } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { GaliciaFlag } from './i18n/LanguageSwitcher'
+import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 
 export default function ProfileView({ supabase, user, agentGender, setAgentGender, speak, theme, setTheme, onClose }) {
   const [profile, setProfile] = useState(null)
@@ -177,14 +177,14 @@ export default function ProfileView({ supabase, user, agentGender, setAgentGende
             </div>
             <div className="flex items-center justify-between bg-slate-900/50 rounded-xl px-4 py-3">
               <div className="flex items-center gap-2">
-                <span className="text-base">{i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}</span>
+                <span className="text-base">{i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-[18px] h-[12px] inline-block align-middle" /> : i18n.language?.startsWith('en') ? <UKFlag className="w-[18px] h-[12px] inline-block align-middle" /> : <SpainFlag className="w-[18px] h-[12px] inline-block align-middle" />}</span>
                 <span className="text-sm text-white">{t('profile.language')}</span>
               </div>
               <div className="flex gap-1">
                 {[
                   { code: 'gl', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
-                  { code: 'es', flag: '🇪🇸' },
-                  { code: 'en', flag: '🇬🇧' },
+                  { code: 'es', flag: <SpainFlag className="w-[18px] h-[12px] inline-block align-middle" /> },
+                  { code: 'en', flag: <UKFlag className="w-[18px] h-[12px] inline-block align-middle" /> },
                 ].map(l => {
                   const active = i18n.language?.startsWith(l.code)
                   return (

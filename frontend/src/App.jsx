@@ -4,7 +4,7 @@ import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
-import { GaliciaFlag } from './i18n/LanguageSwitcher'
+import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
@@ -356,14 +356,14 @@ export default function App() {
           <div className="relative">
             <button onClick={() => setShowLangDropdown(d => !d)}
               className="p-1 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-xs">
-              {i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> : i18n.language?.startsWith('en') ? '🇬🇧' : '🇪🇸'}
+              {i18n.language?.startsWith('gl') ? <GaliciaFlag className="w-[18px] h-[12px] inline-block align-middle" /> : i18n.language?.startsWith('en') ? <UKFlag className="w-[18px] h-[12px] inline-block align-middle" /> : <SpainFlag className="w-[18px] h-[12px] inline-block align-middle" />}
             </button>
             {showLangDropdown && (
               <div className="absolute right-0 top-full mt-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden min-w-[130px]">
                 {[
                   { code: 'gl', label: 'Galego', flag: <GaliciaFlag className="w-[18px] h-[14px] inline-block align-middle" /> },
-                  { code: 'es', label: 'Español', flag: '🇪🇸' },
-                  { code: 'en', label: 'English', flag: '🇬🇧' },
+                  { code: 'es', label: 'Español', flag: <SpainFlag className="w-[18px] h-[12px] inline-block align-middle" /> },
+                  { code: 'en', label: 'English', flag: <UKFlag className="w-[18px] h-[12px] inline-block align-middle" /> },
                 ].map(l => {
                   const active = i18n.language?.startsWith(l.code)
                   return (
