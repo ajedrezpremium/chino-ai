@@ -102,47 +102,61 @@ export default function App() {
     if (data) setLegends(data)
   }
 
-  const CAT_GL = {economia:['presuposto','presupost','economia','salario','diñeiro','ingreso','gasto','venda','traspaso','débeda','millon','limite','financi'],estadio:['estadio','balaidos','aforo','capacidade','remodel','grada','afouteza'],adestradores:['adestrador','adestradora','adestrad','coach','tecnico'],presidentes:['presidente','presidenta','directiva','mouriño','ges'],europa:['europa','uefa','champions','europa league','intertoto','europeo'],historia:['fundacion','fundación','historia','fusión','fusion','1923','orixe','orixes','fundou','naceu','creouse'],plantilla:['plantilla','xogador','xogadora','xogadores','fichaxe','contrato','cesión','cesion','mercado','canteira'],xogadores:['porteiro','goleador','maximo','zamora','gol','goles','mellor','xogou','partidos']}
-  const CAT_ES = {economia:['presupuesto','economia','salario','dinero','ingreso','gasto','venta','traspaso','deuda','millon','limite','financi'],estadio:['estadio','balaidos','aforo','capacidad','remodel','grada','afouteza'],adestradores:['entrenador','tecnico','director'],presidentes:['presidente','presidenta','directiva','mouriño','ges'],europa:['europa','uefa','champions','europa league','intertoto','europeo'],historia:['fundacion','fundacion','historia','fusion','1923','origenes','origen','nacio','creo'],plantilla:['plantilla','jugador','jugadora','jugadores','fichaje','contrato','cesion','mercado','cantera'],xogadores:['portero','goleador','maximo','zamora','gol','goles','mejor','jugo','partidos']}
-  const CAT_EN = {economy:['budget','economy','salary','money','income','spend','sale','transfer','debt','million','limit','financial'],stadium:['stadium','balaidos','capacity','remodel','stand','afouteza'],coaches:['coach','manager','technical','director'],presidents:['president','directive','board','mouriño'],europe:['europe','uefa','champions','europa league','intertoto','european'],history:['foundation','history','fusion','1923','origin','born','created','founded'],squad:['squad','player','players','signing','contract','loan','market','academy'],players:['goalkeeper','keeper','scorer','zamora','goal','goals','best','played','matches']}
-
-  const detectEntity = (text) => {
-    const t = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    const cats = []
-    // Check all category keywords in all languages
-    for (const [cat, keywords] of Object.entries({...CAT_ES,...CAT_GL,...CAT_EN})) {
-      if (keywords.some(k => t.includes(k))) { cats.push(cat); break }
-    }
-    return cats
+  const getEmbedding = async (text) => {
+    try {
+      const key = OPENROUTER_API_KEY || OPENAI_API_KEY
+      if (!key) return null
+      const res = await fetch('https://openrouter.ai/api/v1/embeddings', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'text-embedding-3-small', input: text })
+      })
+      if (!res.ok) return null
+      const data = await res.json()
+      return data.data?.[0]?.embedding || null
+    } catch { return null }
   }
 
   const fetchRelevantFacts = async (userText) => {
-    const categories = detectEntity(userText)
-    // Build a search query: take user text, clean it
-    let searchTerm = userText.toLowerCase().replace(/[^a-z0-9áéíóúñü\s]/g, ' ').trim()
-    // Remove common stop words
-    const stopWords = ['que','que','el','la','los','las','un','una','del','en','por','con','para','es','se','su','al','lo','como','mas','pero','sus','le','ya','este','entre','todo','esta','sin','era','muy','cual','quien','a','e','i','o','u','the','of','and','to','in','is','it','for','on','with','as','at','from','or','an','but','not','you','all','can','had','her','was','one','our','out','has','are','have','been','would','could','should','what','when','where','why','how','which','that','this','these','those','do','does','did']
-    const words = searchTerm.split(/\s+/).filter(w => w.length > 2 && !stopWords.includes(w))
-    searchTerm = words.join(' ')
+    // Try vector search first (semantic)
+    try {
+      const embedding = await getEmbedding(userText)
+      if (embedding) {
+        const { data } = await supabase.rpc('match_knowledge', {
+          query_embedding: embedding,
+          match_threshold: 0.7,
+          match_count: 50
+        })
+        if (data?.length > 0) return data.map(f => f.fact_text)
+      }
+    } catch {}
+
+    // Fallback: keyword + full-text search
+    const CAT_MAP = {
+      economia:['presupuesto','presuposto','salario','dinero','ingreso','gasto','venta','traspaso','deuda','millon','limite','financi'],
+      estadio:['estadio','balaidos','aforo','capacidad','remodel','grada','afouteza'],
+      adestradores:['entrenador','adestrador','coach','tecnico','director'],
+      presidentes:['presidente','directiva','mouriño','ges'],
+      europa:['europa','uefa','champions','europa league','intertoto'],
+      historia:['fundacion','historia','fusion','1923','origen','orixe'],
+      plantilla:['plantilla','xogador','jugador','fichaxe','fichaje','contrato','cesion','mercado','canteira','cantera'],
+      xogadores:['porteiro','portero','goleador','zamora','gol','goles','mejor','mellor','partidos']
+    }
+    const t = userText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const cats = Object.entries(CAT_MAP).filter(([_,kw]) => kw.some(k => t.includes(k))).map(([c]) => c)
+    const stopWords = new Set(['que','el','la','los','las','un','una','del','en','por','con','para','es','se','su','al','lo','como','mas','pero','sus','le','ya','este','entre','todo','esta','sin','era','muy','cual','quien','a','e','i','o','u','the','of','and','to','in','is','it','for','on','with','as','at','from','or','an','but','not','you','all','can','had','her','was','one','our','out','has','are','have','been','would','could','should','what','when','where','why','how','which','that','this','these','those','do','does','did'])
+    const words = userText.toLowerCase().replace(/[^a-z0-9áéíóúñü\s]/g,' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w))
+    const searchTerm = words.join(' ')
 
     let query = supabase.from('knowledge_facts').select('fact_text').eq('verified', true)
-
-    // If we detected categories, filter by them
-    if (categories.length > 0) {
-      query = query.in('category', categories)
-    }
-
-    // If we have meaningful words, use full-text search
-    if (searchTerm.length > 0) {
-      query = query.textSearch('fact_text', searchTerm, { type: 'websearch' })
-    }
-
+    if (cats.length) query = query.in('category', cats)
+    if (searchTerm) query = query.textSearch('fact_text', searchTerm, { type: 'websearch' })
     const { data } = await query.limit(50)
-    if (data?.length > 0) return data.map(f => f.fact_text)
-    // Fallback: no search results, return recent facts from detected categories
-    if (categories.length > 0) {
-      const { data: fallback } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).in('category', categories).limit(30)
-      if (fallback?.length) return fallback.map(f => f.fact_text)
+    if (data?.length) return data.map(f => f.fact_text)
+
+    if (cats.length) {
+      const { data: fb } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).in('category', cats).limit(30)
+      if (fb?.length) return fb.map(f => f.fact_text)
     }
     const { data: anyFacts } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).limit(30)
     return anyFacts?.map(f => f.fact_text) || []
