@@ -41,7 +41,6 @@ export default function App() {
   const [showAuth, setShowAuth] = useState(false)
 
   const [legends, setLegends] = useState([])
-  const [knowledgeFacts, setKnowledgeFacts] = useState([])
   const [correctionFor, setCorrectionFor] = useState(null)
   const [correctionText, setCorrectionText] = useState('')
   const [voices, setVoices] = useState([])
@@ -69,7 +68,6 @@ export default function App() {
 
   useEffect(() => {
     fetchLegends()
-    fetchKnowledge()
     if ('speechSynthesis' in window) {
       window.speechSynthesis.getVoices()
       window.speechSynthesis.addEventListener('voiceschanged', () => {}, { once: true })
@@ -104,9 +102,40 @@ export default function App() {
     if (data) setLegends(data)
   }
 
-  const fetchKnowledge = async () => {
-    const { data } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).limit(30)
-    if (data) setKnowledgeFacts(data.map(f => f.fact_text))
+  const detectEntity = (text) => {
+    const t = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const entities = []
+    // Player names
+    const playerNames = ['iago aspas','aspas','mostovoi','mosto','karpin','mazinho','catanha','pahino','gudelj','michael salgado','michel salgado','salgado','caceres','berizzo','hugo mallo','makelele','nolito','gustavo lopez','canizares','canizares','cavallero','pinto','mate','javier mate','ruben blanco','sergio alvarez','guaita','ivan villar','yoel','borja iglesias','veiga','gabri veiga','fer lopez','mingueza','javier rodriguez','carreira','starfelt','rueda','ailaix moriba','sotelo','hugo sotelo','vecino','swedberg','jutgla','cervi','pablo duran','radu']
+    for (const name of playerNames) {
+      if (t.includes(name)) { entities.push(name); break }
+    }
+    // Categories from keywords
+    if (/\b(presupuesto|presuposto|presupuest|econom|salario|dinero|ingreso|gasto|venta|traspaso|deuda|millon|limite|financi)\b/.test(t)) entities.push('economia')
+    if (/\b(estadio|balaidos|estadio|aforo|capacidad|remodel|grada|afouteza)\b/.test(t)) entities.push('estadio')
+    if (/\b(entrenador|adestrador|coach|tecnico|director)\b/.test(t)) entities.push('adestradores')
+    if (/\b(presidente|presidenta|directiv|mouriño|mourino|ges)\b/.test(t)) entities.push('presidentes')
+    if (/\b(europa|uefa|champions|europa league|intertoto|europeo)\b/.test(t)) entities.push('europa')
+    if (/\b(fundacion|fundacion|historia|fusion|1923|origenes|orixe|fundou)\b/.test(t)) entities.push('historia')
+    if (/\b(plantilla|xogador|jugador|fichaxe|fichaje|contrato|cesion|mercado)\b/.test(t)) entities.push('plantilla')
+    if (/\b(portero|porteiro|canciller|canciller|cancillero|zamora|gol|goles|maximo goleador)\b/.test(t)) entities.push('jugadores')
+    if (/\b(patrocinio|patrocinador|abanca|estrella galicia|adidas)\b/.test(t)) entities.push('plantilla')
+    return entities
+  }
+
+  const fetchRelevantFacts = async (userText) => {
+    const entities = detectEntity(userText)
+    let query = supabase.from('knowledge_facts').select('fact_text').eq('verified', true)
+    if (entities.length > 0) {
+      const cats = entities.filter(e => !['iago aspas','aspas','mostovoi','karpin','mazinho','catanha','pahino','gudelj','michael salgado','michel salgado','salgado','caceres','berizzo','hugo mallo','makelele','nolito','gustavo lopez','canizares','canizares','cavallero','pinto','mate','javier mate','ruben blanco','sergio alvarez','guaita','ivan villar','yoel','borja iglesias','veiga','gabri veiga','fer lopez','mingueza','javier rodriguez','carreira','starfelt','rueda','ailaix moriba','sotelo','hugo sotelo','vecino','swedberg','jutgla','cervi','pablo duran','radu'].includes(e))
+      if (cats.length > 0) query = query.in('category', cats)
+      // Add text search for player names
+      const playerEntity = entities.find(e => !cats.includes(e))
+      if (playerEntity) query = query.textSearch('fact_text', playerEntity)
+    }
+    const { data } = await query.limit(25)
+    if (data) return data.map(f => f.fact_text)
+    return []
   }
 
   const [agentGender, setAgentGender] = useState('male')
@@ -229,6 +258,10 @@ export default function App() {
           headers['X-Title'] = 'Chiño AI'
         }
 
+        // Fetch entity-aware facts
+        const relevantFacts = await fetchRelevantFacts(userText)
+        const factsStr = relevantFacts.length > 0 ? relevantFacts.join('\n') : await fetchRelevantFacts('') // fallback to any facts
+
         // Fetch recent corrections for auto-learning
         let correctionsStr = ''
         try {
@@ -246,7 +279,7 @@ export default function App() {
 
         const messages = [
           { role: 'system', content: SYSTEM_PROMPT },
-          ...(knowledgeFacts.length > 0 ? [{ role: 'system', content: `Hechos verificados:\n${knowledgeFacts.join('\n')}` }] : []),
+          ...(factsStr ? [{ role: 'system', content: `Hechos verificados:\n${factsStr}` }] : []),
           ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
           { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
           { role: 'user', content: userText }

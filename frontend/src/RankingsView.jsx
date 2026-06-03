@@ -3,35 +3,35 @@ import { motion } from 'framer-motion'
 import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-const playerRanking = [
-  { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: '👑 Lenda' },
-  { pos: 2, name: 'Alejandro Mostovoi', role: 'Centrocampista', era: '1996-2004', stats: '72 goles · 235 partidos · 45 asistencias', score: 9200, badge: '⭐ O Zar' },
-  { pos: 3, name: 'Míchel Salgado', role: 'Defensa', era: '1995-1999', stats: '18 goles · 290 partidos · 22 asistencias', score: 8800, badge: '🛡️ Muro' },
-  { pos: 4, name: 'Gustavo López', role: 'Centrocampista', era: '1996-2002', stats: '45 goles · 250 partidos · 60 asistencias', score: 8500, badge: '🎯 Máxico' },
-  { pos: 5, name: 'Mazinho', role: 'Centrocampista', era: '1991-1995', stats: '25 goles · 180 partidos · 30 asistencias', score: 8100, badge: '🌍 Campión 94' },
-  { pos: 6, name: 'Manolo Rodríguez', role: 'Defensa', era: '1960-1975', stats: '12 goles · 512 partidos · 28 asistencias', score: 8000, badge: '📊 512 partidos' },
-  { pos: 7, name: 'Patxi Salinas', role: 'Defensa', era: '1988-1993', stats: '8 goles · 180 partidos · 10 asistencias', score: 7800, badge: '🛡️ Roca vasca' },
-  { pos: 8, name: 'Fernando Veloso', role: 'Centrocampista', era: '1970-1978', stats: '38 goles · 240 partidos · 15 asistencias', score: 7600, badge: '🎩 Elegancia' },
-  { pos: 9, name: 'Valery Karpin', role: 'Centrocampista', era: '1997-2002', stats: '30 goles · 180 partidos · 40 asistencias', score: 7400, badge: '🇷🇺 Zar ruso' },
-  { pos: 10, name: 'Nolito', role: 'Extremo', era: '2013-2016', stats: '39 goles · 103 partidos · 19 asistencias', score: 7300, badge: '💫 Internacional' },
-  { pos: 11, name: 'Hugo Mallo', role: 'Defensa', era: '2012-2023', stats: '10 goles · 350 partidos · 30 asistencias', score: 7100, badge: '🏠 Canteirán' },
-  { pos: 12, name: 'Claude Makelele', role: 'Centrocampista', era: '1998-2000', stats: '4 goles · 70 partidos · 5 asistencias', score: 7000, badge: '🌍 Lenda mundial' },
-  { pos: 13, name: 'Silvinho', role: 'Defensa', era: '1999-2001', stats: '5 goles · 80 partidos · 15 asistencias', score: 6900, badge: '🇧🇷 Lateral fino' },
-  { pos: 14, name: 'Catanha', role: 'Dianteiro', era: '1999-2002', stats: '45 goles · 120 partidos · 18 asistencias', score: 6800, badge: '⚽ Goleador' },
-  { pos: 15, name: 'Pahiño', role: 'Dianteiro', era: '1943-1949', stats: '80 goles · 150 partidos · 12 asistencias', score: 6700, badge: '🎩 Lenda 40s' },
-  { pos: 16, name: 'Benni McCarthy', role: 'Dianteiro', era: '1999-2002', stats: '40 goles · 95 partidos · 20 asistencias', score: 6600, badge: '🇿🇦 Potencia' },
-  { pos: 17, name: 'Borja Iglesias', role: 'Dianteiro', era: '2025-', stats: '14 goles · 36 partidos · 2 asistencias', score: 6500, badge: '🎯 14 goles' },
-  { pos: 18, name: 'Juanfran', role: 'Defensa', era: '1998-2005', stats: '5 goles · 200 partidos · 18 asistencias', score: 6400, badge: '🛡️ Consistencia' },
-  { pos: 19, name: 'Brais Méndez', role: 'Centrocampista', era: '2018-2022', stats: '20 goles · 160 partidos · 25 asistencias', score: 6300, badge: '💎 Canteira' },
-  { pos: 20, name: 'Gabriel Veiga', role: 'Centrocampista', era: '2022-2023', stats: '11 goles · 50 partidos · 4 asistencias', score: 6200, badge: '🌟 40M€' },
-  { pos: 21, name: 'Sergio Álvarez', role: 'Portero', era: '2008-2019', stats: '0 goles · 250 partidos · 80 clean sheets', score: 6100, badge: '🧤 Seguridade' },
-  { pos: 22, name: 'Rubén Blanco', role: 'Portero', era: '2015-2023', stats: '0 goles · 120 partidos · 35 clean sheets', score: 6000, badge: '🧤 Canteirán' },
-  { pos: 23, name: 'Óscar Mingueza', role: 'Defensa', era: '2024-', stats: '3 goles · 36 partidos · 4 asistencias', score: 5900, badge: '📈 18M€' },
-  { pos: 24, name: 'Mauro Rodríguez', role: 'Dianteiro', era: '1950-1960', stats: '55 goles · 180 partidos · 10 asistencias', score: 5800, badge: '⚽ Clásico' },
-  { pos: 25, name: 'Lubo Penev', role: 'Dianteiro', era: '1994-1995', stats: '20 goles · 50 partidos · 5 asistencias', score: 5700, badge: '🇧🇳 Búlgaro' },
+const playerRankingFallback = [
+  { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: 'Lenda' },
+  { pos: 2, name: 'Alejandro Mostovoi', role: 'Centrocampista', era: '1996-2004', stats: '72 goles · 235 partidos · 45 asistencias', score: 9200, badge: 'O Zar' },
+  { pos: 3, name: 'Míchel Salgado', role: 'Defensa', era: '1995-1999', stats: '18 goles · 290 partidos · 22 asistencias', score: 8800, badge: 'Muro' },
+  { pos: 4, name: 'Gustavo López', role: 'Centrocampista', era: '1996-2002', stats: '45 goles · 250 partidos · 60 asistencias', score: 8500, badge: 'Máxico' },
+  { pos: 5, name: 'Mazinho', role: 'Centrocampista', era: '1991-1995', stats: '25 goles · 180 partidos · 30 asistencias', score: 8100, badge: 'Campión 94' },
+  { pos: 6, name: 'Manolo Rodríguez', role: 'Defensa', era: '1960-1975', stats: '12 goles · 512 partidos · 28 asistencias', score: 8000, badge: '512 partidos' },
+  { pos: 7, name: 'Patxi Salinas', role: 'Defensa', era: '1988-1993', stats: '8 goles · 180 partidos · 10 asistencias', score: 7800, badge: 'Roca vasca' },
+  { pos: 8, name: 'Fernando Veloso', role: 'Centrocampista', era: '1970-1978', stats: '38 goles · 240 partidos · 15 asistencias', score: 7600, badge: 'Elegancia' },
+  { pos: 9, name: 'Valery Karpin', role: 'Centrocampista', era: '1997-2002', stats: '30 goles · 180 partidos · 40 asistencias', score: 7400, badge: 'Zar ruso' },
+  { pos: 10, name: 'Nolito', role: 'Extremo', era: '2013-2016', stats: '39 goles · 103 partidos · 19 asistencias', score: 7300, badge: 'Internacional' },
+  { pos: 11, name: 'Hugo Mallo', role: 'Defensa', era: '2012-2023', stats: '10 goles · 350 partidos · 30 asistencias', score: 7100, badge: 'Canteirán' },
+  { pos: 12, name: 'Claude Makelele', role: 'Centrocampista', era: '1998-2000', stats: '4 goles · 70 partidos · 5 asistencias', score: 7000, badge: 'Lenda mundial' },
+  { pos: 13, name: 'Silvinho', role: 'Defensa', era: '1999-2001', stats: '5 goles · 80 partidos · 15 asistencias', score: 6900, badge: 'Lateral fino' },
+  { pos: 14, name: 'Catanha', role: 'Dianteiro', era: '1999-2002', stats: '45 goles · 120 partidos · 18 asistencias', score: 6800, badge: 'Goleador' },
+  { pos: 15, name: 'Pahiño', role: 'Dianteiro', era: '1943-1949', stats: '80 goles · 150 partidos · 12 asistencias', score: 6700, badge: 'Lenda 40s' },
+  { pos: 16, name: 'Benni McCarthy', role: 'Dianteiro', era: '1999-2002', stats: '40 goles · 95 partidos · 20 asistencias', score: 6600, badge: 'Potencia' },
+  { pos: 17, name: 'Borja Iglesias', role: 'Dianteiro', era: '2025-', stats: '14 goles · 36 partidos · 2 asistencias', score: 6500, badge: '14 goles' },
+  { pos: 18, name: 'Juanfran', role: 'Defensa', era: '1998-2005', stats: '5 goles · 200 partidos · 18 asistencias', score: 6400, badge: 'Consistencia' },
+  { pos: 19, name: 'Brais Méndez', role: 'Centrocampista', era: '2018-2022', stats: '20 goles · 160 partidos · 25 asistencias', score: 6300, badge: 'Canteira' },
+  { pos: 20, name: 'Gabriel Veiga', role: 'Centrocampista', era: '2022-2023', stats: '11 goles · 50 partidos · 4 asistencias', score: 6200, badge: '40M€' },
+  { pos: 21, name: 'Sergio Álvarez', role: 'Portero', era: '2008-2019', stats: '0 goles · 250 partidos · 80 clean sheets', score: 6100, badge: 'Seguridade' },
+  { pos: 22, name: 'Rubén Blanco', role: 'Portero', era: '2015-2023', stats: '0 goles · 120 partidos · 35 clean sheets', score: 6000, badge: 'Canteirán' },
+  { pos: 23, name: 'Óscar Mingueza', role: 'Defensa', era: '2024-', stats: '3 goles · 36 partidos · 4 asistencias', score: 5900, badge: '18M€' },
+  { pos: 24, name: 'Mauro Rodríguez', role: 'Dianteiro', era: '1950-1960', stats: '55 goles · 180 partidos · 10 asistencias', score: 5800, badge: 'Clásico' },
+  { pos: 25, name: 'Lubo Penev', role: 'Dianteiro', era: '1994-1995', stats: '20 goles · 50 partidos · 5 asistencias', score: 5700, badge: 'Búlgaro' },
 ]
 
-const coachRanking = [
+const coachRankingFallback = [
   { pos: 1, name: 'Víctor Fernández', era: '1998-2002', logros: '3 semifinais europeas · Era dourada', score: 9500 },
   { pos: 2, name: 'Eduardo Berizzo', era: '2014-2017', logros: 'Semifinais Europa League 2017 · 6º Liga', score: 8900 },
   { pos: 3, name: 'Claudio Giráldez', era: '2024-', logros: 'Cuartos UEFA · 6º LaLiga 2026 · Canteira', score: 8500 },
@@ -95,6 +95,22 @@ export default function RankingsView({ supabase, user, onClose }) {
   const [tab, setTab] = useState('players')
   const [fans, setFans] = useState([])
   const [loadingFans, setLoadingFans] = useState(false)
+  const [playerRanking, setPlayerRanking] = useState([])
+  const [coachRanking, setCoachRanking] = useState([])
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    if (loaded || !supabase) return
+    setLoaded(true)
+    supabase.from('rankings_players').select('*').order('pos', { ascending: true }).then(({ data }) => {
+      if (data?.length) setPlayerRanking(data)
+      else setPlayerRanking(playerRankingFallback)
+    }).catch(() => setPlayerRanking(playerRankingFallback))
+    supabase.from('rankings_coaches').select('*').order('pos', { ascending: true }).then(({ data }) => {
+      if (data?.length) setCoachRanking(data)
+      else setCoachRanking(coachRankingFallback)
+    }).catch(() => setCoachRanking(coachRankingFallback))
+  }, [supabase, loaded])
 
   useEffect(() => {
     if (tab === 'fans' && supabase) {

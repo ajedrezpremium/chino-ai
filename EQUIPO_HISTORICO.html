@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipo Histórico · RC Celta de Vigo</title>
+<script src="https://cdn.tailwindcss.com">
+</script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js">
+</script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+* { font-family: 'Inter', system-ui, sans-serif; }
+body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0c1a2e 100%); }
+.pitch { background: linear-gradient(135deg, #1b5e20, #2e7d32, #388e3c); }
+.player-dot { transition: transform 0.2s; }
+.player-dot:hover { transform: scale(1.1); }
+</style>
+</head>
+<body class="min-h-screen p-4 md:p-8 flex flex-col items-center">
+  <div class="max-w-4xl w-full">
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="inline-flex items-center gap-3 bg-slate-800/80 border border-blue-500/30 rounded-2xl px-5 py-3 mb-2">
+        <span class="text-2xl">🏆</span>
+        <div>
+          <h1 class="text-xl font-black text-white">EQUIPO HISTÓRICO</h1>
+          <p class="text-[10px] text-blue-300 font-semibold">RC CELTA DE VIGO · ONCE DE ORO</p>
+        </div>
+      </div>
+      <p class="text-xs text-slate-400">O mellor xogador en cada posto da historia do club</p>
+    </div>
+
+    <!-- Pitch card -->
+    <div id="pitch-card" class="pitch rounded-3xl shadow-2xl shadow-black/50 relative overflow-hidden border border-green-700/50 mx-auto" style="max-width: 700px;">
+      <!-- Pitch lines SVG -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 700 900" preserveAspectRatio="xMidYMid meet">
+        <rect x="10" y="10" width="680" height="880" rx="8" fill="none" stroke="white" stroke-width="2"/>
+        <line x1="10" y1="450" x2="690" y2="450" stroke="white" stroke-width="2"/>
+        <circle cx="350" cy="450" r="60" fill="none" stroke="white" stroke-width="1.5"/>
+        <rect x="245" y="20" width="210" height="260" rx="4" fill="none" stroke="white" stroke-width="1.5"/>
+        <rect x="245" y="620" width="210" height="260" rx="4" fill="none" stroke="white" stroke-width="1.5"/>
+        <circle cx="350" cy="160" r="4" fill="white"/>
+        <circle cx="350" cy="740" r="4" fill="white"/>
+      </svg>
+
+      <!-- Players grid -->
+      <div class="relative z-10 flex flex-col items-center px-4 py-6" style="min-height: 600px;">
+        <!-- GK -->
+        <div class="flex justify-center mb-8">
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-yellow-400/90 border-2 border-yellow-300 flex items-center justify-center text-slate-900 font-black text-lg shadow-lg shadow-yellow-500/30">
+              <span>CAÑ</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Cañizares</span>
+            <span class="text-[8px] text-yellow-300 font-semibold">PORTERO</span>
+          </div>
+        </div>
+
+        <!-- Defenders: RB, CB, CB, LB -->
+        <div class="w-full flex justify-between px-4 mb-8">
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-blue-500/90 border-2 border-blue-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-500/30">
+              <span>MÍCH</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Míchel Salgado</span>
+            <span class="text-[8px] text-blue-300 font-semibold">LD</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-blue-600/90 border-2 border-blue-500 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-600/30">
+              <span>CÁC</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Cáceres</span>
+            <span class="text-[8px] text-blue-300 font-semibold">DFC</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-blue-600/90 border-2 border-blue-500 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-600/30">
+              <span>BERI</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Berizzo</span>
+            <span class="text-[8px] text-blue-300 font-semibold">DFC</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-blue-500/90 border-2 border-blue-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-blue-500/30">
+              <span>H.MA</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Hugo Mallo</span>
+            <span class="text-[8px] text-blue-300 font-semibold">LI</span>
+          </div>
+        </div>
+
+        <!-- Midfielders: CM, CM, CM -->
+        <div class="w-full flex justify-around px-8 mb-8">
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-sky-500/90 border-2 border-sky-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-sky-500/30">
+              <span>KARP</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Karpin</span>
+            <span class="text-[8px] text-sky-300 font-semibold">MC</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-sky-400/90 border-2 border-sky-300 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-sky-400/30">
+              <span>MAZI</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Mazinho</span>
+            <span class="text-[8px] text-sky-300 font-semibold">MC</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-sky-500/90 border-2 border-sky-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-sky-500/30">
+              <span>MOST</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Mostovoi</span>
+            <span class="text-[8px] text-sky-300 font-semibold">MC</span>
+          </div>
+        </div>
+
+        <!-- Forwards: LW, ST, RW -->
+        <div class="w-full flex justify-between px-4">
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-emerald-500/90 border-2 border-emerald-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-emerald-500/30">
+              <span>ASP</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Iago Aspas</span>
+            <span class="text-[8px] text-emerald-300 font-semibold">EI</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full bg-emerald-400/90 border-2 border-emerald-300 flex items-center justify-center text-slate-900 font-black text-sm shadow-lg shadow-emerald-400/30">
+              <span>CAT</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Catanha</span>
+            <span class="text-[8px] text-emerald-300 font-semibold">DC</span>
+          </div>
+          <div class="player-dot flex flex-col items-center cursor-pointer">
+            <div class="w-13 h-13 md:w-15 md:h-15 rounded-full bg-emerald-500/90 border-2 border-emerald-400 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-emerald-500/30">
+              <span>PAHI</span>
+            </div>
+            <span class="text-[9px] font-bold text-white mt-1 bg-slate-900/70 px-2 py-0.5 rounded-full whitespace-nowrap">Pahiño</span>
+            <span class="text-[8px] text-emerald-300 font-semibold">ED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer watermark -->
+      <div class="absolute bottom-2 right-3 z-10 text-[8px] text-white/30 font-bold tracking-wider">
+        CHIÑO AI · RCCELTA
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-wrap justify-center gap-3 mt-6">
+      <button onclick="downloadPNG()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all active:scale-95 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        DESCARGAR PNG
+      </button>
+      <button onclick="window.print()" class="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 text-white text-sm font-bold rounded-xl transition-all active:scale-95 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+        IMPRIMIR
+      </button>
+    </div>
+
+    <div id="loading" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
+      <div class="bg-slate-800 rounded-2xl p-6 text-center shadow-2xl">
+        <div class="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-3"></div>
+        <p class="text-white text-sm font-bold">Xerando imaxe...</p>
+      </div>
+    </div>
+
+    <!-- Player list below -->
+    <div class="mt-8 bg-slate-800/50 rounded-2xl border border-slate-700/50 p-4 md:p-6 max-w-700 mx-auto">
+      <h3 class="text-white font-black text-sm mb-3">🌟 ONCE DE ORO · RC CELTA</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-1.5 text-[10px]">
+        <div class="text-slate-300"><span class="text-yellow-400 font-bold">1</span> Cañizares (POR)</div>
+        <div class="text-slate-300"><span class="text-blue-400 font-bold">2</span> Míchel Salgado (LD)</div>
+        <div class="text-slate-300"><span class="text-blue-400 font-bold">3</span> Cáceres (DFC)</div>
+        <div class="text-slate-300"><span class="text-blue-400 font-bold">4</span> Berizzo (DFC)</div>
+        <div class="text-slate-300"><span class="text-blue-400 font-bold">5</span> Hugo Mallo (LI)</div>
+        <div class="text-slate-300"><span class="text-sky-400 font-bold">6</span> Karpin (MC)</div>
+        <div class="text-slate-300"><span class="text-sky-400 font-bold">7</span> Mazinho (MC)</div>
+        <div class="text-slate-300"><span class="text-sky-400 font-bold">8</span> Mostovoi (MC)</div>
+        <div class="text-slate-300"><span class="text-emerald-400 font-bold">9</span> Iago Aspas (EI)</div>
+        <div class="text-slate-300"><span class="text-emerald-400 font-bold">10</span> Catanha (DC)</div>
+        <div class="text-slate-300"><span class="text-emerald-400 font-bold">11</span> Pahiño (ED)</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function downloadPNG() {
+      const el = document.getElementById('pitch-card')
+      const loader = document.getElementById('loading')
+      loader.classList.remove('hidden')
+      html2canvas(el, {
+        scale: 2,
+        backgroundColor: null,
+        allowTaint: true,
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        const link = document.createElement('a')
+        link.download = 'equipo-historico-celta.png'
+        link.href = canvas.toDataURL('image/png')
+        link.click()
+        loader.classList.add('hidden')
+      }).catch(() => {
+        loader.classList.add('hidden')
+        alert('Erro ao xerar a imaxe. Proba con outro navegador.')
+      })
+    }
+  </script>
+
+  <footer class="mt-8 text-center text-[10px] text-slate-600">
+    CHIÑO AI · Memoria viva do RC Celta de Vigo · Fundado o 23 de agosto de 1923
+  </footer>
+</body>
+</html>
