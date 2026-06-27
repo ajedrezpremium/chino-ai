@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle, Share2, Check, Twitter, MessageCircle, Calendar } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle, Share2, Check, Twitter, MessageCircle, Calendar, Star } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
@@ -17,6 +17,7 @@ const RankingsView = lazy(() => import('./RankingsView'))
 const SectionsView = lazy(() => import('./SectionsView'))
 const MatchesView = lazy(() => import('./MatchesView'))
 const ProfileView = lazy(() => import('./ProfileView'))
+const AcademyView = lazy(() => import('./AcademyView'))
 const LandingView = lazy(() => import('./LandingView'))
 const AuthModal = lazy(() => import('./AuthModal'))
 
@@ -497,6 +498,10 @@ export default function App() {
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'matches' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Calendar size={11} className="inline mr-0.5" />{t('header.matches')}
           </button>
+          <button onClick={() => setCurrentTab('academy')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'academy' ? 'bg-yellow-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Star size={11} className="inline mr-0.5" />Academia
+          </button>
           <button onClick={() => setCurrentTab('sections')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'sections' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Sparkles size={11} className="inline mr-0.5" />{t('header.seccions')}
@@ -551,7 +556,7 @@ export default function App() {
           {user && <XpBar supabase={supabase} user={user} compact onLevelUp={(lvl) => {
             setLevelUpMsg({ level: lvl, name: t(`academy.levels.${lvl}`, `Level ${lvl}`) })
             setTimeout(() => setLevelUpMsg(null), 4000)
-          }} onAcademy={() => { setRankingTab('academy'); setCurrentTab('rankings') }} />}
+          }} onAcademy={() => setCurrentTab('academy')} />}
           <div className="relative">
             <button onClick={() => setShowLangDropdown(d => !d)}
               className="p-1 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-xs">
@@ -612,6 +617,8 @@ export default function App() {
         <SectionsView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (
         <BusinessView supabase={supabase} onClose={() => setCurrentTab('chat')} />
+      ) : currentTab === 'academy' ? (
+        <AcademyView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} onNavigate={(t) => { setRankingTab(t === 'rewards' ? 'rewards' : 'players'); setCurrentTab('rankings') }} />
       ) : currentTab === 'gamer' ? (
         <ChinoGamer supabase={supabase} user={user} speak={speak} />
       ) : (

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye, Gift } from 'lucide-react'
+import { Trophy, Medal, Shield, TrendingUp, Award, Users, Eye, Gift } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import PlayerCard from './PlayerCard'
 import RewardsView from './RewardsView'
-import AcademyView from './AcademyView'
 
 const playerRankingFallback = [
   { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: 'Lenda' },
@@ -188,7 +187,6 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
           <TabButton id="coaches" label={t('rankings.coaches')} icon={<Award size={14} className="inline mr-1" />} />
           <TabButton id="fans" label={t('rankings.fans')} icon={<Users size={14} className="inline mr-1" />} />
           <TabButton id="rewards" label="Premios" icon={<Gift size={14} className="inline mr-1" />} />
-          <TabButton id="academy" label="Academia" icon={<Star size={14} className="inline mr-1" />} />
         </div>
       </div>
 
@@ -280,11 +278,7 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
           <RewardsView user={user} />
         )}
 
-        {tab === 'academy' && (
-          <AcademyView supabase={supabase} user={user} onClose={() => setTab('players')} onNavigate={(t) => setTab(t)} />
-        )}
-
-        {tab !== 'rewards' && tab !== 'academy' && (
+        {tab !== 'rewards' && (
           <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
             {t('rankings.footer')}
           </p>
