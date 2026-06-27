@@ -30,10 +30,10 @@ const XP_ACTIONS = {
 export { getLevel, getLevelProgress, LEVEL_THRESHOLDS }
 
 export function awardXp(supabase, userId, action, amount) {
-  if (!supabase || !userId) return Promise.resolve()
+  if (!supabase || !userId) return Promise.resolve(null)
   const xpGain = amount || XP_ACTIONS[action] || 10
 
-  return supabase.rpc('award_xp', { p_user_id: userId, p_xp: xpGain }).catch(() => {
+  return supabase.rpc('award_xp', { p_user_id: userId, p_xp: xpGain }).then(() => ({ gain: xpGain, streakBonus: 0, total: xpGain })).catch(() => {
     return supabase.from('user_xp').select('xp, streak, last_activity_date').eq('user_id', userId).single().then(({ data }) => {
       const today = new Date().toISOString().split('T')[0]
       const prevXp = data?.xp || 0
@@ -52,8 +52,8 @@ export function awardXp(supabase, userId, action, amount) {
         max_streak: Math.max(data?.max_streak || 0, newStreak),
         last_activity_date: today,
         updated_at: new Date().toISOString()
-      }).catch(() => {})
-    }).catch(() => {})
+      }).then(() => ({ gain: xpGain, streakBonus, total: totalGain }))
+    }).catch(() => null)
   })
 }
 
@@ -68,7 +68,7 @@ export default function XpBar({ supabase, user, compact = false, onLevelUp, onAc
     if (data) {
       setXpData(data)
       if (data.level > prevLevel && prevLevel > 0) {
-        onLevelUp?.(data.level)
+        onLevelUp?.(data.level, LEVEL_TITLES[data.level - 1] || `Level ${data.level}`)
       }
       setPrevLevel(data.level)
     }
@@ -87,6 +87,7 @@ export default function XpBar({ supabase, user, compact = false, onLevelUp, onAc
   const streak = xpData?.streak || 0
   const { current, needed, pct } = getLevelProgress(xp)
   const levelName = t(`academy.levels.${level}`, `Level ${level}`)
+  const LEVEL_TITLES = ['Aficionado','Seguidor','Celtista','Celeste','Internacional','Mostovoi','Zar','Lenda','Inmortal','Celta de #Lenda']
 
   if (compact) {
     return (

@@ -63,6 +63,7 @@ export default function App() {
   const [messageCount, setMessageCount] = useState(0)
   const [theme, setTheme] = useState(() => localStorage.getItem('chino_theme') || 'dark')
   const [levelUpMsg, setLevelUpMsg] = useState(null)
+  const [xpToast, setXpToast] = useState(null)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -427,7 +428,12 @@ export default function App() {
         setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch, actions: actions.length ? actions : undefined }])
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
-        awardXp(supabase, user?.id, 'chat_message').catch(() => {})
+        awardXp(supabase, user?.id, 'chat_message').then(r => {
+          if (r) {
+            setXpToast({ gain: r.gain, streak: r.streakBonus })
+            setTimeout(() => setXpToast(null), 2500)
+          }
+        }).catch(() => {})
 
         const newCount = messageCount + 1
         setMessageCount(newCount)
@@ -553,9 +559,9 @@ export default function App() {
             )}
           </div>
           <PushNotif supabase={supabase} user={user} />
-          {user && <XpBar supabase={supabase} user={user} compact onLevelUp={(lvl) => {
-            setLevelUpMsg({ level: lvl, name: t(`academy.levels.${lvl}`, `Level ${lvl}`) })
-            setTimeout(() => setLevelUpMsg(null), 4000)
+          {user && <XpBar supabase={supabase} user={user} compact onLevelUp={(lvl, title) => {
+            setLevelUpMsg({ level: lvl, title: title || t(`academy.levels.${lvl}`, `Level ${lvl}`) })
+            setTimeout(() => setLevelUpMsg(null), 5000)
           }} onAcademy={() => setCurrentTab('academy')} />}
           <div className="relative">
             <button onClick={() => setShowLangDropdown(d => !d)}
@@ -599,8 +605,16 @@ export default function App() {
           <AnimatePresence>
             {levelUpMsg && (
               <motion.div initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10, scale: 0.9 }}
-                className="absolute right-0 top-full mt-2 bg-gradient-to-r from-yellow-600 to-yellow-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xl z-50 whitespace-nowrap">
-                ⬆️ ¡Nivel {levelUpMsg.level}! — {levelUpMsg.name}
+                className="absolute right-0 top-full mt-2 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xl z-50 whitespace-nowrap border border-yellow-400/30">
+                🏆 ¡Nivel {levelUpMsg.level}! — {levelUpMsg.title}
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {xpToast && (
+              <motion.div initial={{ opacity: 0, x: 20, scale: 0.8 }} animate={{ opacity: 1, x: 0, scale: 1 }} exit={{ opacity: 0, x: 20, scale: 0.8 }}
+                className="fixed bottom-24 right-4 z-50 bg-gradient-to-r from-green-600 to-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xl border border-green-400/30">
+                +{xpToast.gain} XP{xpToast.streak > 0 ? ` (🔥 +${xpToast.streak})` : ''}
               </motion.div>
             )}
           </AnimatePresence>

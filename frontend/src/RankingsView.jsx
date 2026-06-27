@@ -275,7 +275,7 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
         )}
 
         {tab === 'rewards' && (
-          <RewardsView user={user} />
+          <RewardsView supabase={supabase} user={user} />
         )}
 
         {tab !== 'rewards' && (

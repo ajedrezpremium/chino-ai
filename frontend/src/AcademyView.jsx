@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Flame, Star, Zap, MessageCircle, Target, Award, Eye, Check, ChevronRight } from 'lucide-react'
+import { Trophy, Flame, Star, Zap, MessageCircle, Target, Award, Eye, Check, ChevronRight, Gift } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { getLevel, getLevelProgress, LEVEL_THRESHOLDS } from './XpBar'
+import { getLevel, getLevelProgress, awardXp } from './XpBar'
 
 const LEVEL_NAMES = {
   1: { title: 'Aficionado', color: 'from-slate-500 to-slate-600', icon: '🌱', xp: 0 },
@@ -35,13 +35,37 @@ export default function AcademyView({ supabase, user, onClose, onNavigate }) {
   const { t } = useTranslation()
   const [xpData, setXpData] = useState(null)
   const [tab, setTab] = useState('levels')
+  const [claiming, setClaiming] = useState(false)
+  const [claimedToday, setClaimedToday] = useState(false)
 
-  useEffect(() => {
+  const refreshXp = () => {
     if (!supabase || !user?.id) return
     supabase.from('user_xp').select('*').eq('user_id', user.id).single().then(({ data }) => {
       if (data) setXpData(data)
     })
+  }
+
+  useEffect(() => {
+    refreshXp()
   }, [supabase, user?.id])
+
+  useEffect(() => {
+    if (xpData?.last_activity_date) {
+      const today = new Date().toISOString().split('T')[0]
+      setClaimedToday(xpData.last_activity_date === today)
+    }
+  }, [xpData])
+
+  const claimDailyBonus = async () => {
+    if (!supabase || !user?.id || claiming || claimedToday) return
+    setClaiming(true)
+    const r = await awardXp(supabase, user.id, 'daily_bonus')
+    if (r) {
+      refreshXp()
+      setClaimedToday(true)
+    }
+    setClaiming(false)
+  }
 
   const xp = xpData?.xp || 0
   const level = xpData?.level || 1
@@ -101,6 +125,37 @@ export default function AcademyView({ supabase, user, onClose, onNavigate }) {
               </div>
               <p className="text-xs text-white/70 mt-2">{current.toLocaleString()} / {needed.toLocaleString()} XP</p>
             </motion.div>
+
+            {/* Daily bonus */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={claimDailyBonus}
+              disabled={claimedToday || claiming}
+              className={`w-full rounded-xl p-3 flex items-center gap-3 border transition-all ${
+                claimedToday
+                  ? 'bg-slate-800/30 border-slate-700/30 opacity-60'
+                  : 'bg-gradient-to-r from-orange-900/40 to-yellow-900/40 border-orange-500/40 hover:from-orange-900/60 hover:to-yellow-900/60 cursor-pointer'
+              }`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 ${
+                claimedToday ? 'bg-slate-700' : 'bg-gradient-to-br from-orange-500 to-yellow-500 animate-pulse'
+              }`}>
+                {claimedToday ? '✅' : '🎁'}
+              </div>
+              <div className="flex-1 text-left">
+                <p className={`text-sm font-bold ${claimedToday ? 'text-slate-500' : 'text-white'}`}>
+                  {claimedToday ? 'Bono diario reclamado' : '🎁 Bono diario'}
+                </p>
+                <p className={`text-[10px] ${claimedToday ? 'text-slate-600' : 'text-orange-300'}`}>
+                  {claimedToday ? 'Volve mañá para máis XP' : '+50 XP · Reclama cada día'}
+                </p>
+              </div>
+              {!claimedToday && (
+                <div className="text-right">
+                  <div className="text-sm font-black text-yellow-400">+50</div>
+                  <div className="text-[9px] text-yellow-500">XP</div>
+                </div>
+              )}
+            </motion.button>
 
             {/* All levels */}
             <div className="space-y-1.5">

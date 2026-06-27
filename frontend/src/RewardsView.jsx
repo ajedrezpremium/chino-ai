@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, Gift, Users, Star, ChevronLeft, Medal, Eye } from 'lucide-react'
+import { Trophy, Gift, Users, Star, ChevronLeft, Medal, Eye, Zap, Target, Flame } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { REWARDS, REWARD_WINNERS } from './rewards-data'
+import { getLevel, getLevelProgress } from './XpBar'
 
 const typeColors = {
   digital: 'from-blue-500 to-blue-700',
@@ -18,11 +19,28 @@ const typeLabels = {
   eternal: 'Eterna',
 }
 
-export default function RewardsView({ user, onClose }) {
+const LEVEL_TITLES = ['Aficionado','Seguidor','Celtista','Celeste','Internacional','Mostovoi','Zar','Lenda','Inmortal','Celta de #Lenda']
+
+export default function RewardsView({ user, onClose, supabase }) {
   const { t } = useTranslation()
   const [tab, setTab] = useState('catalog')
   const [selectedReward, setSelectedReward] = useState(null)
-  const userPoints = 0
+  const [xpData, setXpData] = useState(null)
+
+  useEffect(() => {
+    if (!supabase || !user?.id) return
+    supabase.from('user_xp').select('*').eq('user_id', user.id).single().then(({ data }) => {
+      if (data) setXpData(data)
+    })
+  }, [supabase, user?.id])
+
+  const xp = xpData?.xp || 0
+  const level = xpData?.level || 1
+  const streak = xpData?.streak || 0
+  const { current, needed, pct } = getLevelProgress(xp)
+
+  const pointsFromXp = Math.floor(xp / 10)
+  const userPoints = pointsFromXp
 
   const TabButton = ({ id, label, icon }) => (
     <button onClick={() => setTab(id)}
@@ -47,10 +65,20 @@ export default function RewardsView({ user, onClose }) {
           <TabButton id="winners" label="Gañadores" icon={<Users size={14} className="inline mr-1" />} />
         </div>
         {user && (
-          <div className="mt-2 bg-slate-800/60 rounded-lg p-2 flex items-center gap-2">
-            <Trophy size={14} className="text-yellow-400" />
-            <span className="text-xs text-slate-400">Os teus puntos:</span>
-            <span className="text-sm font-black text-yellow-400">{userPoints.toLocaleString()}</span>
+          <div className="mt-2 space-y-1">
+            <div className="bg-slate-800/60 rounded-lg p-2 flex items-center gap-2">
+              <Trophy size={14} className="text-yellow-400" />
+              <span className="text-xs text-slate-400">Os teus puntos:</span>
+              <span className="text-sm font-black text-yellow-400">{userPoints.toLocaleString()}</span>
+            </div>
+            <div className="bg-slate-800/40 rounded-lg px-2 py-1.5 flex items-center gap-2">
+              <Target size={11} className="text-blue-400" />
+              <span className="text-[10px] text-slate-500">Nivel {level}: {LEVEL_TITLES[level - 1]}</span>
+              <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden max-w-[60px]">
+                <div className="h-full bg-gradient-to-r from-blue-500 to-yellow-400 rounded-full" style={{ width: `${pct * 100}%` }} />
+              </div>
+              <span className="text-[9px] text-slate-500">{current}/{needed}</span>
+            </div>
           </div>
         )}
       </div>
@@ -58,7 +86,7 @@ export default function RewardsView({ user, onClose }) {
       <div className="p-4 space-y-3">
         {tab === 'catalog' && (
           <>
-            <p className="text-[10px] text-slate-500 mb-2">Gana puntos xogando a Chiño Gamer, chateando con Chiño e acertando pronósticos. Canto máis xogues, máis premios podes desbloquear.</p>
+            <p className="text-[10px] text-slate-500 mb-2">Gana puntos chateando, xogando a Chiño Gamer e acertando pronósticos. Cada 10 XP = 1 punto.</p>
             <div className="space-y-2">
               <AnimatePresence>
                 {REWARDS.map((r, i) => {
@@ -93,7 +121,7 @@ export default function RewardsView({ user, onClose }) {
                             className="overflow-hidden">
                             <div className="mt-3 pt-3 border-t border-slate-700 flex items-center justify-between">
                               <span className={`text-xs ${unlocked ? 'text-green-400' : 'text-slate-500'}`}>
-                                {unlocked ? '✅ Desbloqueado' : `🔒 Faltan ${(r.points - userPoints).toLocaleString()} pts`}
+                                {unlocked ? '✅ Desbloqueado' : `🔗 Faltan ${(r.points - userPoints).toLocaleString()} pts`}
                               </span>
                               {user && unlocked && (
                                 <button className="text-[10px] bg-yellow-600 hover:bg-yellow-500 text-white font-bold px-3 py-1 rounded-full transition-colors">
@@ -108,6 +136,18 @@ export default function RewardsView({ user, onClose }) {
                   )
                 })}
               </AnimatePresence>
+            </div>
+
+            <div className="bg-slate-800/40 border border-slate-700/50 rounded-xl p-3 mt-4">
+              <p className="text-[10px] text-slate-500 mb-1 flex items-center gap-1"><Zap size={10} /> Como gañar puntos</p>
+              <div className="space-y-1 text-[10px]">
+                <div className="flex justify-between text-slate-400"><span>💬 Mensaxe no chat</span><span className="text-green-400">+10 XP (+1 pt)</span></div>
+                <div className="flex justify-between text-slate-400"><span>✅ Acerto no Gamer</span><span className="text-green-400">+25 XP (+2 pts)</span></div>
+                <div className="flex justify-between text-slate-400"><span>❌ Fallo no Gamer</span><span className="text-green-400">+5 XP</span></div>
+                <div className="flex justify-between text-slate-400"><span>🎯 Pronóstico acertado</span><span className="text-green-400">+100 XP (+10 pts)</span></div>
+                <div className="flex justify-between text-slate-400"><span>🔥 Bono de racha (diario)</span><span className="text-green-400">+5-35 XP</span></div>
+                <div className="flex justify-between text-slate-400"><span>🎲 Bono diario</span><span className="text-green-400">+50 XP (+5 pts)</span></div>
+              </div>
             </div>
           </>
         )}
