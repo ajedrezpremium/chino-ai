@@ -1,0 +1,20 @@
+const fs = require('fs')
+const sql = fs.readFileSync('../output/vector_embeddings_supabase.sql', 'utf8')
+const lines = sql.split('\n')
+const valuesIdx = lines.findIndex(l => l.trim().startsWith('VALUES'))
+const closeIdx = lines.findIndex(l => l.trim().startsWith(') AS v(text_prefix, vec)'))
+const factLines = lines.slice(valuesIdx + 1, closeIdx).map(l => l.trim()).filter(l => l.startsWith('('))
+
+const line = factLines[0]
+console.log('RAW start:', JSON.stringify(line.slice(0, 150)))
+const clean = line.endsWith(',') ? line.slice(0, -1) : line
+const inner = clean.slice(1, -1)
+console.log('INNER start:', JSON.stringify(inner.slice(0, 100)))
+const commaIdx = inner.indexOf("', '")
+console.log('commaIdx:', commaIdx)
+const factPrefix = inner.slice(1, commaIdx)
+let vecStr = inner.slice(commaIdx + 3, -1)
+console.log('VEC_START:', JSON.stringify(vecStr.slice(0, 60)))
+console.log('VEC_END:', JSON.stringify(vecStr.slice(-30)))
+console.log('VEC startsWith quote:', vecStr.startsWith("'"))
+console.log('VEC endsWith quote:', vecStr.endsWith("'"))

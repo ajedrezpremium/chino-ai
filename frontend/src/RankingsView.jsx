@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Trophy, Medal, Star, Shield, TrendingUp, Award, Users, Eye, Gift } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import PlayerCard from './PlayerCard'
+import RewardsView from './RewardsView'
+import AcademyView from './AcademyView'
 
 const playerRankingFallback = [
   { pos: 1, name: 'Iago Aspas', role: 'Dianteiro', era: '2008-', stats: '210 goles · 450 partidos · 85 asistencias', score: 9850, badge: 'Lenda' },
@@ -90,25 +93,40 @@ const fakeFans = [
 const badgeColors = ['from-yellow-500 to-amber-600', 'from-slate-400 to-slate-500', 'from-amber-700 to-amber-800']
 const badgeLabels = ['🥇', '🥈', '🥉']
 
-export default function RankingsView({ supabase, user, onClose }) {
+export default function RankingsView({ supabase, user, onClose, initialTab = 'players' }) {
   const { t } = useTranslation()
-  const [tab, setTab] = useState('players')
+  const [tab, setTab] = useState(initialTab)
   const [fans, setFans] = useState([])
   const [loadingFans, setLoadingFans] = useState(false)
   const [playerRanking, setPlayerRanking] = useState([])
   const [coachRanking, setCoachRanking] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [selectedPlayer, setSelectedPlayer] = useState(null)
 
   useEffect(() => {
     if (loaded || !supabase) return
     setLoaded(true)
     supabase.from('rankings_players').select('*').order('pos', { ascending: true }).then(({ data }) => {
-      if (data?.length) setPlayerRanking(data)
-      else setPlayerRanking(playerRankingFallback)
+      if (data?.length) {
+        const seen = new Set()
+        setPlayerRanking(data.filter(p => {
+          const key = p.pos
+          if (seen.has(key)) return false
+          seen.add(key)
+          return true
+        }))
+      } else setPlayerRanking(playerRankingFallback)
     }).catch(() => setPlayerRanking(playerRankingFallback))
     supabase.from('rankings_coaches').select('*').order('pos', { ascending: true }).then(({ data }) => {
-      if (data?.length) setCoachRanking(data)
-      else setCoachRanking(coachRankingFallback)
+      if (data?.length) {
+        const seen = new Set()
+        setCoachRanking(data.filter(c => {
+          const key = c.pos
+          if (seen.has(key)) return false
+          seen.add(key)
+          return true
+        }))
+      } else setCoachRanking(coachRankingFallback)
     }).catch(() => setCoachRanking(coachRankingFallback))
   }, [supabase, loaded])
 
@@ -169,13 +187,16 @@ export default function RankingsView({ supabase, user, onClose }) {
           <TabButton id="players" label={t('rankings.players')} icon={<Trophy size={14} className="inline mr-1" />} />
           <TabButton id="coaches" label={t('rankings.coaches')} icon={<Award size={14} className="inline mr-1" />} />
           <TabButton id="fans" label={t('rankings.fans')} icon={<Users size={14} className="inline mr-1" />} />
+          <TabButton id="rewards" label="Premios" icon={<Gift size={14} className="inline mr-1" />} />
+          <TabButton id="academy" label="Academia" icon={<Star size={14} className="inline mr-1" />} />
         </div>
       </div>
 
       <div className="p-4 space-y-3">
         {tab === 'players' && playerRanking.map((p, i) => (
           <motion.div key={p.name} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
-            className={`bg-slate-800/80 border rounded-xl p-4 rank-card ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
+            onClick={() => setSelectedPlayer(p)}
+            className={`bg-slate-800/80 border rounded-xl p-4 rank-card cursor-pointer transition-all hover:bg-slate-700/80 hover:border-blue-500/30 ${i < 3 ? 'border-yellow-500/40' : 'border-slate-700'}`}>
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black text-lg ${i < 3 ? `bg-gradient-to-br ${badgeColors[i]}` : 'bg-slate-700'}`}>
                 {i < 3 ? badgeLabels[i] : `#${p.pos}`}
@@ -255,10 +276,36 @@ export default function RankingsView({ supabase, user, onClose }) {
           </div>
         )}
 
-        <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
-          {t('rankings.footer')}
-        </p>
+        {tab === 'rewards' && (
+          <RewardsView user={user} />
+        )}
+
+        {tab === 'academy' && (
+          <AcademyView supabase={supabase} user={user} onClose={() => setTab('players')} onNavigate={(t) => setTab(t)} />
+        )}
+
+        {tab !== 'rewards' && tab !== 'academy' && (
+          <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
+            {t('rankings.footer')}
+          </p>
+        )}
       </div>
+
+      <AnimatePresence>
+        {selectedPlayer && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+            onClick={() => setSelectedPlayer(null)}
+          >
+            <div onClick={e => e.stopPropagation()}>
+              <PlayerCard player={selectedPlayer} onClose={() => setSelectedPlayer(null)} />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

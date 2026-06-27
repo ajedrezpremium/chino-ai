@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle, Share2, Check, Twitter, MessageCircle, Calendar } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
 import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 import PitchXI from './PitchXI'
+import LiveResultsBanner from './LiveResultsBanner'
+import PushNotif from './PushNotif'
+import XpBar, { awardXp } from './XpBar'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
 const BusinessView = lazy(() => import('./BusinessView'))
 const RankingsView = lazy(() => import('./RankingsView'))
 const SectionsView = lazy(() => import('./SectionsView'))
+const MatchesView = lazy(() => import('./MatchesView'))
 const ProfileView = lazy(() => import('./ProfileView'))
 const LandingView = lazy(() => import('./LandingView'))
 const AuthModal = lazy(() => import('./AuthModal'))
@@ -35,6 +39,7 @@ export default function App() {
   const [isRecording, setIsRecording] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [currentTab, setCurrentTab] = useState('chat')
+  const [rankingTab, setRankingTab] = useState('players')
   const [adminMode, setAdminMode] = useState(() => localStorage.getItem('chino_admin') === 'true')
   const [showLanding, setShowLanding] = useState(() => sessionStorage.getItem('chino_landing') !== 'true')
   const [user, setUser] = useState(null)
@@ -42,6 +47,10 @@ export default function App() {
 
   const [legends, setLegends] = useState([])
   const [correctionFor, setCorrectionFor] = useState(null)
+  const [shareOpen, setShareOpen] = useState(null)
+  const [copiedIdx, setCopiedIdx] = useState(null)
+  const [reactions, setReactions] = useState({})
+  const [reactionOpen, setReactionOpen] = useState(null)
   const [correctionText, setCorrectionText] = useState('')
   const [voices, setVoices] = useState([])
   const [showVoicePicker, setShowVoicePicker] = useState(false)
@@ -49,7 +58,10 @@ export default function App() {
   const [selectedVoiceURI, setSelectedVoiceURI] = useState(() => localStorage.getItem('chino_voice') || '')
   const messagesEndRef = useRef(null)
 
+  const [summaryCache, setSummaryCache] = useState([])
+  const [messageCount, setMessageCount] = useState(0)
   const [theme, setTheme] = useState(() => localStorage.getItem('chino_theme') || 'dark')
+  const [levelUpMsg, setLevelUpMsg] = useState(null)
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -242,12 +254,83 @@ export default function App() {
   const loadChatHistory = async () => {
     if (!user?.id) return
     const { data } = await supabase.from('chat_history').select('message, role').order('created_at', { ascending: true }).limit(50)
-    if (data?.length) setMessages(data.map(m => ({ role: m.role === 'user' ? 'user' : 'agent', text: m.message })))
+    if (data?.length) {
+      setMessages(data.map(m => ({ role: m.role === 'user' ? 'user' : 'agent', text: m.message })))
+      setMessageCount(Math.floor(data.filter(m => m.role === 'agent').length / 2))
+    }
   }
 
   useEffect(() => {
     loadChatHistory()
+    loadSummaries()
   }, [user?.id])
+
+  const loadSummaries = async () => {
+    if (!user?.id) return
+    const { data } = await supabase.from('conversation_summaries')
+      .select('summary_text')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .limit(3)
+    if (data?.length) setSummaryCache(data.map(s => s.summary_text))
+  }
+
+  const generateSummary = async (recentMessages) => {
+    const key = OPENROUTER_API_KEY || OPENAI_API_KEY
+    if (!key) return
+    const text = recentMessages.map(m => `${m.role === 'user' ? 'Usuario' : 'Chiño'}: ${m.text}`).join('\n').slice(-3000)
+    try {
+      const res = await fetch(USE_OPENROUTER ? 'https://openrouter.ai/api/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}`,
+          ...(USE_OPENROUTER ? { 'HTTP-Referer': 'https://chinoaiagent.vercel.app', 'X-Title': 'Chiño AI' } : {}) },
+        body: JSON.stringify({
+          model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
+          messages: [{ role: 'system', content: 'Resume esta conversación sobre el Celta de Vigo en 2-3 frases en español. Sé conciso.' },
+            { role: 'user', content: text }]
+        })
+      })
+      const data = await res.json()
+      return data.choices?.[0]?.message?.content || null
+    } catch { return null }
+  }
+
+  const storeSummary = async (summaryText) => {
+    if (!user?.id || !summaryText) return
+    await supabase.from('conversation_summaries').insert({
+      user_id: user.id,
+      summary_text: summaryText,
+      message_count: messageCount
+    }).catch(() => {})
+    setSummaryCache(prev => [summaryText, ...prev].slice(0, 3))
+  }
+
+  const handleShare = async (msgIdx) => {
+    const text = messages[msgIdx]?.text
+    if (!text) return
+    const shareText = `🤖 Chiño AI · RC Celta\n\n${text}\n\nhttps://chinoaiagent.vercel.app`
+
+    if (navigator.share) {
+      try { await navigator.share({ title: 'Chiño AI', text: shareText }) } catch {}
+      return
+    }
+    setShareOpen(shareOpen === msgIdx ? null : msgIdx)
+  }
+
+  const shareAction = (type, text) => {
+    const shareText = `🤖 Chiño AI · RC Celta\n\n${text}\n\nhttps://chinoaiagent.vercel.app`
+    const url = encodeURIComponent('https://chinoaiagent.vercel.app')
+    const msg = encodeURIComponent(shareText)
+    if (type === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${msg}`, '_blank', 'noopener')
+    else if (type === 'whatsapp') window.open(`https://wa.me/?text=${msg}`, '_blank', 'noopener')
+    else if (type === 'copy') {
+      navigator.clipboard.writeText(shareText).then(() => {
+        setCopiedIdx(shareOpen)
+        setTimeout(() => setCopiedIdx(null), 2000)
+      })
+    }
+    setShareOpen(null)
+  }
 
   const handleCorrection = async (msgIdx) => {
     const original = messages[msgIdx]?.text
@@ -301,10 +384,15 @@ export default function App() {
           }
         } catch {}
 
-        const messages = [
+        const memoryStr = summaryCache.length > 0
+          ? `Resumen de conversaciones anteriores (recuérdalas):\n${summaryCache.join('\n---\n')}`
+          : ''
+
+        const apiMessages = [
           { role: 'system', content: SYSTEM_PROMPT },
           ...(factsStr ? [{ role: 'system', content: `Hechos verificados:\n${factsStr}` }] : []),
           ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
+          ...(memoryStr ? [{ role: 'system', content: memoryStr }] : []),
           { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
           { role: 'user', content: userText }
         ]
@@ -312,7 +400,7 @@ export default function App() {
         const res = await fetch(baseUrl, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini', messages })
+          body: JSON.stringify({ model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini', messages: apiMessages })
         })
         const data = await res.json()
         const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
@@ -321,6 +409,15 @@ export default function App() {
         setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch }])
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
+        awardXp(supabase, user?.id, 'chat_message').catch(() => {})
+
+        const newCount = messageCount + 1
+        setMessageCount(newCount)
+        if (newCount % 10 === 0 && user?.id) {
+          const recentConversation = (messages.length > 10 ? messages.slice(-10) : messages)
+            .concat([{ role: 'user', text: userText }, { role: 'agent', text: aiText }])
+          generateSummary(recentConversation).then(s => { if (s) storeSummary(s) })
+        }
       } else {
         setMessages(prev => [...prev, { role: 'agent', text: t('chat.no_key') }])
       }
@@ -379,6 +476,10 @@ export default function App() {
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'rankings' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Medal size={11} className="inline mr-0.5" />{t('header.ranking')}
           </button>
+          <button onClick={() => setCurrentTab('matches')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'matches' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <Calendar size={11} className="inline mr-0.5" />{t('header.matches')}
+          </button>
           <button onClick={() => setCurrentTab('sections')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'sections' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Sparkles size={11} className="inline mr-0.5" />{t('header.seccions')}
@@ -429,6 +530,11 @@ export default function App() {
               </div>
             )}
           </div>
+          <PushNotif supabase={supabase} user={user} />
+          {user && <XpBar supabase={supabase} user={user} compact onLevelUp={(lvl) => {
+            setLevelUpMsg({ level: lvl, name: t(`academy.levels.${lvl}`, `Level ${lvl}`) })
+            setTimeout(() => setLevelUpMsg(null), 4000)
+          }} onAcademy={() => { setRankingTab('academy'); setCurrentTab('rankings') }} />}
           <div className="relative">
             <button onClick={() => setShowLangDropdown(d => !d)}
               className="p-1 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors text-xs">
@@ -468,13 +574,23 @@ export default function App() {
               <span className="text-[10px] font-bold text-white">{t('header.entrar')}</span>
             </button>
           )}
+          <AnimatePresence>
+            {levelUpMsg && (
+              <motion.div initial={{ opacity: 0, y: -10, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                className="absolute right-0 top-full mt-2 bg-gradient-to-r from-yellow-600 to-yellow-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xl z-50 whitespace-nowrap">
+                ⬆️ ¡Nivel {levelUpMsg.level}! — {levelUpMsg.name}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
       {currentTab === 'profile' ? (
         <ProfileView supabase={supabase} user={user} agentGender={agentGender} setAgentGender={setAgentGender} speak={speak} theme={theme} setTheme={setTheme} onClose={(goto) => setCurrentTab(goto || 'chat')} />
       ) : currentTab === 'rankings' ? (
-        <RankingsView supabase={supabase} user={user} onClose={() => setCurrentTab('chat')} />
+        <RankingsView key={`rankings-${rankingTab}`} supabase={supabase} user={user} initialTab={rankingTab} onClose={() => { setRankingTab('players'); setCurrentTab('chat') }} />
+      ) : currentTab === 'matches' ? (
+        <MatchesView supabase={supabase} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'sections' ? (
         <SectionsView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (
@@ -483,65 +599,134 @@ export default function App() {
         <ChinoGamer supabase={supabase} user={user} speak={speak} />
       ) : (
         <>
-          <main className="flex-1 overflow-y-auto p-4 z-10 space-y-4 pb-28">
+          <main className="flex-1 overflow-y-auto p-4 z-10 space-y-4 pb-40">
             <AnimatePresence>
-              {messages.map((msg, idx) => (
-                <motion.div key={idx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+              {messages.map((msg, idx) => {
+                const prev = messages[idx - 1]
+                const sameSender = prev && prev.role === msg.role
+                const showAvatar = msg.role === 'agent' && !sameSender
+                const now = new Date()
+                const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+                const reacted = reactions[idx]
+                return (
+                <motion.div key={idx} initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   className={`flex items-end gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  {msg.role === 'agent' && (
-                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-blue-600">
+                  {showAvatar && (
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-blue-600 shadow-lg shadow-blue-500/30 ring-2 ring-blue-400/30">
                       <img src="/chino-avatar.png" alt={t('app.avatar_male')} className="w-full h-full object-cover" />
                     </div>
                   )}
-                  <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-br-none' : 'bg-slate-800 border border-blue-500/30 text-gray-100 rounded-bl-none'}`}>
-                    <p className="text-sm md:text-base">{msg.text}</p>
-                    {msg.role === 'agent' && msg.showPitch && <PitchXI />}
-                    {msg.role === 'agent' && (
-                      <div className="flex items-center gap-2 mt-2">
-                        <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs">
-                          <Volume2 size={12} /> {t('header.escutar')}
-                        </button>
-                        {user && (
-                          <button onClick={() => setCorrectionFor(correctionFor === idx ? null : idx)}
-                            className="text-slate-500 hover:text-yellow-400 flex items-center gap-1 text-xs">
-                            <AlertTriangle size={10} /> {t('header.corrixir')}
+                  {!showAvatar && msg.role === 'agent' && <div className="w-8 flex-shrink-0" />}
+                  <div className={`max-w-[80%] ${sameSender ? 'mt-1' : ''}`}>
+                    <div className={`p-3 ${msg.role === 'user'
+                      ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl rounded-br-sm shadow-lg shadow-blue-600/20'
+                      : 'bg-slate-800/90 border border-blue-500/20 text-gray-100 rounded-2xl rounded-bl-sm shadow-lg shadow-black/20'}`}>
+                      {!sameSender && msg.role === 'user' && (
+                        <p className="text-[10px] text-blue-200/70 mb-1 font-medium">{user?.email?.split('@')[0] || t('app.avatar_female')}</p>
+                      )}
+                      <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                      {msg.role === 'agent' && msg.showPitch && <PitchXI />}
+                      {msg.role === 'agent' && (
+                        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-700/50">
+                          <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs transition-colors">
+                            <Volume2 size={12} /> {t('header.escutar')}
                           </button>
-                        )}
-                      </div>
-                    )}
-                    {correctionFor === idx && (
-                      <div className="mt-2 pt-2 border-t border-slate-700">
-                        <textarea value={correctionText} onChange={e => setCorrectionText(e.target.value)}
-                          placeholder={t('chat.correction_placeholder')}
-                          className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-yellow-500 mb-1" rows={2} />
-                        <div className="flex gap-1 justify-end">
-                          <button onClick={() => { setCorrectionFor(null); setCorrectionText('') }}
-                            className="text-[10px] text-slate-500 px-2 py-1 rounded hover:bg-slate-700">{t('chat.cancel')}</button>
-                          <button onClick={() => handleCorrection(idx)}
-                            className="text-[10px] bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-500 disabled:opacity-50 font-bold"
-                            disabled={!correctionText.trim()}>{t('chat.send')}</button>
+                          {user && (
+                            <button onClick={() => setCorrectionFor(correctionFor === idx ? null : idx)}
+                              className="text-slate-500 hover:text-yellow-400 flex items-center gap-1 text-xs transition-colors">
+                              <AlertTriangle size={10} /> {t('header.corrixir')}
+                            </button>
+                          )}
+                          <div className="relative">
+                            <button onClick={() => handleShare(idx)}
+                              className="text-slate-500 hover:text-green-400 flex items-center gap-1 text-xs transition-colors">
+                              <Share2 size={10} /> {t('header.share')}
+                            </button>
+                            {shareOpen === idx && (
+                              <div className="absolute bottom-full left-0 mb-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 overflow-hidden min-w-[140px]">
+                                <button onClick={() => shareAction('twitter', msg.text)}
+                                  className="w-full text-left text-xs px-3 py-2 flex items-center gap-2 hover:bg-slate-700 text-slate-300">
+                                  <Twitter size={12} className="text-blue-400" /> {t('header.share_twitter')}
+                                </button>
+                                <button onClick={() => shareAction('whatsapp', msg.text)}
+                                  className="w-full text-left text-xs px-3 py-2 flex items-center gap-2 hover:bg-slate-700 text-slate-300">
+                                  <MessageCircle size={12} className="text-green-400" /> {t('header.share_whatsapp')}
+                                </button>
+                                <button onClick={() => shareAction('copy', msg.text)}
+                                  className="w-full text-left text-xs px-3 py-2 flex items-center gap-2 hover:bg-slate-700 text-slate-300">
+                                  {copiedIdx === idx ? <Check size={12} className="text-green-400" /> : <Share2 size={12} />} {copiedIdx === idx ? t('header.share_copied') : t('header.share_copy')}
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                          <div className="relative ml-auto">
+                            <button onClick={() => setReactionOpen(reactionOpen === idx ? null : idx)}
+                              className="text-slate-500 hover:text-yellow-400 flex items-center gap-1 text-xs transition-colors">
+                              <span className="text-sm">{reacted || '🙂'}</span>
+                            </button>
+                            {reactionOpen === idx && (
+                              <div className="absolute bottom-full right-0 mb-1 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 px-2 py-1.5 flex gap-1">
+                                {['👍', '❤️', '😂', '😮', '🔥', '😢'].map(emoji => (
+                                  <button key={emoji} onClick={() => {
+                                    setReactions(prev => ({ ...prev, [idx]: prev[idx] === emoji ? null : emoji }))
+                                    setReactionOpen(null)
+                                  }}
+                                    className={`text-lg hover:scale-125 transition-transform ${reacted === emoji ? 'scale-110 ring-1 ring-blue-400 rounded' : ''}`}>
+                                    {emoji}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                      {correctionFor === idx && (
+                        <div className="mt-2 pt-2 border-t border-slate-700">
+                          <textarea value={correctionText} onChange={e => setCorrectionText(e.target.value)}
+                            placeholder={t('chat.correction_placeholder')}
+                            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-yellow-500 mb-1" rows={2} />
+                          <div className="flex gap-1 justify-end">
+                            <button onClick={() => { setCorrectionFor(null); setCorrectionText('') }}
+                              className="text-[10px] text-slate-500 px-2 py-1 rounded hover:bg-slate-700">{t('chat.cancel')}</button>
+                            <button onClick={() => handleCorrection(idx)}
+                              className="text-[10px] bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-500 disabled:opacity-50 font-bold"
+                              disabled={!correctionText.trim()}>{t('chat.send')}</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <p className={`text-[9px] text-slate-600 mt-0.5 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>{time}</p>
                   </div>
                 </motion.div>
-              ))}
+              )})}
             </AnimatePresence>
 
             {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-slate-800 p-3 rounded-2xl rounded-bl-none border border-blue-500/30">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" />
-                    <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce animation-delay-75" />
-                    <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce animation-delay-150" />
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-end gap-2">
+                <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-blue-600 shadow-lg shadow-blue-500/30 ring-2 ring-blue-400/30">
+                  <img src="/chino-avatar.png" alt={t('app.avatar_male')} className="w-full h-full object-cover" />
+                </div>
+                <div className="bg-slate-800/90 border border-blue-500/20 rounded-2xl rounded-bl-sm shadow-lg shadow-black/20 px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                    <span className="text-[10px] text-slate-500 font-medium">{t('chat.typing')}</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             )}
             <div ref={messagesEndRef} />
           </main>
 
+          {currentTab === 'chat' && (
+            <div className="z-10 px-4 pb-1 bg-slate-900/90 backdrop-blur-md">
+              <LiveResultsBanner supabase={supabase} />
+            </div>
+          )}
           <footer className="z-10 p-4 bg-slate-900/90 backdrop-blur-md border-t border-blue-500/30 fixed bottom-0 w-full">
             <div className="flex items-center gap-2 max-w-2xl mx-auto">
               <button onClick={startListening}

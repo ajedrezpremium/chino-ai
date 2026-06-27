@@ -13,10 +13,17 @@
     "gamer": "Gamer",
     "ranking": "Ranking",
     "seccions": "Sections",
+    "matches": "Matches",
     "biz": "Biz",
     "entrar": "Login",
     "escutar": "Listen",
-    "corrixir": "Correct"
+    "corrixir": "Correct",
+    "share": "Share",
+    "share_twitter": "Twitter",
+    "share_whatsapp": "WhatsApp",
+    "share_copy": "Copy text",
+    "share_copied": "Copied!",
+    "share_native": "Share..."
   },
   "landing": {
     "tagline": "The first AI agent in world football",
@@ -60,7 +67,8 @@
     "cancel": "Cancel",
     "send": "Send",
     "fallback": "Sorry, I couldn't process that.",
-    "chrome_voice": "Use Chrome for voice."
+    "chrome_voice": "Use Chrome for voice.",
+    "typing": "typing..."
   },
   "voice": {
     "manual": "MANUAL VOICE",
@@ -89,7 +97,13 @@
     "grade_starter": "Starter",
     "grade_promise": "Promise",
     "grade": "Grade",
-    "new_record": "🎉 NEW RECORD! 🎉"
+    "new_record": "🎉 NEW RECORD! 🎉",
+    "daily_title": "Daily Trivia",
+    "daily_desc": "A new AI-generated question every day",
+    "daily_bonus": "+50 bonus XP",
+    "daily_correct": "Correct answer! +50 XP",
+    "daily_wrong": "Wrong. Try again tomorrow!",
+    "daily_done": "You already answered today's trivia"
   },
   "rankings": {
     "title": "Rankings",
@@ -232,6 +246,62 @@
     "roadmap": "🗺️ Roadmap",
     "quote": "\"The first AI agent in football history\"",
     "footer": "Chiño AI © 2026 · Ready to launch"
+  },
+  "live": {
+    "last_match": "Last match",
+    "next_match": "Next match",
+    "celta": "Celta"
+  },
+  "matches": {
+    "title": "Match by Match",
+    "subtitle": "Celta's entire history, season by season",
+    "back": "Back",
+    "celta": "Celta",
+    "scorers": "Scorers",
+    "attendance": "Attendance",
+    "venue": "Venue",
+    "official_data": "📊 Official data — Google",
+    "empty": "Coming soon: full data for all seasons",
+    "watch_highlights": "Watch match highlights",
+    "goals": "Goals",
+    "lineups": "Lineups",
+    "substitutions": "Substitutions",
+    "summary": "Summary"
+  },
+  "player_card": {
+    "stats_detail": "Career stats",
+    "overall": "Overall",
+    "radar_goles": "Goals",
+    "radar_asistencias": "Assists",
+    "radar_partidos": "Matches",
+    "radar_trofeos": "Trophies",
+    "radar_liderazgo": "Leadership",
+    "radar_longevidad": "Longevity"
+  },
+  "academy": {
+    "title": "Celtista Academy",
+    "level": "Level",
+    "xp": "Experience",
+    "streak": "Streak",
+    "days": "days",
+    "levels": {
+      "1": "Fan",
+      "2": "Follower",
+      "3": "Celtista",
+      "4": "Celeste",
+      "5": "International",
+      "6": "Mostovoi",
+      "7": "Tsar",
+      "8": "Legend",
+      "9": "Immortal",
+      "10": "Celta de #Lenda"
+    }
+  },
+  "notif": {
+    "enable": "Enable notifications",
+    "disable": "Disable notifications",
+    "title": "Celta updates",
+    "body": "New result, news or anecdote about RC Celta!"
   },
   "errors": {
     "boundary_title": "Oops! Something went wrong",

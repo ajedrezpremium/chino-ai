@@ -13,10 +13,17 @@
     "gamer": "Gamer",
     "ranking": "Ranking",
     "seccions": "Seccións",
+    "matches": "Partidos",
     "biz": "Biz",
     "entrar": "Entrar",
     "escutar": "Escutar",
-    "corrixir": "Corrixir"
+    "corrixir": "Corrixir",
+    "share": "Compartir",
+    "share_twitter": "Twitter",
+    "share_whatsapp": "WhatsApp",
+    "share_copy": "Copiar texto",
+    "share_copied": "Copiado!",
+    "share_native": "Compartir..."
   },
   "landing": {
     "tagline": "O primeiro axente de IA do fútbol mundial",
@@ -60,7 +67,8 @@
     "cancel": "Cancelar",
     "send": "Enviar",
     "fallback": "Perdona, non puiden procesar iso.",
-    "chrome_voice": "Usa Chrome para voz."
+    "chrome_voice": "Usa Chrome para voz.",
+    "typing": "escribindo..."
   },
   "voice": {
     "manual": "VOZ MANUAL",
@@ -89,7 +97,13 @@
     "grade_starter": "Titular",
     "grade_promise": "Promesa",
     "grade": "Nivel",
-    "new_record": "🎉 NOVO RÉCORD! 🎉"
+    "new_record": "🎉 NOVO RÉCORD! 🎉",
+    "daily_title": "Trivia do día",
+    "daily_desc": "Unha pregunta nova cada día xerada por IA",
+    "daily_bonus": "+50 XP extra",
+    "daily_correct": "Resposta correcta! +50 XP",
+    "daily_wrong": "Incorrecto. Maña proba outra!",
+    "daily_done": "Xa respondiches a trivia de hoxe"
   },
   "rankings": {
     "title": "Clasificacións",
@@ -232,6 +246,62 @@
     "roadmap": "🗺️ Roadmap",
     "quote": "\"O primeiro axente de IA na historia do fútbol\"",
     "footer": "Chiño AI © 2026 · Listo para debutar"
+  },
+  "live": {
+    "last_match": "Último partido",
+    "next_match": "Vindeiro partido",
+    "celta": "Celta"
+  },
+  "matches": {
+    "title": "Partido a Partido",
+    "subtitle": "Toda a historia do Celta, tempada a tempada",
+    "back": "Volver",
+    "celta": "Celta",
+    "scorers": "Goleadores",
+    "attendance": "Asistencia",
+    "venue": "Lugar",
+    "official_data": "📊 Datos oficiais — Google",
+    "empty": "Próximamente: datos completos de todas as tempadas",
+    "watch_highlights": "Ver resumo do partido",
+    "goals": "Goles",
+    "lineups": "Aliñacións",
+    "substitutions": "Cambios",
+    "summary": "Resumo"
+  },
+  "player_card": {
+    "stats_detail": "Estatísticas de carreira",
+    "overall": "Global",
+    "radar_goles": "Goles",
+    "radar_asistencias": "Asistencias",
+    "radar_partidos": "Partidos",
+    "radar_trofeos": "Trofeos",
+    "radar_liderazgo": "Liderado",
+    "radar_longevidad": "Lonxevidade"
+  },
+  "academy": {
+    "title": "Academia Celtista",
+    "level": "Nivel",
+    "xp": "Experiencia",
+    "streak": "Raia",
+    "days": "días",
+    "levels": {
+      "1": "Afeccionado",
+      "2": "Seguidor",
+      "3": "Celtista",
+      "4": "Celeste",
+      "5": "Internacional",
+      "6": "Mostovoi",
+      "7": "Zar",
+      "8": "Lenda",
+      "9": "Inmortal",
+      "10": "Celta de #Lenda"
+    }
+  },
+  "notif": {
+    "enable": "Activar notificacións",
+    "disable": "Desactivar notificacións",
+    "title": "Novidades do Celta",
+    "body": "Novo resultado, noticia ou anécdota do RC Celta!"
   },
   "errors": {
     "boundary_title": "Upa! Algo foi mal",
