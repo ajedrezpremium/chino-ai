@@ -405,8 +405,13 @@ export default function App() {
         const data = await res.json()
         const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
         const showPitch = raw.includes('[PITCHXI]')
-        const aiText = raw.replace('[PITCHXI]', '').trim()
-        setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch }])
+        const hasOferta = raw.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/g)
+        const hasEnlace = raw.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/g)
+        const actions = []
+        if (hasOferta) hasOferta.forEach(m => { const [_,t,u] = m.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'oferta', label: t, url: u }) })
+        if (hasEnlace) hasEnlace.forEach(m => { const [_,t,u] = m.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'enlace', label: t, url: u }) })
+        const aiText = raw.replace(/\[OFERTA:[^\]]+\]\([^)]+\)/g, '').replace(/\[ENLACE:[^\]]+\]\([^)]+\)/g, '').replace('[PITCHXI]', '').trim()
+        setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch, actions: actions.length ? actions : undefined }])
         saveMessage('agent', aiText)
         speak(aiText, agentGender)
         awardXp(supabase, user?.id, 'chat_message').catch(() => {})
@@ -627,6 +632,16 @@ export default function App() {
                       )}
                       <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                       {msg.role === 'agent' && msg.showPitch && <PitchXI />}
+                      {msg.role === 'agent' && msg.actions?.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {msg.actions.map((a, i) => (
+                            <a key={i} href={a.url} target="_blank" rel="noopener noreferrer"
+                              className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl transition-all ${a.type === 'oferta' ? 'bg-gradient-to-r from-yellow-600 to-orange-600 text-white shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50' : 'bg-blue-600 hover:bg-blue-500 text-white shadow'}`}>
+                              {a.type === 'oferta' ? '🎁' : '🔗'} {a.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
                       {msg.role === 'agent' && (
                         <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-700/50">
                           <button onClick={() => speak(msg.text, agentGender)} className="text-blue-400 hover:text-blue-300 flex items-center gap-1 text-xs transition-colors">
