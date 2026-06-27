@@ -405,7 +405,7 @@ export default function App() {
           { role: 'system', content: `Hechos verificados:\n${finalFactsStr}` },
           ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
           ...(memoryStr ? [{ role: 'system', content: memoryStr }] : []),
-          { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
+          { role: 'system', content: `🚨 IDIOMA: ${detectLang(userText) === 'gl' ? 'O usuario escribiu en GALEGO. RESPONDE SÓ EN GALEGO. 0 palabras en español ou inglés. REVISA a túa resposta e elimina calquera palabra noutro idioma.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English. 0 words in Spanish or Galician. CHECK your response and remove any non-English words.' : 'El usuario escribió en ESPAÑOL. RESPONDE SÓ EN ESPAÑOL. 0 palabras en gallego o inglés. REVISA tu respuesta y elimina cualquier palabra en otro idioma.'}` },
           { role: 'user', content: userText }
         ]
 
