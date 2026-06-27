@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Zap, Flame, Trophy, TrendingUp } from 'lucide-react'
+import React, { useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
+import { Flame, Trophy } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 const LEVEL_THRESHOLDS = [0, 500, 1500, 3000, 5000, 8000, 12000, 18000, 25000, 35000]
@@ -59,9 +59,8 @@ export function awardXp(supabase, userId, action, amount) {
 
 export default function XpBar({ supabase, user, compact = false, onLevelUp, onAcademy }) {
   const { t } = useTranslation()
-  const [xpData, setXpData] = useState(null)
-  const [showDetails, setShowDetails] = useState(false)
-  const [prevLevel, setPrevLevel] = useState(1)
+  const [xpData, setXpData] = React.useState(null)
+  const [prevLevel, setPrevLevel] = React.useState(1)
 
   const fetchXp = useCallback(async () => {
     if (!supabase || !user?.id) return
@@ -91,50 +90,20 @@ export default function XpBar({ supabase, user, compact = false, onLevelUp, onAc
 
   if (compact) {
     return (
-      <div className="relative">
-        <button onClick={() => setShowDetails(!showDetails)}
-          className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 rounded-full px-2 py-1 transition-colors">
-          <Trophy size={12} className="text-yellow-400" />
-          <span className="text-[10px] font-bold text-white">{level}</span>
-          <div className="w-12 h-1.5 bg-slate-700 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transition-all duration-500" style={{ width: `${pct * 100}%` }} />
-          </div>
-          {streak > 0 && (
-            <span className="flex items-center gap-0.5 text-[10px] text-orange-400">
-              <Flame size={10} /> {streak}
-            </span>
-          )}
-        </button>
-        <AnimatePresence>
-          {showDetails && (
-            <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-              className="absolute right-0 top-full mt-2 w-56 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-50 p-3">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-bold text-white">{t('academy.title')}</span>
-                <span className="text-[10px] text-yellow-400 font-bold">{t('academy.level')} {level}</span>
-              </div>
-              <p className="text-[10px] text-slate-400 mb-1">{levelName}</p>
-              <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden mb-1">
-                <div className="h-full bg-gradient-to-r from-blue-500 to-yellow-400 rounded-full transition-all duration-500" style={{ width: `${pct * 100}%` }} />
-              </div>
-              <p className="text-[9px] text-slate-500 mb-2">{current} / {needed} XP</p>
-              <div className="flex items-center gap-2 text-[10px] text-slate-400">
-                <Flame size={12} className="text-orange-400" />
-                <span>{t('academy.streak')}: <strong className="text-white">{streak}</strong> {t('academy.days')}</span>
-              </div>
-              <div className="mt-2 pt-2 border-t border-slate-700 space-y-1">
-                <p className="text-[9px] text-slate-500">{t('academy.xp')}: <strong className="text-white">{xp}</strong></p>
-                {onAcademy && (
-                  <button onClick={() => { setShowDetails(false); onAcademy() }}
-                    className="w-full text-[9px] bg-blue-600/40 hover:bg-blue-600/60 text-blue-300 font-bold px-2 py-1 rounded-lg transition-colors">
-                    📊 Ver Academia completa
-                  </button>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <motion.button whileTap={{ scale: 0.95 }}
+        onClick={() => onAcademy?.()}
+        className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 rounded-full px-2 py-1 transition-colors cursor-pointer">
+        <Trophy size={12} className="text-yellow-400" />
+        <span className="text-[10px] font-bold text-white">{level}</span>
+        <div className="w-12 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-yellow-500 to-yellow-400 rounded-full transition-all duration-500" style={{ width: `${pct * 100}%` }} />
+        </div>
+        {streak > 0 && (
+          <span className="flex items-center gap-0.5 text-[10px] text-orange-400">
+            <Flame size={10} /> {streak}
+          </span>
+        )}
+      </motion.button>
     )
   }
 
