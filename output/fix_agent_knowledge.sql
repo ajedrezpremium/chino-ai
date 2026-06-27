@@ -277,4 +277,30 @@ INSERT INTO knowledge_facts (fact_text, category, verified) VALUES
 ('O Celta xogou as semifinais da Copa da UEFA en 2001 (perdeu ante o Alavés), en 2002 (perdeu ante o Borussia Dortmund) e en 2017 (perdeu ante o Manchester United).', 'europa', TRUE),
 ('O Celta gañou a Copa Intertoto en 2000, o seu único título oficial.', 'europa', TRUE);
 
+-- ============================================================
+-- PARTE 8: ANTIALUCINACIONES (feitos negativos explícitos)
+-- ============================================================
+
+INSERT INTO knowledge_facts (fact_text, category, verified) VALUES
+-- Títulos NON gañados
+('O Celta NUNCA gañou a Copa do Rei. Foi subcampión en 1948, 1994 e 2001. Nunca digas que a gañou.', 'historia', TRUE),
+('O Celta NUNCA gañou LaLiga. Mellor posición histórica: 4º (1947-48 e 2002-03).', 'historia', TRUE),
+('O Celta NUNCA gañou a Champions League. Xogouna unha vez: oitavos de final en 2003-04.', 'europa', TRUE),
+('O Celta NUNCA gañou a UEFA/Europa League. Semifinais en 2001, 2002 e 2017.', 'europa', TRUE),
+('O único título internacional oficial do Celta é a Copa Intertoto 2000.', 'historia', TRUE),
+('O Celta NUNCA gañou a Supercopa de España.', 'historia', TRUE),
+
+-- Erros cronolóxicos comúns
+('Aleksandr Mostovoi chegou ao Celta en 1996. NON xogou a final de Copa de 1994.', 'xogadores', TRUE),
+('Iago Aspas debutou co primeiro equipo do Celta en 2008. NON formou parte do EuroCelta (1998-2004).', 'xogadores', TRUE),
+('Carlos Mouriño foi presidente do Celta de 2006 a 2023, NON ata 2025.', 'presidentes', TRUE),
+('Marián Mouriño é presidenta desde decembro de 2023, NON desde 2025.', 'presidentes', TRUE),
+('O estadio de Balaídos inaugurouse en 1928, promovido por Joaquín Fontán. NON o construíu ningún presidente do Celta.', 'estadio', TRUE),
+('Daniel Dopazo NON foi presidente do Celta. O presidente tras Bárcena foi Ramón Fernández Mato (1927-1928).', 'presidentes', TRUE),
+('Cesáreo González NON construíu Balaídos. O estadio xa existía cando el foi presidente (1934-1935).', 'presidentes', TRUE),
+
+-- Precisións sobre o Celta dos 90
+('O Celta dos primeiros 90 (1991-1995) era diferente ao EuroCelta. Txetxu Rojo e Carlos Aimar foron adestradores. Final de Copa 1994. Mostovoi aínda non chegara.', 'historia', TRUE),
+('O EuroCelta comezou en 1998 coa chegada de Víctor Fernández como adestrador, e durou ata 2004.', 'historia', TRUE);
+
 COMMIT;

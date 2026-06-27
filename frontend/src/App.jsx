@@ -368,6 +368,18 @@ export default function App() {
         // Fetch entity-aware facts
         const relevantFacts = await fetchRelevantFacts(userText)
         const factsStr = relevantFacts.length > 0 ? relevantFacts.join('\n') : await fetchRelevantFacts('') // fallback to any facts
+        // Always include core anti-hallucination facts
+        const CORE_TRUTHS = [
+          'O Celta NUNCA gañou a Copa do Rei. Subcampión en 1948, 1994 e 2001.',
+          'O Celta NUNCA gañou LaLiga. Mellor posto: 4º.',
+          'O Celta NUNCA gañou a Champions nin a UEFA/Europa League.',
+          'Aleksandr Mostovoi chegou ao Celta en 1996, NON xogou a final de Copa de 1994.',
+          'Iago Aspas debutou en 2008, NON xogou co EuroCelta.',
+          'O estadio de Balaídos inaugurouse en 1928. NON o construíu ningún presidente do Celta.',
+          'Marián Mouriño é presidenta desde decembro de 2023, NON desde 2025.',
+          'Carlos Mouriño foi presidente de 2006 a 2023, NON ata 2025.',
+        ]
+        const finalFactsStr = factsStr ? CORE_TRUTHS.join('\n') + '\n---\n' + factsStr : CORE_TRUTHS.join('\n')
 
         // Fetch recent corrections for auto-learning
         let correctionsStr = ''
@@ -390,7 +402,7 @@ export default function App() {
 
         const apiMessages = [
           { role: 'system', content: SYSTEM_PROMPT },
-          ...(factsStr ? [{ role: 'system', content: `Hechos verificados:\n${factsStr}` }] : []),
+          { role: 'system', content: `Hechos verificados:\n${finalFactsStr}` },
           ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
           ...(memoryStr ? [{ role: 'system', content: memoryStr }] : []),
           { role: 'system', content: `LANGUAGE: ${detectLang(userText) === 'gl' ? 'The user wrote in GALLEGO. Respond ONLY in galego.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English.' : 'El usuario escribió en ESPAÑOL. Responde SOLO en español.'}` },
