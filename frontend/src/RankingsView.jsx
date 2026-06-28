@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Trophy, Medal, Shield, TrendingUp, Award, Users, Eye, Gift } from 'lucide-react'
+import { Trophy, Medal, Shield, TrendingUp, Award, Users, Eye, Gift, Flame, Star, Target } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import PlayerCard from './PlayerCard'
 import RewardsView from './RewardsView'
@@ -97,6 +97,8 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
   const [tab, setTab] = useState(initialTab)
   const [fans, setFans] = useState([])
   const [loadingFans, setLoadingFans] = useState(false)
+  const [comunidade, setComunidade] = useState([])
+  const [loadingComu, setLoadingComu] = useState(false)
   const [playerRanking, setPlayerRanking] = useState([])
   const [coachRanking, setCoachRanking] = useState([])
   const [loaded, setLoaded] = useState(false)
@@ -158,6 +160,31 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
     }
   }, [tab, supabase])
 
+  useEffect(() => {
+    if (tab === 'comunidade' && supabase) {
+      setLoadingComu(true)
+      supabase.from('user_xp')
+        .select('*')
+        .order('xp', { ascending: false })
+        .limit(50)
+        .then(async ({ data: xpUsers }) => {
+          if (!xpUsers || xpUsers.length === 0) { setLoadingComu(false); return }
+          const userIds = xpUsers.map(u => u.user_id)
+          const { data: profiles } = await supabase
+            .from('user_profiles')
+            .select('id, display_name, username')
+            .in('id', userIds)
+          const profileMap = Object.fromEntries((profiles || []).map(p => [p.id, p]))
+          const enriched = xpUsers.map(u => ({
+            ...u,
+            name: profileMap[u.user_id]?.display_name || profileMap[u.user_id]?.username || u.user_id.slice(0, 8)
+          }))
+          setComunidade(enriched)
+          setLoadingComu(false)
+        })
+    }
+  }, [tab, supabase])
+
   const fanName = (f) => {
     if (user && f.user_id === user.id) return t('rankings.you')
     if (f.username) return f.username
@@ -186,6 +213,7 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
           <TabButton id="players" label={t('rankings.players')} icon={<Trophy size={14} className="inline mr-1" />} />
           <TabButton id="coaches" label={t('rankings.coaches')} icon={<Award size={14} className="inline mr-1" />} />
           <TabButton id="fans" label={t('rankings.fans')} icon={<Users size={14} className="inline mr-1" />} />
+          <TabButton id="comunidade" label="Comunidade" icon={<Star size={14} className="inline mr-1" />} />
           <TabButton id="rewards" label="Premios" icon={<Gift size={14} className="inline mr-1" />} />
         </div>
       </div>
@@ -274,11 +302,57 @@ export default function RankingsView({ supabase, user, onClose, initialTab = 'pl
           </div>
         )}
 
+        {tab === 'comunidade' && (
+          <div className="space-y-2">
+            <p className="text-[10px] text-slate-500 mb-2">Usuarios reais ordenados por XP acumulado na Academia Celtista</p>
+            {loadingComu ? (
+              Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="rounded-xl p-3 flex items-center gap-3 bg-slate-800/60 border border-slate-700">
+                  <div className="skeleton w-9 h-9 rounded-full" />
+                  <div className="flex-1"><div className="skeleton h-4 w-24 mb-1" /><div className="skeleton h-3 w-16" /></div>
+                  <div className="text-right"><div className="skeleton h-4 w-12 mb-1" /><div className="skeleton h-3 w-8 ml-auto" /></div>
+                </div>
+              ))
+            ) : comunidade.length > 0 ? (
+              comunidade.map((u, i) => (
+                <motion.div key={u.user_id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.02 }}
+                  className={`rounded-xl p-3 flex items-center gap-3 border ${user && u.user_id === user.id ? 'bg-blue-900/40 border-blue-500/40' : 'bg-slate-800/60 border-slate-700/50'}`}>
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center font-black text-sm ${i < 3 ? `bg-gradient-to-br ${badgeColors[i]}` : 'bg-slate-700'}`}>
+                    {i < 3 ? badgeLabels[i] : `#${i + 1}`}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-sm text-white truncate">{comuName(u)}</p>
+                      {user && u.user_id === user.id && <span className="text-[9px] bg-blue-600 text-white px-1.5 rounded-full font-bold">Ti</span>}
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                      <Trophy size={10} className="text-yellow-400" />
+                      <span>Nivel {u.level || 1}</span>
+                      {u.streak > 0 && (
+                        <><Flame size={10} className="text-orange-400" /> <span>Racha {u.streak}</span></>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm font-black text-yellow-400">{(u.xp || 0).toLocaleString()}</div>
+                    <div className="text-[9px] text-slate-500">XP</div>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-slate-500">
+                <p className="font-bold text-sm">Aínda non hai usuarios</p>
+                <p className="text-[10px] mt-1">Os primeiros en xogar aparecerán aquí</p>
+              </div>
+            )}
+          </div>
+        )}
+
         {tab === 'rewards' && (
           <RewardsView supabase={supabase} user={user} />
         )}
 
-        {tab !== 'rewards' && (
+        {tab !== 'rewards' && tab !== 'comunidade' && (
           <p className="text-center text-[10px] text-slate-600 pt-2 pb-20">
             {t('rankings.footer')}
           </p>

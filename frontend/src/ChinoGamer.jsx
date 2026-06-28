@@ -75,6 +75,8 @@ export default function ChinoGamer({ supabase, speak, user }) {
   const [dailyTrivia, setDailyTrivia] = useState(null)
   const [dailyAnswered, setDailyAnswered] = useState(false)
   const [dailyResult, setDailyResult] = useState(null)
+  const [xpEarned, setXpEarned] = useState(0)
+  const [xpToast, setXpToast] = useState(null)
 
   useEffect(() => {
     fetchQuestions()
@@ -222,11 +224,15 @@ Make it challenging but fair. Use real facts. Never repeat questions about found
       setStreak(s => s + 1)
       playSound('correct')
       speak(t('gamer.correct'))
-      awardXp(supabase, user?.id, 'gamer_correct').catch(() => {})
+      awardXp(supabase, user?.id, 'gamer_correct').then(r => {
+        if (r) { setXpEarned(prev => prev + r.total); setXpToast({ gain: r.total }); setTimeout(() => setXpToast(null), 2000) }
+      }).catch(() => {})
     } else {
       setStreak(0)
       playSound('wrong')
-      awardXp(supabase, user?.id, 'gamer_wrong').catch(() => {})
+      awardXp(supabase, user?.id, 'gamer_wrong').then(r => {
+        if (r) { setXpEarned(prev => prev + r.total); setXpToast({ gain: r.total }); setTimeout(() => setXpToast(null), 2000) }
+      }).catch(() => {})
     }
 
     setScore(s => s + points)
@@ -338,7 +344,6 @@ Make it challenging but fair. Use real facts. Never repeat questions about found
       <main className="flex-1 overflow-y-auto p-4 z-10">
         <div className="max-w-lg mx-auto">
           <div className="flex justify-between items-center mb-4 text-sm">
-            <span className="text-blue-400 font-bold">{t('gamer.question')} {currentIdx + 1}/{TOTAL_QUESTIONS}</span>
             <span className="text-yellow-400 font-bold">{score} {t('gamer.points')}</span>
             <div className={`flex items-center gap-1 font-mono ${timer <= 5 ? 'text-red-500 animate-pulse' : 'text-white'}`}>
               <Timer size={16} /> {timer}{t('gamer.seconds')}
@@ -369,6 +374,14 @@ Make it challenging but fair. Use real facts. Never repeat questions about found
             </motion.div>
           </AnimatePresence>
         </div>
+        <AnimatePresence>
+          {xpToast && (
+            <motion.div initial={{ opacity: 0, y: 20, scale: 0.8 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.8 }}
+              className="fixed bottom-24 right-4 z-50 bg-gradient-to-r from-green-600 to-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xl border border-green-400/30">
+              +{xpToast.gain} XP
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     )
   }
@@ -389,6 +402,11 @@ Make it challenging but fair. Use real facts. Never repeat questions about found
           <h2 className="text-2xl font-black text-white mb-1">{t('gamer.game_over')}</h2>
           <p className="text-5xl font-black text-blue-500 mb-2">{score} {t('gamer.points')}</p>
           <p className="text-slate-400 mb-4">{correct}/{TOTAL_QUESTIONS} · {t('gamer.grade')}: <span className="text-yellow-400 font-bold">{grade}</span></p>
+          {xpEarned > 0 && (
+            <div className="bg-green-900/30 border border-green-500/30 rounded-xl py-2 px-4 mb-4 inline-block">
+              <span className="text-green-400 font-bold text-sm">+{xpEarned} XP gañados</span>
+            </div>
+          )}
 
           <div className="space-y-2 mb-6 text-left max-h-40 overflow-y-auto">
             {answers.map((a, i) => (
