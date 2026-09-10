@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle, Share2, Check, Twitter, MessageCircle, Calendar, Star } from 'lucide-react'
+import { Mic, Send, Volume2, Sparkles, Trophy, BarChart3, Medal, Settings, LogIn, AlertTriangle, Share2, Check, Twitter, MessageCircle, Star, History } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import ErrorBoundary from './ErrorBoundary'
 import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
+import { LIGA_AGENT_SNAPSHOT } from './liga-data'
 import PitchXI from './PitchXI'
 import LiveResultsBanner from './LiveResultsBanner'
 import PushNotif from './PushNotif'
@@ -15,7 +16,7 @@ const ChinoGamer = lazy(() => import('./ChinoGamer'))
 const BusinessView = lazy(() => import('./BusinessView'))
 const RankingsView = lazy(() => import('./RankingsView'))
 const SectionsView = lazy(() => import('./SectionsView'))
-const MatchesView = lazy(() => import('./MatchesView'))
+const HistorialView = lazy(() => import('./HistorialView'))
 const ProfileView = lazy(() => import('./ProfileView'))
 const AcademyView = lazy(() => import('./AcademyView'))
 const LandingView = lazy(() => import('./LandingView'))
@@ -188,12 +189,19 @@ export default function App() {
     if (/\b(the|is|was|are|were|have|has|been|will|would|could|should|who|what|when|where|why|how|which|that|this|these|those|do|does|did|can|shall|might|may|must|hello|hi|thanks|thank|football|player|team|club|match|game|goal|season|league|cup|europe|world|best|never|always|please|sorry|welcome)\b/i.test(lower)) return 'en'
     return 'es'
   }
+  const normalizeVoiceName = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  const MALE_VOICE_RE = /pablo|raul|jorge|david|masculin|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam|diego|antonio|miguel|angel|jose|francisco|carlos|alejandro|fernando|sergio|javier|manuel|juan|vicente|enrique|ramon|pedro|luis|alfred|hector|omar|ricardo|eduardo|felipe|andres|mario|jesus/i
+  const FEMALE_VOICE_RE = /helena|zira|laura|elena|sabina|dalia|femenin|mujer|samantha|karen|susan|julia|emma|olivia|ava|sophia|mia|charlotte|victoria|monica|paulina|carmen|ana|maria|isabel|dolores|teresa|rosa|cristina|patricia|silvia|beatriz|andrea|claudia|paula|marta|irene|alba|lucia|noelia|valentina|camila|gabriela|daniela|carolina|maite|siri|kyoko|yuna|moira|tessa|alicia|maren|nora|selma|katja|heidi|sarah|fiona|emily|chloe|grace|zoe|ruby|olive|paisley|reagan|jamie|quinn|jordan|avery|charlie/i
+  const voiceMatchesGender = (v, gender) => {
+    if (!v) return false
+    const n = normalizeVoiceName(v.name)
+    return gender === 'male' ? MALE_VOICE_RE.test(n) : FEMALE_VOICE_RE.test(n)
+  }
   const pickVoice = (voices, gender) => {
-    const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-    const male = /pablo|raul|jorge|david|masculin|mark|daniel|james|john|paul|mike|tom|alex|oliver|harry|george|sam|diego|antonio|miguel|angel|jose|francisco|carlos|alejandro|fernando|sergio|javier|manuel|juan|vicente|enrique|ramon|pedro|luis|alfred|hector|omar|ricardo|eduardo|felipe|andres|mario|jesus/i
-    const female = /helena|zira|laura|elena|sabina|dalia|femenin|mujer|samantha|karen|susan|julia|emma|olivia|ava|sophia|mia|charlotte|victoria|monica|paulina|carmen|ana|maria|isabel|dolores|teresa|rosa|cristina|patricia|silvia|beatriz|andrea|claudia|paula|marta|irene|alba|lucia|noelia|valentina|camila|gabriela|daniela|carolina|maite|siri|kyoko|yuna|moira|tessa|alicia|maren|nora|selma|katja|heidi|sarah|fiona|emily|chloe|grace|zoe|ruby|olive|paisley|reagan|jamie|quinn|jordan|avery|charlie/i
+    const normalize = normalizeVoiceName
+    const male = MALE_VOICE_RE
+    const female = FEMALE_VOICE_RE
     const name = (v) => normalize(v.name)
-    const matchGender = (v) => gender === 'male' ? male.test(name(v)) : female.test(name(v))
     const notOpposite = (v) => gender === 'male' ? !female.test(name(v)) : !male.test(name(v))
     if (gender === 'male') {
       return voices.find(v => male.test(name(v)))
@@ -205,6 +213,7 @@ export default function App() {
       || voices[0]
   }
   const speak = (text, gender, retry = 0) => {
+    try {
     if (!('speechSynthesis' in window)) return
     const u = new SpeechSynthesisUtterance(text)
     const g = gender || agentGender
@@ -214,7 +223,7 @@ export default function App() {
     }
     if (selectedVoiceURI) {
       const saved = allVoices.find(v => v.voiceURI === selectedVoiceURI)
-      if (saved && matchGender(saved)) { u.voice = saved; u.lang = saved.lang; u.rate = g === 'male' ? 1.0 : 1.1; window.speechSynthesis.speak(u); return }
+      if (saved && voiceMatchesGender(saved, g)) { u.voice = saved; u.lang = saved.lang; u.rate = g === 'male' ? 1.0 : 1.1; window.speechSynthesis.speak(u); return }
     }
     const lang = detectLang(text)
     const langVoices = lang === 'en'
@@ -224,6 +233,7 @@ export default function App() {
     u.lang = u.voice?.lang || 'es-ES'
     u.rate = g === 'male' ? 1.0 : 1.1
     window.speechSynthesis.speak(u)
+    } catch {}
   }
 
   const startListening = () => {
@@ -405,6 +415,7 @@ export default function App() {
         const apiMessages = [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'system', content: `Hechos verificados:\n${finalFactsStr}` },
+          { role: 'system', content: LIGA_AGENT_SNAPSHOT },
           ...(correctionsStr ? [{ role: 'system', content: `Correcciones recientes de usuarios (aprende de ellas):\n${correctionsStr}` }] : []),
           ...(memoryStr ? [{ role: 'system', content: memoryStr }] : []),
           { role: 'system', content: `🚨 IDIOMA: ${detectLang(userText) === 'gl' ? 'O usuario escribiu en GALEGO. RESPONDE SÓ EN GALEGO. 0 palabras en español ou inglés. REVISA a túa resposta e elimina calquera palabra noutro idioma.' : detectLang(userText) === 'en' ? 'The user wrote in ENGLISH. Respond ONLY in English. 0 words in Spanish or Galician. CHECK your response and remove any non-English words.' : 'El usuario escribió en ESPAÑOL. RESPONDE SÓ EN ESPAÑOL. 0 palabras en gallego o inglés. REVISA tu respuesta y elimina cualquier palabra en otro idioma.'}` },
@@ -416,6 +427,11 @@ export default function App() {
           headers,
           body: JSON.stringify({ model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini', messages: apiMessages })
         })
+        if (!res.ok) {
+          const errText = await res.text().catch(() => '')
+          console.error('Chiño AI API error:', res.status, errText.slice(0, 300))
+          throw new Error(`API ${res.status}`)
+        }
         const data = await res.json()
         const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
         const showPitch = raw.includes('[PITCHXI]')
@@ -500,9 +516,9 @@ export default function App() {
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'rankings' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
             <Medal size={11} className="inline mr-0.5" />{t('header.ranking')}
           </button>
-          <button onClick={() => setCurrentTab('matches')}
-            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'matches' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
-            <Calendar size={11} className="inline mr-0.5" />{t('header.matches')}
+          <button onClick={() => setCurrentTab('historial')}
+            className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'historial' ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
+            <History size={11} className="inline mr-0.5" />{t('header.historial')}
           </button>
           <button onClick={() => setCurrentTab('academy')}
             className={`text-[11px] px-2.5 py-1.5 rounded-full transition-colors ${currentTab === 'academy' ? 'bg-yellow-600 text-white' : 'bg-slate-700 text-slate-300'}`}>
@@ -625,8 +641,8 @@ export default function App() {
         <ProfileView supabase={supabase} user={user} agentGender={agentGender} setAgentGender={setAgentGender} speak={speak} theme={theme} setTheme={setTheme} onClose={(goto) => setCurrentTab(goto || 'chat')} />
       ) : currentTab === 'rankings' ? (
         <RankingsView key={`rankings-${rankingTab}`} supabase={supabase} user={user} initialTab={rankingTab} onClose={() => { setRankingTab('players'); setCurrentTab('chat') }} />
-      ) : currentTab === 'matches' ? (
-        <MatchesView supabase={supabase} onClose={() => setCurrentTab('chat')} />
+      ) : currentTab === 'historial' ? (
+        <HistorialView supabase={supabase} onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'sections' ? (
         <SectionsView onClose={() => setCurrentTab('chat')} />
       ) : currentTab === 'biz' ? (

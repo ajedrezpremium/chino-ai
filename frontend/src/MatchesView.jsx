@@ -16,7 +16,7 @@ const MOCK_MATCHES = {
   ]
 }
 
-export default function MatchesView({ onClose, supabase }) {
+export default function MatchesView({ onClose, supabase, embedded = false }) {
   const { t, i18n } = useTranslation()
   const [season, setSeason] = useState('2025-26')
   const [matches, setMatches] = useState([])
@@ -130,6 +130,7 @@ export default function MatchesView({ onClose, supabase }) {
   return (
     <main className="flex-1 overflow-y-auto z-10">
       <div className="p-4 pb-24">
+        {!embedded && (
         <div className="flex items-center gap-3 mb-4">
           <button onClick={onClose} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 transition-colors">
             <ArrowLeft size={18} />
@@ -139,6 +140,7 @@ export default function MatchesView({ onClose, supabase }) {
             <p className="text-[10px] text-slate-400">{t('matches.subtitle')}</p>
           </div>
         </div>
+        )}
 
         <div className="flex items-center gap-2 mb-4">
           <button onClick={() => {
