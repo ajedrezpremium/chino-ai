@@ -11,6 +11,7 @@ import PitchXI from './PitchXI'
 import LiveResultsBanner from './LiveResultsBanner'
 import PushNotif from './PushNotif'
 import XpBar, { awardXp } from './XpBar'
+import CouponCard from './CouponCard'
 
 const ChinoGamer = lazy(() => import('./ChinoGamer'))
 const BusinessView = lazy(() => import('./BusinessView'))
@@ -256,10 +257,34 @@ export default function App() {
     r.onend = () => setIsRecording(false)
   }
 
-  const saveMessage = async (role, text) => {
+  const saveMessage = async (role, text, hasAction = false) => {
     if (!user?.id) return
     try {
-      await supabase.from('chat_history').insert({ user_id: user.id, role, message: text })
+      const { error } = await supabase.from('chat_history').insert({ user_id: user.id, role, message: text, has_action: hasAction })
+      if (error) throw error
+    } catch {
+      try { await supabase.from('chat_history').insert({ user_id: user.id, role, message: text }) } catch {}
+    }
+  }
+
+  // Atribución de ventas: UTM automático + rexistro de clics (fire-and-forget, nunca rompe o chat)
+  const withUtm = (url, campaign) => {
+    try {
+      const u = new URL(url)
+      u.searchParams.set('utm_source', 'chino_ai')
+      u.searchParams.set('utm_medium', 'chat')
+      u.searchParams.set('utm_campaign', campaign || 'general')
+      return u.toString()
+    } catch { return url }
+  }
+  const trackClick = (kind, label, url) => {
+    try {
+      supabase.from('link_clicks').insert({
+        user_id: user?.id || null,
+        label: (label || '').slice(0, 200),
+        url: (url || '').slice(0, 500),
+        kind
+      }).then().catch(() => {})
     } catch {}
   }
 
@@ -437,12 +462,16 @@ export default function App() {
         const showPitch = raw.includes('[PITCHXI]')
         const hasOferta = raw.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/g)
         const hasEnlace = raw.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/g)
+        const hasCupon = raw.match(/\[CUPON:\s*([A-Z0-9_-]+)\]/gi)
         const actions = []
-        if (hasOferta) hasOferta.forEach(m => { const [_,t,u] = m.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'oferta', label: t, url: u }) })
-        if (hasEnlace) hasEnlace.forEach(m => { const [_,t,u] = m.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'enlace', label: t, url: u }) })
-        const aiText = raw.replace(/\[OFERTA:[^\]]+\]\([^)]+\)/g, '').replace(/\[ENLACE:[^\]]+\]\([^)]+\)/g, '').replace('[PITCHXI]', '').trim()
-        setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch, actions: actions.length ? actions : undefined }])
-        saveMessage('agent', aiText)
+        if (hasOferta) hasOferta.forEach(m => { const [_,t,u] = m.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'oferta', label: t, url: withUtm(u, 'oferta') }) })
+        if (hasEnlace) hasEnlace.forEach(m => { const [_,t,u] = m.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/); actions.push({ type: 'enlace', label: t, url: withUtm(u, 'enlace') }) })
+        const coupons = []
+        if (hasCupon) hasCupon.forEach(m => { const c = m.match(/\[CUPON:\s*([A-Z0-9_-]+)\]/i); if (c?.[1]) coupons.push(c[1].toUpperCase()) })
+        const aiText = raw.replace(/\[OFERTA:[^\]]+\]\([^)]+\)/g, '').replace(/\[ENLACE:[^\]]+\]\([^)]+\)/g, '').replace(/\[CUPON:\s*[A-Z0-9_-]+\]/gi, '').replace('[PITCHXI]', '').trim()
+        const hasCommercial = actions.length > 0 || coupons.length > 0
+        setMessages(prev => [...prev, { role: 'agent', text: aiText, showPitch, actions: actions.length ? actions : undefined, coupons: coupons.length ? [...new Set(coupons)] : undefined }])
+        saveMessage('agent', aiText, hasCommercial)
         speak(aiText, agentGender)
         awardXp(supabase, user?.id, 'chat_message').then(r => {
           if (r) {
@@ -685,9 +714,17 @@ export default function App() {
                         <div className="flex flex-wrap gap-2 mt-2">
                           {msg.actions.map((a, i) => (
                             <a key={i} href={a.url} target="_blank" rel="noopener noreferrer"
+                              onClick={() => trackClick(a.type, a.label, a.url)}
                               className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl transition-all ${a.type === 'oferta' ? 'bg-gradient-to-r from-yellow-600 to-orange-600 text-white shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50' : 'bg-blue-600 hover:bg-blue-500 text-white shadow'}`}>
                               {a.type === 'oferta' ? '🎁' : '🔗'} {a.label}
                             </a>
+                          ))}
+                        </div>
+                      )}
+                      {msg.role === 'agent' && msg.coupons?.length > 0 && (
+                        <div className="flex flex-col gap-2 mt-2">
+                          {msg.coupons.map((code) => (
+                            <CouponCard key={code} code={code} supabase={supabase} user={user} onClaim={() => trackClick('cupon', code, `cupon:${code}`)} />
                           ))}
                         </div>
                       )}
