@@ -46,28 +46,39 @@ function endpointFor(model) {
 
 const RETRYABLE = new Set([402, 403, 404, 429, 500, 502, 503, 529])
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
 export async function chatComplete(messages, { temperature = 0.3, maxTokens = 1200, tag = 'chat' } = {}) {
   let lastError = null
   for (const model of CHAT_CHAIN) {
-    try {
-      const { url, headers } = endpointFor(model)
-      const budget = needsBigBudget(model) ? Math.max(maxTokens, 2500) : maxTokens
-      const res = await fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ model, messages, temperature, max_tokens: budget }),
-      })
-      if (!res.ok) {
-        if (RETRYABLE.has(res.status)) { lastError = new Error(`API ${res.status} (${model})`); continue }
-        throw new Error(`API ${res.status} (${model})`)
+    // 1 intento + 1 reintento ante 429 (rate-limit transitorio)
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const { url, headers } = endpointFor(model)
+        const budget = needsBigBudget(model) ? Math.max(maxTokens, 2500) : maxTokens
+        const res = await fetch(url, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ model, messages, temperature, max_tokens: budget }),
+        })
+        if (res.status === 429 && attempt === 0) {
+          lastError = new Error(`API 429 (${model})`)
+          await sleep(3000)
+          continue
+        }
+        if (!res.ok) {
+          if (RETRYABLE.has(res.status)) { lastError = new Error(`API ${res.status} (${model})`); break }
+          throw new Error(`API ${res.status} (${model})`)
+        }
+        const data = await res.json()
+        const text = data.choices?.[0]?.message?.content?.trim()
+        if (!text) { lastError = new Error(`Empty (${model})`); break }
+        console.info(`[chiño:${tag}] modelo ${model}`)
+        return { text, model }
+      } catch (e) {
+        lastError = e
+        break
       }
-      const data = await res.json()
-      const text = data.choices?.[0]?.message?.content?.trim()
-      if (!text) { lastError = new Error(`Empty (${model})`); continue }
-      console.info(`[chiño:${tag}] modelo ${model}`)
-      return { text, model }
-    } catch (e) {
-      lastError = e
     }
   }
   throw lastError || new Error('No model available')
