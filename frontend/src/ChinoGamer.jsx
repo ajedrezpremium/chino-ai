@@ -3,6 +3,7 @@ import { Trophy, Timer, Flame, Star, ArrowLeft, RefreshCw, Sparkles, Check, X } 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { awardXp } from './XpBar'
+import { chatComplete } from './ai-models'
 
 const playSound = (type) => {
   try {
@@ -88,22 +89,12 @@ export default function ChinoGamer({ supabase, speak, user }) {
     if (!key) return
     const lang = i18n.language?.startsWith('gl') ? 'galego' : i18n.language?.startsWith('en') ? 'English' : 'Spanish'
     try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}`,
-          'HTTP-Referer': 'https://chinoaiagent.vercel.app', 'X-Title': 'Chiño AI' },
-        body: JSON.stringify({
-          model: 'openai/gpt-4o-mini',
-          messages: [
-            { role: 'system', content: `Generate ONE trivia question about RC Celta de Vigo in ${lang}. 
+      const { text: content } = await chatComplete([
+        { role: 'system', content: `Generate ONE trivia question about RC Celta de Vigo in ${lang}.
 Return valid JSON only: {"question_text":"...","option_a":"...","option_b":"...","option_c":"...","option_d":"...","correct_option":"A/B/C/D","explanation":"..."}
 Make it challenging but fair. Use real facts. Never repeat questions about founding year or Iago Aspas goals.` }
-          ]
-        })
-      })
-      const data = await res.json()
-      const content = data.choices?.[0]?.message?.content || '{}'
-      const clean = content.replace(/```json|```/g, '').trim()
+      ], { temperature: 0.7, maxTokens: 600, tag: 'trivia' })
+      const clean = (content || '{}').replace(/```json|```/g, '').trim()
       const q = JSON.parse(clean)
       return q
     } catch { return null }

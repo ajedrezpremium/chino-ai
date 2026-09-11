@@ -7,6 +7,7 @@ import ErrorBoundary from './ErrorBoundary'
 import { GaliciaFlag, SpainFlag, UKFlag } from './i18n/LanguageSwitcher'
 import { SYSTEM_PROMPT } from './chino-knowledge'
 import { LIGA_AGENT_SNAPSHOT } from './liga-data'
+import { chatComplete } from './ai-models'
 import PitchXI from './PitchXI'
 import LiveResultsBanner from './LiveResultsBanner'
 import PushNotif from './PushNotif'
@@ -30,7 +31,6 @@ const supabase = createClient(
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY || ''
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || ''
-const USE_OPENROUTER = !!OPENROUTER_API_KEY
 
 export default function App() {
   const { t, i18n } = useTranslation()
@@ -134,29 +134,42 @@ export default function App() {
   }
 
   const fetchRelevantFacts = async (userText) => {
-    // Try vector search first (semantic)
-    try {
-      const embedding = await getEmbedding(userText)
-      if (embedding) {
-        const { data } = await supabase.rpc('match_knowledge', {
-          query_embedding: embedding,
-          match_threshold: 0.7,
-          match_count: 50
-        })
-        if (data?.length > 0) return data.map(f => f.fact_text)
+    // Triple fusión en paralelo: vectorial (sinónimos) + full-text (termos exactos)
+    // + categoría (contexto). Ningunha vía pode deixar fóra ás outras.
+    const seen = new Set()
+    const merged = []
+    const pushFacts = (arr) => {
+      for (const f of arr || []) {
+        const ft = typeof f === 'string' ? f : f.fact_text
+        if (ft && !seen.has(ft)) { seen.add(ft); merged.push(ft) }
       }
-    } catch {}
+    }
+    const vectorJob = (async () => {
+      try {
+        const embedding = await getEmbedding(userText)
+        if (embedding) {
+          const { data } = await supabase.rpc('match_knowledge', {
+            query_embedding: embedding,
+            match_threshold: 0.6,
+            match_count: 25
+          })
+          pushFacts(data)
+        }
+      } catch {}
+    })()
 
-    // Fallback: keyword + full-text search
+    // Keyword + full-text + categoría (sempre se executa para fusionar)
     const CAT_MAP = {
       economia:['presupuesto','presuposto','salario','dinero','ingreso','gasto','venta','traspaso','deuda','millon','limite','financi'],
-      estadio:['estadio','balaidos','aforo','capacidad','remodel','grada','afouteza'],
+      estadio:['estadio','balaidos','aforo','capacidad','remodel','grada','afouteza','tour','visita','museo'],
       adestradores:['entrenador','adestrador','coach','tecnico','director'],
-      presidentes:['presidente','directiva','mouriño','ges'],
-      europa:['europa','uefa','champions','europa league','intertoto'],
-      historia:['fundacion','historia','fusion','1923','origen','orixe'],
+      presidentes:['presidente','presidenta','directiva','mouriño','ges'],
+      europa:['europa','uefa','champions','europa league','intertoto','suplemento'],
+      historia:['fundacion','historia','fusion','1923','origen','orixe','copa','subcampeon'],
       plantilla:['plantilla','xogador','jugador','fichaxe','fichaje','contrato','cesion','mercado','canteira','cantera'],
-      xogadores:['porteiro','portero','goleador','zamora','gol','goles','mejor','mellor','partidos']
+      xogadores:['porteiro','portero','goleador','zamora','gol','goles','mejor','mellor','partidos','aspas','mostovoi'],
+      liga:['liga','clasificacion','tabla','posicion','puesto','puntos','lider','jornada','descenso','ascenso'],
+      servicios:['abono','abonado','renovar','renovacion','carnet','entrada','entradas','taquilla','precio','cuesta','cuestan','horario','portal','tienda']
     }
     const t = userText.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     const cats = Object.entries(CAT_MAP).filter(([_,kw]) => kw.some(k => t.includes(k))).map(([c]) => c)
@@ -164,18 +177,30 @@ export default function App() {
     const words = userText.toLowerCase().replace(/[^a-z0-9áéíóúñü\s]/g,' ').split(/\s+/).filter(w => w.length > 2 && !stopWords.has(w))
     const searchTerm = words.join(' ')
 
-    let query = supabase.from('knowledge_facts').select('fact_text').eq('verified', true)
-    if (cats.length) query = query.in('category', cats)
-    if (searchTerm) query = query.textSearch('fact_text', searchTerm, { type: 'websearch' })
-    const { data } = await query.limit(50)
-    if (data?.length) return data.map(f => f.fact_text)
+    const keywordJob = (async () => {
+      try {
+        let query = supabase.from('knowledge_facts').select('fact_text').eq('verified', true)
+        if (cats.length) query = query.in('category', cats)
+        if (searchTerm) query = query.textSearch('fact_text', searchTerm, { type: 'websearch' })
+        const { data } = await query.limit(25)
+        pushFacts(data)
+      } catch {}
+      // Feitos da categoría detectada: alta sinal, sempre se inclúen
+      if (cats.length) {
+        try {
+          const { data: fb } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).in('category', cats).limit(25)
+          pushFacts(fb)
+        } catch {}
+      }
+    })()
 
-    if (cats.length) {
-      const { data: fb } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).in('category', cats).limit(30)
-      if (fb?.length) return fb.map(f => f.fact_text)
+    await Promise.all([vectorJob, keywordJob])
+
+    if (merged.length === 0) {
+      const { data: anyFacts } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).limit(20).catch(() => ({ data: [] }))
+      pushFacts(anyFacts)
     }
-    const { data: anyFacts } = await supabase.from('knowledge_facts').select('fact_text').eq('verified', true).limit(30)
-    return anyFacts?.map(f => f.fact_text) || []
+    return merged.slice(0, 60)
   }
 
   const [agentGender, setAgentGender] = useState('male')
@@ -317,18 +342,12 @@ export default function App() {
     if (!key) return
     const text = recentMessages.map(m => `${m.role === 'user' ? 'Usuario' : 'Chiño'}: ${m.text}`).join('\n').slice(-3000)
     try {
-      const res = await fetch(USE_OPENROUTER ? 'https://openrouter.ai/api/v1/chat/completions' : 'https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}`,
-          ...(USE_OPENROUTER ? { 'HTTP-Referer': 'https://chinoaiagent.vercel.app', 'X-Title': 'Chiño AI' } : {}) },
-        body: JSON.stringify({
-          model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini',
-          messages: [{ role: 'system', content: 'Resume esta conversación sobre el Celta de Vigo en 2-3 frases en español. Sé conciso.' },
-            { role: 'user', content: text }]
-        })
-      })
-      const data = await res.json()
-      return data.choices?.[0]?.message?.content || null
+      const { text: summary } = await chatComplete(
+        [{ role: 'system', content: 'Resume esta conversación sobre el Celta de Vigo en 2-3 frases en español. Sé conciso.' },
+          { role: 'user', content: text }],
+        { temperature: 0.3, maxTokens: 300, tag: 'resumen' }
+      )
+      return summary || null
     } catch { return null }
   }
 
@@ -393,15 +412,6 @@ export default function App() {
     try {
       const key = OPENROUTER_API_KEY || OPENAI_API_KEY
       if (key) {
-        const baseUrl = USE_OPENROUTER
-          ? 'https://openrouter.ai/api/v1/chat/completions'
-          : 'https://api.openai.com/v1/chat/completions'
-        const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` }
-        if (USE_OPENROUTER) {
-          headers['HTTP-Referer'] = 'https://chinoaiagent.vercel.app'
-          headers['X-Title'] = 'Chiño AI'
-        }
-
         // Fetch entity-aware facts
         const relevantFacts = await fetchRelevantFacts(userText)
         const factsStr = relevantFacts.length > 0 ? relevantFacts.join('\n') : await fetchRelevantFacts('') // fallback to any facts
@@ -447,18 +457,14 @@ export default function App() {
           { role: 'user', content: userText }
         ]
 
-        const res = await fetch(baseUrl, {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({ model: USE_OPENROUTER ? 'openai/gpt-4o-mini' : 'gpt-4o-mini', messages: apiMessages })
-        })
-        if (!res.ok) {
-          const errText = await res.text().catch(() => '')
-          console.error('Chiño AI API error:', res.status, errText.slice(0, 300))
-          throw new Error(`API ${res.status}`)
+        let raw = t('chat.fallback')
+        try {
+          const { text } = await chatComplete(apiMessages, { temperature: 0.3, maxTokens: 1200, tag: 'chat' })
+          raw = text || t('chat.fallback')
+        } catch (e) {
+          console.error('Chiño AI API error:', e?.message)
+          throw e
         }
-        const data = await res.json()
-        const raw = data.choices?.[0]?.message?.content || t('chat.fallback')
         const showPitch = raw.includes('[PITCHXI]')
         const hasOferta = raw.match(/\[OFERTA:\s*([^\]]+)\]\(([^)]+)\)/g)
         const hasEnlace = raw.match(/\[ENLACE:\s*([^\]]+)\]\(([^)]+)\)/g)
